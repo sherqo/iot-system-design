@@ -1,3 +1,4 @@
+\newpage
 \section{Functional View Specification}
 
 \subsection{Overview}
@@ -36,6 +37,7 @@ Decision core running on ESP32.
   \item State manager as single source of truth.
 \end{itemize}
 
+\newpage
 \subsubsection*{Block 3 -- Actuation Block}
 Executes commands on relays and valve, with confirmation and retries.
 \begin{table}[htbp]
@@ -80,22 +82,8 @@ Provides monitoring panels and manual override controls for admin users.
 Fetches daily prayer times and caches them for resilience.
 
 \subsection{Inter-Block Data Flow Summary}
-\begin{table}[htbp]
+\begin{figure}[H]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.2cm} L{5.2cm} L{7.8cm}}
-\toprule
-\textbf{From} & \textbf{To} & \textbf{Data} \\
-\midrule
-Sensing Block & Processing Block & Raw events, flow rates, IAQ readings \\
-External API Block & Processing Block & Daily prayer schedule \\
-Processing Block & Actuation Block & Device commands \\
-Actuation Block & Processing Block & Confirmations, fault flags \\
-Processing Block & Data and Storage Block & State snapshots, logs, transitions \\
-Processing Block & Alert Block & Threshold breach events \\
-Data and Storage Block & Dashboard Block & Current and historical readings \\
-Alert Block & Dashboard Block & Active alert queue \\
-Dashboard Block & Processing Block & Manual override commands \\
-\bottomrule
-\end{tabular*}
-\caption{Functional block data flows}
-\end{table}
+\includegraphics[width=0.95\textwidth]{7.3-data-flow-diagram.png}
+\caption{Inter-block data flow}
+\end{figure}

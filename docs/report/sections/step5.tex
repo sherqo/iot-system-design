@@ -1,3 +1,4 @@
+\newpage
 \section{Service Specifications}
 
 \subsection{Overview}
@@ -45,14 +46,13 @@ SVC-07 & Dashboard Monitoring \& Override & Application + Control & On-demand \\
   \item Purpose: Automates lights and fans/AC per zone based on prayer windows and occupancy.
   \item Interface: ESP32 reads SVC-01 and SVC-02 state, then controls relay GPIOs.
   \item Decision logic:
-\begin{verbatim}
-IF in_prayer_window AND occupancy > 0:
-  activate(lights, fans)
-ELSE:
-  deactivate(lights, fans)
-IF override_active:
-  apply manual override
-\end{verbatim}
+  \begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{5.3-energy-control-service.png}
+  \caption{Energy control logic finite state machine}
+  \end{figure}
+
+
   \item Air quality from SVC-05 can independently force fan activation.
 \end{itemize}
 

@@ -20,6 +20,7 @@ IAQ Sensor & Prayer hall near ventilation & CO$_2$, temperature, humidity \\
 \caption{Perception layer sensors}
 \end{table}
 
+\newpage
 \textbf{Actuators}
 \begin{table}[htbp]
 \centering
@@ -71,6 +72,7 @@ Alert generation & Publishes threshold breach events to data layer \\
 
 Failsafe: If server connectivity is lost, edge controllers continue autonomous operation.
 
+\newpage
 \subsection{Level 4 -- Data Accumulation Layer}
 \textbf{Role:} Aggregate processed data, store logs, and serve dashboard queries.
 \begin{itemize}
@@ -88,15 +90,8 @@ Failsafe: If server connectivity is lost, edge controllers continue autonomous o
 \end{itemize}
 
 \subsection{Level Interaction Summary}
-\begin{verbatim}
-[Sensors / Actuators] (Level 1)
-      | GPIO / I2C / UART
-      v
-[ESP32 Edge Controller] (Level 2+3) <--- [Prayer Time API]
-      | Wi-Fi (WPA2-PSK)
-      v
-[Local Server / Registration Server] (Level 4)
-      | Local LAN
-      v
-[Admin Web Dashboard] (Level 5)
-\end{verbatim}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{6.5-layers.png}
+\caption{IoT system layer interactions}
+\end{figure}
