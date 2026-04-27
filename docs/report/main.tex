@@ -13,6 +13,8 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{url}
 \usepackage{enumitem}
 \usepackage{microtype}
 \usepackage{parskip}
@@ -28,7 +30,10 @@
 \makeatother
 
 % ─── Hyperlinks ─────────────────────────────────────────────────────────────
-\hypersetup{hidelinks, pdftitle={Smart Mosque Management System}, pdfauthor={Team Project}}
+\hypersetup{hidelinks, breaklinks=true, pdftitle={Smart Mosque Management System}, pdfauthor={Team Project}}
+\def\UrlBreaks{\do\/\do\-}
+\def\UrlBigBreaks{\do\/\do\-}
+\g_URLmuskip=0mu plus 2mu\relax
 
 % ─── Section Formatting ─────────────────────────────────────────────────────
 \definecolor{mysec}{RGB}{47,84,150}
