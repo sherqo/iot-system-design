@@ -1,4 +1,4 @@
-\section{Step 7: Functional View Specification}
+\section{Functional View Specification}
 
 \subsection{Overview}
 The functional view breaks the system into independent blocks by behavior. Each block has defined inputs, outputs, and responsibilities, with clear data flows for modularity and maintainability.
@@ -40,7 +40,7 @@ Decision core running on ESP32.
 Executes commands on relays and valve, with confirmation and retries.
 \begin{table}[htbp]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.2cm} L{3.6cm} L{4.8cm}}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.2cm} L{4.9cm} L{4.8cm}}
 \toprule
 \textbf{Device} & \textbf{Command Type} & \textbf{Confirmation} \\
 \midrule
@@ -56,7 +56,7 @@ Solenoid valve & OPEN/CLOSE per tap & GPIO acknowledgment \\
 Persists time-series data for dashboard and analytics.
 \begin{table}[htbp]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.3cm} L{3.3cm} L{4.6cm}}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.3cm} L{5.3cm} L{4.6cm}}
 \toprule
 \textbf{Data Type} & \textbf{Logging Frequency} & \textbf{Retention} \\
 \midrule
@@ -82,7 +82,7 @@ Fetches daily prayer times and caches them for resilience.
 \subsection{Inter-Block Data Flow Summary}
 \begin{table}[htbp]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.2cm} L{4.2cm} L{4.8cm}}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.2cm} L{5.2cm} L{7.8cm}}
 \toprule
 \textbf{From} & \textbf{To} & \textbf{Data} \\
 \midrule

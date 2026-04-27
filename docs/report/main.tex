@@ -17,6 +17,7 @@
 \usepackage{microtype}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage[svgnames]{xcolor}
 \usepackage{multirow}
 \usepackage{float}
 
@@ -30,14 +31,22 @@
 \hypersetup{hidelinks, pdftitle={Smart Mosque Management System}, pdfauthor={Team Project}}
 
 % ─── Section Formatting ─────────────────────────────────────────────────────
+\definecolor{mysec}{RGB}{47,84,150}
+\definecolor{mysubsec}{RGB}{60,98,165}
+\definecolor{mysubsubsec}{RGB}{75,115,180}
+
 \titleformat{\section}
-{\Large\bfseries}
+{\Large\bfseries\color{mysec}}
 {\thesection.}{0.5em}{}[\titlerule]
 \titleformat{\subsection}
-{\large\bfseries}
+{\large\bfseries\color{mysubsec}}
 {\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+{\normalsize\bfseries\color{mysubsubsec}}
+{\thesubsubsection}{0.5em}{}
 \titlespacing*{\section}{0pt}{2.2em}{1.0em}
 \titlespacing*{\subsection}{0pt}{1.8em}{1.0em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{1.0em}
 
 % ─── Header / Footer ────────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -122,6 +131,13 @@
 \input{step8}
 \input{step9}
 \input{step10}
+
+% ─── List of Figures ──────────────────────────────────────────────────────────
+\newpage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\newpage
+
 \input{resources}
 
 \end{document}
