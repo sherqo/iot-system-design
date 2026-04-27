@@ -1,7 +1,7 @@
 \documentclass[12pt, a4paper]{article}
 
 % ─── Packages ───────────────────────────────────────────────────────────────
-\usepackage[a4paper, margin=1.8cm]{geometry}
+\usepackage[a4paper, margin=1.5cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -18,9 +18,16 @@
 \usepackage{parskip}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{float}
+
+% Support both `make` build (cwd=.build) and direct pdflatex runs.
+\graphicspath{{../imgs/}{../../imgs/}{imgs/}}
+\makeatletter
+\def\input@path{{sections/}{../sections/}}
+\makeatother
 
 % ─── Hyperlinks ─────────────────────────────────────────────────────────────
-\hypersetup{hidelinks, pdftitle={Title}, pdfauthor={Author}}
+\hypersetup{hidelinks, pdftitle={Smart Mosque Management System}, pdfauthor={Team Project}}
 
 % ─── Section Formatting ─────────────────────────────────────────────────────
 \titleformat{\section}
@@ -36,8 +43,8 @@
 \pagestyle{fancy}
 \fancyhf{}
 \setlength{\headheight}{13.6pt}
-\fancyhead[L]{\small Course Title}
-\fancyhead[R]{\small Phase X}
+\fancyhead[L]{\small CSE356: Internet of Things}
+\fancyhead[R]{\small Smart Mosque Management System}
 \fancyfoot[C]{\small Page \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -54,55 +61,67 @@
 
 % ────────────────────────────────────────────────────────────────────────────
 \begin{document}
-\thispagestyle{empty}
 
 % ─── Cover Page ─────────────────────────────────────────────────────────────
+\begin{titlepage}
+\thispagestyle{empty}
+
 \begin{center}
-	\vspace*{1.5cm}
-	{\small\scshape Faculty of Engineering}\\[0.2em]
-	{\small\scshape Department of Computer Engineering}\\[0.3em]
-	{\small Course Name}\\[2cm]
+    \includegraphics[width=0.18\textwidth]{0-uni-logo.png}\\[1.6em]
+    {\Large\bfseries Ain Shams University -- Faculty of Engineering I-CHEP}\\[0.9em]
+    {\large CSE356: Internet of Things}\\[2.3em]
 
-	{\LARGE\bfseries Phase X Title}\\[0.5em]
-	{\large Subtitle}\\[1.5cm]
+    \vspace*{1.3cm}
 
-	{\Large\bfseries Project Name}\\[0.4em]
-	{\large Team / Group}\\[2cm]
-
-	\begin{tabular}{p{6cm}p{3.5cm}p{4.5cm}}
-		\toprule \textbf{Name} & \textbf{ID} & \textbf{Role} \\
-		\midrule Member 1      & ID1         & Role1         \\
-		Member 2               & ID2         & Role2         \\
-		Member 3               & ID3         & Role3         \\
-		Member 4               & ID4         & Role4         \\
-		Member 5               & ID5         & Role5         \\
-		\bottomrule
-	\end{tabular}\\[2cm]
-
-	{\normalsize Date: \today}
+    {\Huge\bfseries Project Report}\\[1.0em]
+    {\LARGE\bfseries Smart Mosque Management System}\\[1.4em]
+    \rule{0.62\textwidth}{0.5pt}\\[1.3em]
+    {\large 14-May-2026}
 \end{center}
 
-\newpage
+\vfill
+
+\begin{center}
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{L{3.2cm}L{8.8cm}}
+\toprule
+\textbf{Submitted to} & Prof. Islam Tharwat\\
+                      & Eng. Hamdy Osama\\
+\bottomrule
+\end{tabular}
+}
+
+\vspace{1.0em}
+
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{L{3.2cm}L{8.8cm}}
+\toprule
+\textbf{Submitted by} & 23P0184 -- Sara Ahmed\\
+                      & 23P0360 -- El-Sharqawy Wael\\
+                      & 23P0386 -- Esraa Mustafa\\
+                      & 23P0272 -- Nada Medhat\\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\vspace*{2.6cm}
+\end{titlepage}
 
 % ─── Table of Contents ──────────────────────────────────────────────────────
 \tableofcontents
 \newpage
 
-% ════════════════════════════════════════════════════════════════════════════
-\section{Section 1}
-
-\subsection{Subsection}
-
-Content here.
-
-% ════════════════════════════════════════════════════════════════════════════
-\section{Section 2}
-
-Content here.
-
-% ════════════════════════════════════════════════════════════════════════════
-\section{Conclusion}
-
-Content here.
+\input{step1}
+\input{step2}
+\input{step3}
+\input{step4}
+\input{step5}
+\input{step6}
+\input{step7}
+\input{step8}
+\input{step9}
+\input{step10}
+\input{resources}
 
 \end{document}

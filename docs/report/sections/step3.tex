@@ -1,0 +1,109 @@
+\section{Step 3: Domain Model Specification}
+
+\subsection{Entities}
+\textbf{Core System Entities:}
+\begin{itemize}
+  \item Mosque
+  \item Zone (Prayer Hall / Wudu Area)
+\end{itemize}
+
+\textbf{Sensors:}
+\begin{itemize}
+  \item Motion Sensor
+  \item IR Counter Sensor
+  \item Air Quality Sensor
+  \item Water Flow Sensor
+\end{itemize}
+
+\textbf{Actuators:}
+\begin{itemize}
+  \item Light
+  \item Fan / AC
+  \item Water Valve
+\end{itemize}
+
+\textbf{System Components:}
+\begin{itemize}
+  \item Controller (MCU/SBC)
+  \item IoT Server
+  \item Dashboard (Web App)
+  \item Admin
+\end{itemize}
+
+\subsection{Attributes for each Entity}
+\textbf{Mosque}
+\begin{itemize}
+  \item mosqueID
+  \item name
+  \item location
+\end{itemize}
+
+\textbf{Zone}
+\begin{itemize}
+  \item zoneID
+  \item type (Prayer Hall / Wudu Area)
+  \item capacity
+\end{itemize}
+
+\textbf{Sensor}
+\begin{itemize}
+  \item sensorID
+  \item type (motion, IR, air, water)
+  \item status (active/inactive)
+  \item value (reading)
+\end{itemize}
+
+\textbf{Actuator}
+\begin{itemize}
+  \item actuatorID
+  \item type (light, fan, valve)
+  \item status (ON/OFF)
+\end{itemize}
+
+\textbf{Controller}
+\begin{itemize}
+  \item controllerID
+  \item processingLogic
+  \item status
+\end{itemize}
+
+\textbf{IoT Server}
+\begin{itemize}
+  \item serverID
+  \item database
+  \item connectionStatus
+\end{itemize}
+
+\textbf{Dashboard}
+\begin{itemize}
+  \item dashboardID
+  \item displayData
+  \item controlOptions
+\end{itemize}
+
+\textbf{Admin}
+\begin{itemize}
+  \item adminID
+  \item username
+  \item password
+\end{itemize}
+
+\subsection{Relationships}
+\begin{itemize}
+  \item Mosque contains Zones
+  \item Zone contains Sensors
+  \item Zone contains Actuators
+  \item Sensors send data to Controller
+  \item Controller controls Actuators
+  \item Controller communicates with IoT Server
+  \item IoT Server updates Dashboard
+  \item Admin interacts with Dashboard
+  \item Dashboard sends commands to Controller
+\end{itemize}
+
+\subsection{UML Diagram}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.76\textwidth]{3.4-uml-diagram.png}
+  \caption{UML domain model diagram}
+\end{figure}

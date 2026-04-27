@@ -1,0 +1,197 @@
+\section{Step 9: Device and Component Integration}
+
+\subsection{Input Devices (Sensors)}
+
+\subsubsection{Motion Sensor (PIR)}
+
+A Passive Infrared (PIR) sensor detects changes in infrared radiation emitted by warm bodies.
+It is compact, low-cost, and energy-efficient.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.85\linewidth]{9.1.1-pir.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.85\linewidth]{9.1.1-grid-eye-illusion.png}
+\end{minipage}
+\caption{PIR motion sensor (left) and PIR sensing grid illustration (right)}
+\end{figure}
+
+\textbf{Sensor details:}
+\begin{itemize}
+    \item Detection range: up to 7 meters
+    \item Detection angle: 110 degrees
+    \item Operating voltage: DC 4.5V--12V
+    \item Output signal: 3.3V digital output
+    \item Delay time: 0.3 seconds to 5 minutes (adjustable)
+    \item Operating temperature: -15$^\circ$C to +70$^\circ$C
+    \item Sensitivity: adjustable
+\end{itemize}
+
+\textbf{Working principle summary:}
+
+\textbf{1. Infrared detection:} The PIR sensing element continuously detects infrared
+radiation from the environment. When a warm object crosses the field of view, the detected
+radiation level changes from one zone to another, producing a measurable differential signal.
+This transition is the key trigger used by the sensor to recognize motion.
+
+\textbf{2. Sensor structure:} Uses dual sensing zones and lens focusing.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.85\linewidth]{9.1.1-infrared-detection.png}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.85\linewidth]{9.1.1-sensor-structure.png}
+\end{minipage}
+\caption{Infrared detection concept (left) and PIR sensor structure (right)}
+\end{figure}
+
+\textbf{3. Idle state:} Balanced sensing zones keep the output stable.
+
+\textbf{4. Motion detection:} As a person moves across the sensing area, one PIR segment
+receives higher infrared energy than the other. The sensor circuit amplifies this difference
+and interprets it as movement.
+
+\textbf{5. Output generation:} After threshold comparison, the sensor produces a digital
+output pulse. This output is forwarded to the controller to trigger occupancy and automation
+logic in real time.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{9.1.1-motion-detection.jpg}
+\caption{Motion detection behavior}
+\end{figure}
+
+PIR should be installed away from Wi-Fi antennas to reduce electromagnetic interference risk.
+
+% -------------------------------------------------------
+\subsubsection{Air Quality Sensor (IAQ)}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{9.1.2-air-quality-sensor.jpg}
+\caption{Indoor air quality sensor module}
+\end{figure}
+
+IAQ sensing supports ventilation control by monitoring gases and climate parameters.
+
+\textbf{Key IAQ factors:}
+\begin{itemize}
+    \item Chemical pollutants (CO$_2$, VOCs, NO$_2$)
+    \item Biological contaminants (mold, bacteria, allergens)
+    \item Particulate matter (PM2.5, PM10)
+    \item Environmental conditions (humidity, temperature, pressure)
+\end{itemize}
+
+\textbf{Common pollutants and impact:}
+\begin{table}[H]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{2.2cm} L{4.8cm} L{5.6cm}}
+\toprule
+\textbf{Pollutant} & \textbf{Description} & \textbf{Health Effects} \\
+\midrule
+CO$_2$        & Ventilation indicator                  & Fatigue, headache, lower productivity \\
+VOCs          & Emitted by paints/cleaners/plastics    & Irritation, dizziness, long-term risk \\
+PM2.5/PM10    & Fine dust and smoke particles          & Respiratory and cardiovascular burden \\
+CO            & Incomplete combustion product          & Severe toxicity at high concentration \\
+Formaldehyde  & Emitted by furniture/insulation        & Carcinogenic, irritation \\
+NO$_2$/O$_3$  & Combustion and outdoor sources         & Respiratory distress \\
+Humidity      & Moisture level                         & Mold growth, discomfort \\
+Temperature   & Thermal condition                      & Fatigue, reduced comfort \\
+\bottomrule
+\end{tabular*}
+\caption{IAQ factors and effects}
+\end{table}
+
+IAQ sensors require periodic calibration (typically every 6--12 months).
+
+% -------------------------------------------------------
+\subsubsection{Water Flow Sensor}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{9.1.3-water-flow-sensor.jpg}
+\caption{Water flow sensor}
+\end{figure}
+
+Water flow sensors measure instantaneous flow rate and cumulative usage, producing pulse
+output suitable for MCU integration. This allows the controller to detect abnormal continuous
+flow and apply water-saving actions when needed.
+
+\textbf{Working principle summary:}
+\begin{itemize}
+    \item Water drives an internal rotor.
+    \item Hall-effect sensing converts rotor speed to pulse signal.
+    \item Pulse frequency maps to flow rate.
+    \item Controller computes usage and triggers control logic.
+\end{itemize}
+
+% -------------------------------------------------------
+\subsection{Output Devices (Actuators)}
+
+\subsubsection{Smart Lights}
+Activated by combined prayer-window and occupancy conditions to balance comfort and energy savings.
+
+\subsubsection{Fans (AC Simulation)}
+Activated by IAQ conditions and occupancy demand; reduced when conditions normalize.
+
+\subsubsection{Solenoid Valve}
+Automatically closes water supply during abnormal flow patterns and can reopen via logic/manual reset.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.42\textwidth]{9.2.3-parts-of-solenoid-valve.jpg}
+\caption{Solenoid valve components}
+\end{figure}
+
+% -------------------------------------------------------
+\subsection{Processing Unit}
+
+The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and peripheral interfaces
+(I2C/UART/SPI/PWM), low power operation, and capability to run concurrent IoT control tasks.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.45\textwidth]{9.3-esp32.jpg}
+\caption{ESP32 processing unit}
+\end{figure}
+
+% -------------------------------------------------------
+\subsection{Communication Layer}
+\begin{itemize}
+    \item Local Wi-Fi AP for ESP32-to-server connectivity
+    \item IEEE 802.11 with WPA2-PSK security
+    \item Star topology
+    \item IoT network segmentation from general user devices
+    \item CPT representation: LAN linking MCU units to Registration Server
+\end{itemize}
+
+% -------------------------------------------------------
+\subsection{Integration Workflow}
+\begin{enumerate}
+    \item Sensing stage
+    \item Data transmission stage
+    \item Processing and decision stage
+    \item Actuation stage
+    \item Monitoring and feedback stage
+\end{enumerate}
+
+This workflow is consistent with Step 2 process design.
+
+% -------------------------------------------------------
+\subsection{System Diagram}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.84\textwidth]{9.6-system-diagram.png}
+\caption{System integration diagram}
+\end{figure}

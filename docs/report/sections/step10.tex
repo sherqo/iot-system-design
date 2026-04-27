@@ -1,0 +1,52 @@
+\section{Step 10: Application Development}
+
+\subsection{Application Overview and Platform}
+The application layer is a web-based dashboard acting as the primary interface between users and the IoT system. It centralizes real-time data visualization and device control in one operational view.
+
+\subsection{User Role}
+The system is designed for an admin role with full access to monitoring, alert handling, and override control to maintain system performance and safety.
+
+\subsection{Core Features}
+\begin{itemize}
+  \item Real-time monitoring (CO$_2$, temperature, humidity, occupancy)
+  \item Live status display of connected devices
+  \item Alert and notification handling for abnormal conditions
+  \item Actuator control (e.g., ventilation)
+  \item Historical data overview and basic trend visualization
+\end{itemize}
+
+\textbf{Application-system interaction:}
+\begin{itemize}
+  \item Retrieves real-time sensor data via backend APIs
+  \item Displays continuously updated system status
+  \item Sends control commands to actuators
+  \item Supports bidirectional monitoring/control communication
+  \item Maintains low-latency updates for operational responsiveness
+\end{itemize}
+
+\subsection{User Interface Design}
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{10.4-ui-design-1.png}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{10.4-ui-design-2.png}
+  \end{minipage}
+  \caption{Dashboard UI design - views 1 and 2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{10.4-ui-design-3.png}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{10.4-ui-design-4.png}
+  \end{minipage}
+  \caption{Dashboard UI design - views 3 and 4}
+\end{figure}

@@ -1,0 +1,100 @@
+\section{Step 8: Operational View Specification}
+
+\subsection{System Performance}
+
+\subsubsection{Response Time}
+The system operates in near real-time. Motion events trigger lighting and ventilation in approximately 1--2 seconds. In the wudu area, abnormal continuous flow triggers valve closure in approximately 2--3 seconds to reduce waste while limiting false positives.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{8.1.1.jpg}
+  \caption{Operational response-time trend}
+\end{figure}
+
+Air quality is monitored periodically and ventilation is adjusted when thresholds are exceeded. Temperature and humidity are also tracked to maintain comfort. The system handles simultaneous sensor inputs during peak times without noticeable degradation.
+
+\subsubsection{Data Update Frequency}
+\begin{itemize}
+  \item Occupancy: real-time update per entry/exit event.
+  \item Air quality: every 1 minute (balanced responsiveness and stability).
+  \item Water usage: continuously monitored in real time.
+\end{itemize}
+
+\subsubsection{Throughput}
+The system processes motion, water-flow, and air-quality streams in parallel, enabling simultaneous monitoring and decision-making during high-demand periods such as Friday prayer and Ramadan.
+
+\subsubsection{Efficiency}
+Lights and fans operate only when needed based on occupancy and schedule, and water control logic closes supply during leak-like behavior to reduce waste.
+
+\subsection{System Reliability}
+
+\subsubsection{Sensor Failure Handling}
+Fallback mechanisms keep operation safe during sensor faults.
+\begin{itemize}
+  \item Motion sensor failure: admin manual override controls lighting and fans.
+  \item Flow sensor failure: manual valve override + admin alert.
+  \item Air-quality sensor failure: ventilation follows safe default schedule.
+\end{itemize}
+
+\subsubsection{Network Failure}
+Core control continues locally if network/server connectivity is lost. Dashboard synchronization resumes automatically after restoration.
+
+\subsubsection{Power Failure}
+On recovery, the system returns to predefined safe startup states. Critical monitoring may be maintained through optional backup power.
+
+\subsection{System Scalability}
+
+\subsubsection{More Sensors}
+Additional occupancy, flow, and IAQ sensors can be integrated with the same controller logic.
+
+\subsubsection{Spreading to Other Mosques}
+The architecture can be replicated across multiple mosques, each with local operation and data separation.
+
+\subsubsection{Modular Architecture}
+Occupancy, water, air-quality, and dashboard modules can evolve independently, reducing maintenance risk and easing upgrades.
+
+\subsection{System Security}
+
+\subsubsection{Network Protection}
+\begin{itemize}
+  \item Segmented network for IoT devices
+  \item Restricted dashboard/control access
+  \item Firewall/gateway policy enforcement
+  \item Monitoring for suspicious behavior and repeated login attempts
+\end{itemize}
+
+\subsubsection{Access Control}
+Role-based permissions, authenticated overrides, and action logging are applied for accountability.
+
+Authentication flow:
+\begin{center}
+User $\rightarrow$ Login Page $\rightarrow$ Authentication Check $\rightarrow$ Access Granted $\rightarrow$ Dashboard
+\end{center}
+
+\subsubsection{Data Encryption}
+WPA2-PSK secures Wi-Fi communication between sensors, controllers, and dashboard. AES encryption protects traffic confidentiality and integrity.
+
+\subsubsection{Device Filtering}
+MAC allow-list filtering blocks unknown devices from joining. It is used together with WPA2-PSK and access control (not standalone security).
+
+\subsubsection{Privacy Protection}
+The system stores aggregate occupancy counts only and avoids personal identification. PIR-based sensing does not capture images.
+
+\subsection{Energy Efficiency}
+
+\subsubsection{Prayer Time Control}
+Prayer-time-aware control avoids continuous operation outside worship periods.
+
+\subsubsection{Occupancy-Based Activation}
+Devices activate only when people are present, reducing unnecessary consumption.
+
+\subsubsection{Automatic Shutdown}
+Lights and fans turn off after inactivity timeout, minimizing waste.
+
+\subsection{Safety Considerations}
+
+\subsubsection{Device Overheating}
+Thermal-safe operation requires ventilation, safe power design, and alerts/shutdown under abnormal heating.
+
+\subsubsection{Water Valve Reliability}
+Valve closure is validated over a short window to avoid false shutdown during normal use interruptions.

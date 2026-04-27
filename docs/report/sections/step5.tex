@@ -1,0 +1,100 @@
+\section{Step 5: Service Specifications}
+
+\subsection{Overview}
+The Smart Mosque Management System exposes seven core services. Each service is a defined unit of functionality with clear inputs, outputs, triggers, and interfaces. Services are implemented on the ESP32 controller and exposed to the dashboard via the local network.
+
+\subsection{Service List}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{1.8cm} L{5.2cm} L{3.3cm} L{4.2cm}}
+\toprule
+\textbf{Service ID} & \textbf{Service Name} & \textbf{Type} & \textbf{Trigger} \\
+\midrule
+SVC-01 & Prayer Time Sync & Data Acquisition & Scheduled -- once daily \\
+SVC-02 & Occupancy Tracking & Sensing & Continuous (event-driven) \\
+SVC-03 & Energy Control & Actuation & Event-driven \\
+SVC-04 & Water Monitoring \& Control & Sensing + Actuation & Continuous \\
+SVC-05 & Air Quality Monitoring & Sensing + Actuation & Periodic (every 60s) \\
+SVC-06 & Alert \& Notification & Notification & Threshold-triggered \\
+SVC-07 & Dashboard Monitoring \& Override & Application + Control & On-demand \\
+\bottomrule
+\end{tabular*}
+\caption{Core service list}
+\end{table}
+
+\subsection{Service Descriptions}
+
+\subsubsection*{SVC-01 -- Prayer Time Sync Service}
+\begin{itemize}
+  \item Purpose: Retrieves accurate daily prayer times to anchor energy automation logic.
+  \item Interface: Daily HTTP GET request to prayer-time API.
+  \item Output: Five daily timestamps (Fajr, Dhuhr, Asr, Maghrib, Isha) stored locally.
+  \item Fallback: Use previous day's cached schedule when API is unreachable.
+\end{itemize}
+
+\subsubsection*{SVC-02 -- Occupancy Tracking Service}
+\begin{itemize}
+  \item Purpose: Counts people in prayer hall in real time.
+  \item Interface: PIR events $\rightarrow$ ESP32 counter logic $\rightarrow$ dashboard polling every 30s.
+  \item Operations: \texttt{increment\_count()}, \texttt{decrement\_count()}, \texttt{get\_current\_count()}.
+  \item Output fields: occupancy\_count, capacity\_percent, status (NORMAL / HIGH / FULL).
+\end{itemize}
+
+\subsubsection*{SVC-03 -- Energy Control Service}
+\begin{itemize}
+  \item Purpose: Automates lights and fans/AC per zone based on prayer windows and occupancy.
+  \item Interface: ESP32 reads SVC-01 and SVC-02 state, then controls relay GPIOs.
+  \item Decision logic:
+\begin{verbatim}
+IF in_prayer_window AND occupancy > 0:
+  activate(lights, fans)
+ELSE:
+  deactivate(lights, fans)
+IF override_active:
+  apply manual override
+\end{verbatim}
+  \item Air quality from SVC-05 can independently force fan activation.
+\end{itemize}
+
+\subsubsection*{SVC-04 -- Water Monitoring and Control Service}
+\begin{itemize}
+  \item Purpose: Detect leaks/taps-left-open and control solenoid valve.
+  \item Interface: Flow sensor pulse output $\rightarrow$ ESP32 pulse counter $\rightarrow$ valve GPIO.
+  \item Key operations: \texttt{monitor\_flow()}, \texttt{detect\_anomaly()}, \texttt{close\_valve()}, \texttt{open\_valve()}.
+  \item Failsafe: If flow sensor goes offline, valve defaults to closed and admin is notified.
+\end{itemize}
+
+\subsubsection*{SVC-05 -- Air Quality Monitoring Service}
+\begin{itemize}
+  \item Purpose: Monitor CO$_2$, temperature, humidity and auto-activate ventilation.
+  \item Polling interval: Every 60 seconds.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{3.3cm} L{3.7cm} L{3.1cm} L{3.5cm}}
+\toprule
+\textbf{Parameter} & \textbf{Normal} & \textbf{Action Threshold} & \textbf{Action} \\
+\midrule
+CO$_2$ & $<$ 1000 ppm & $>$ 1000 ppm & Activate fans \\
+Temperature & 18--26 $^\circ$C & $>$ 28 $^\circ$C & Activate fans \\
+Humidity & 30--60\% & $>$ 65\% & Activate fans \\
+\bottomrule
+\end{tabular*}
+\caption{Air quality thresholds}
+\end{table}
+
+\subsubsection*{SVC-06 -- Alert and Notification Service}
+\begin{itemize}
+  \item Purpose: Detect threshold breaches and push real-time alerts.
+  \item Interface: Internal event bus, dashboard polls alert queue.
+  \item Deduplication: Same alert type per device/zone can fire once per 5 minutes.
+\end{itemize}
+
+\subsubsection*{SVC-07 -- Dashboard Monitoring and Manual Override Service}
+\begin{itemize}
+  \item Purpose: Unified monitoring and manual override control.
+  \item Interface: Dashboard polls ESP32 REST endpoints every 30 seconds; override uses HTTP POST.
+  \item Override operations: \texttt{override\_on()}, \texttt{override\_off()}, \texttt{clear\_override()}.
+  \item Safety: Override expires automatically after configured duration.
+\end{itemize}

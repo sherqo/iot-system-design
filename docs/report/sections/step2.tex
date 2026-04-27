@@ -1,0 +1,87 @@
+\section{Step 2: Process Specification}
+
+\subsection{Overview}
+The Smart Mosque Management System operates through coordinated processes that continuously collect sensor data, analyze conditions, and trigger automated actions. These processes ensure efficient energy usage, water conservation, and safe occupancy management. The system follows a Sense $\rightarrow$ Process $\rightarrow$ Act $\rightarrow$ Monitor pipeline.
+
+\subsection{Core System Processes}
+
+\subsubsection{Occupancy Detection Process}
+\textbf{Objective:} Monitor the number of people inside the mosque.
+
+\textbf{Workflow:}
+\begin{enumerate}
+  \item IR sensors at entrances detect entry/exit events.
+  \item System increments/decrements occupancy count.
+  \item Data is sent to the central controller.
+  \item If occupancy exceeds threshold, trigger alert on dashboard.
+  \item Occupancy data is used by other processes (energy control).
+\end{enumerate}
+
+\subsubsection{Energy Management Process}
+\textbf{Objective:} Optimize electricity usage based on prayer times and occupancy.
+
+\textbf{Workflow:}
+\begin{enumerate}
+  \item System retrieves prayer times from API.
+  \item Motion sensors detect presence in prayer hall.
+  \item Decision logic:
+  \begin{itemize}
+    \item IF (Within Prayer Window OR Motion Detected), then turn ON lights and AC/fans.
+    \item ELSE, turn OFF devices.
+  \end{itemize}
+  \item Optionally adjust intensity based on crowd density.
+\end{enumerate}
+
+\subsubsection{Wudu Water Monitoring Process}
+\textbf{Objective:} Prevent water waste in ablution areas.
+
+\textbf{Workflow:}
+\begin{enumerate}
+  \item Flow sensors measure water usage.
+  \item System checks for continuous flow without interruption.
+  \item If abnormal usage is detected:
+  \begin{itemize}
+    \item Assume tap left open or leak.
+    \item Activate water valve to shut water.
+  \end{itemize}
+  \item Log water consumption data.
+\end{enumerate}
+
+\subsubsection{Air Quality Monitoring Process}
+\textbf{Objective:} Maintain comfortable and safe air conditions.
+
+\textbf{Workflow:}
+\begin{enumerate}
+  \item Sensors read CO$_2$, humidity, and temperature.
+  \item Compare readings with predefined thresholds.
+  \item If air quality is poor, activate ventilation.
+  \item Update dashboard with real-time values.
+\end{enumerate}
+
+\subsubsection{Central Monitoring and Control Process}
+\textbf{Objective:} Provide full system visibility and control.
+
+\textbf{Workflow:}
+\begin{enumerate}
+  \item Collect data from all subsystems.
+  \item Display occupancy, energy usage, water consumption, and air quality on web dashboard.
+  \item Allow admin override and manual ON/OFF operations.
+  \item Optionally store historical data.
+\end{enumerate}
+
+\subsection{Integrated System Flowchart}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{2.3-integrated-system-flowchart.png}
+  \caption{Integrated system flowchart}
+\end{figure}
+
+\subsection{Process Interaction Notes}
+\begin{itemize}
+  \item Occupancy data affects energy decisions.
+  \item Air quality can override energy logic (force ventilation ON).
+  \item Water system is independent but logged centrally.
+  \item All processes communicate via a central controller (MCU/SBC).
+\end{itemize}
+
+The system processes are designed as loosely coupled modules to ensure scalability, maintainability, and real-time responsiveness.

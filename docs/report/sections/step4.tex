@@ -1,0 +1,76 @@
+\section{Step 4: Information Model Specification}
+
+\subsection{Types of Data in System}
+
+\subsubsection{Sensor Data (Raw Data)}
+\textbf{Occupancy Data}
+\begin{itemize}
+  \item peopleCount (int)
+  \item entry/exit events
+\end{itemize}
+
+\textbf{Motion Data}
+\begin{itemize}
+  \item motionDetected (boolean)
+\end{itemize}
+
+\textbf{Air Quality Data}
+\begin{itemize}
+  \item CO$_2$Level (ppm)
+  \item temperature ($^\circ$C)
+  \item humidity (\%)
+\end{itemize}
+
+\textbf{Water Data}
+\begin{itemize}
+  \item flowRate (L/min)
+  \item usageDuration (seconds)
+\end{itemize}
+
+\subsubsection{Processed Data}
+\begin{itemize}
+  \item occupancyStatus (normal / full / overcrowded)
+  \item airQualityStatus (good / moderate / poor)
+  \item waterUsageStatus (normal / leak detected)
+  \item energyState (ON / OFF)
+\end{itemize}
+
+\subsubsection{System Data (Stored)}
+\begin{itemize}
+  \item historical water usage
+  \item energy consumption logs
+  \item occupancy logs
+  \item alerts history
+\end{itemize}
+
+\subsubsection{Control Data (from Admin)}
+\begin{itemize}
+  \item manual override commands
+  \item turn ON/OFF devices
+\end{itemize}
+
+\subsection{Data Flow}
+
+\subsubsection{Main Flow}
+Sensors $\rightarrow$ Controller $\rightarrow$ IoT Server $\rightarrow$ Dashboard
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{4.2.1-main-flow.png}
+  \caption{Main data flow}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{4.2.1-main-flow-legend.png}
+  \caption{Main flow legend}
+\end{figure}
+
+\subsubsection{Control Flow}
+Admin $\rightarrow$ Dashboard $\rightarrow$ Controller $\rightarrow$ Actuators
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{4.2.2-control-flow.png}
+  \caption{Control flow}
+\end{figure}

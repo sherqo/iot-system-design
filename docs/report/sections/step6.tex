@@ -1,0 +1,102 @@
+\section{Step 6: IoT Level Specification}
+The Smart Mosque Management System is structured across five IoT levels, following a standard layered architecture. Each layer has a defined responsibility and communicates with adjacent layers.
+
+\subsection{Level 1 -- Perception Layer}
+\textbf{Role:} Direct interaction with the physical environment.
+
+\textbf{Sensors}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.1cm} L{4.1cm} L{5.5cm}}
+\toprule
+\textbf{Device} & \textbf{Placement} & \textbf{Measurement} \\
+\midrule
+PIR Motion Sensor & Main entrance, exit, hall zone & Entry/exit events, zone presence \\
+Water Flow Sensor & Wudu tap inlet pipe & Flow rate (L/min), pulse output \\
+PIR Motion Sensor (Wudu) & Ablution area & Presence near taps \\
+IAQ Sensor & Prayer hall near ventilation & CO$_2$, temperature, humidity \\
+\bottomrule
+\end{tabular*}
+\caption{Perception layer sensors}
+\end{table}
+
+\textbf{Actuators}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.1cm} L{4.1cm} L{5.5cm}}
+\toprule
+\textbf{Device} & \textbf{Placement} & \textbf{Controlled Action} \\
+\midrule
+Smart Relay (Lights) & Per hall zone & ON/OFF lighting \\
+Smart Relay (Fans/AC) & Per hall zone, wudu area & ON/OFF ventilation \\
+Solenoid Valve & Wudu tap supply line & Open/close water flow \\
+\bottomrule
+\end{tabular*}
+\caption{Perception layer actuators}
+\end{table}
+
+\subsection{Level 2 -- Network Layer}
+\textbf{Role:} Local connectivity and data transport.
+\begin{itemize}
+  \item Hardware: Local Wi-Fi access point for ESP32 nodes and local server
+  \item Protocol: IEEE 802.11 Wi-Fi with WPA2-PSK
+  \item Topology: Star
+  \item Segmentation: IoT network isolated from guest/user devices
+\end{itemize}
+
+Key decision: Core control loops are local and do not depend on internet connectivity.
+
+\subsection{Level 3 -- Edge Processing Layer}
+\textbf{Role:} Real-time control and decision-making.
+
+\textbf{Hardware:} ESP32 microcontrollers per functional zone.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.6cm} L{8.8cm}}
+\toprule
+\textbf{Function} & \textbf{Description} \\
+\midrule
+Sensor polling & Reads PIR, IAQ, and flow sensor inputs at configured intervals \\
+Occupancy counting & Increments/decrements people count based on entry/exit events \\
+Prayer window evaluation & Compares current time against cached prayer schedule \\
+Energy control logic & Combines occupancy and prayer window state for relays \\
+Water control logic & Detects anomalies and closes valve when required \\
+Air quality control & Polls IAQ every 60s and activates fans on threshold breach \\
+Alert generation & Publishes threshold breach events to data layer \\
+\bottomrule
+\end{tabular*}
+\caption{Edge processing responsibilities}
+\end{table}
+
+Failsafe: If server connectivity is lost, edge controllers continue autonomous operation.
+
+\subsection{Level 4 -- Data Accumulation Layer}
+\textbf{Role:} Aggregate processed data, store logs, and serve dashboard queries.
+\begin{itemize}
+  \item CPT simulation backend: Registration Server
+  \item Real deployment option: local server (e.g., lightweight REST + database)
+  \item Retention: rolling 30-day window with optional archival
+\end{itemize}
+
+\subsection{Level 5 -- Application Layer}
+\textbf{Role:} Human-facing dashboard for monitoring and control.
+\begin{itemize}
+  \item Web dashboard on local network
+  \item Single admin role
+  \item Functions: live monitoring, alert display, schedule view, manual override
+\end{itemize}
+
+\subsection{Level Interaction Summary}
+\begin{verbatim}
+[Sensors / Actuators] (Level 1)
+      | GPIO / I2C / UART
+      v
+[ESP32 Edge Controller] (Level 2+3) <--- [Prayer Time API]
+      | Wi-Fi (WPA2-PSK)
+      v
+[Local Server / Registration Server] (Level 4)
+      | Local LAN
+      v
+[Admin Web Dashboard] (Level 5)
+\end{verbatim}

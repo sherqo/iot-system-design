@@ -1,0 +1,101 @@
+\section{Step 7: Functional View Specification}
+
+\subsection{Overview}
+The functional view breaks the system into independent blocks by behavior. Each block has defined inputs, outputs, and responsibilities, with clear data flows for modularity and maintainability.
+
+\subsection{Functional Block Descriptions}
+
+\subsubsection*{Block 1 -- Sensing Block}
+Collects raw data from the mosque environment.
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.2cm} L{2.8cm} L{2.6cm} L{4cm}}
+\toprule
+\textbf{Sub-function} & \textbf{Sensor} & \textbf{Interval} & \textbf{Output} \\
+\midrule
+Entry/exit detection & PIR (entrance) & Event-based & Increment/decrement event \\
+Zone presence detection & PIR (hall zones) & Every 5s & Presence flag per zone \\
+Water flow measurement & Flow sensor & Every 1s & Flow rate (L/min) \\
+Tap-area presence & PIR (wudu) & Event-based & Presence flag \\
+Air quality reading & IAQ sensor & Every 60s & CO$_2$, temperature, humidity \\
+\bottomrule
+\end{tabular*}
+\caption{Sensing block functions}
+\end{table}
+
+Failure behavior: Offline sensors are flagged to processing, then safe defaults are applied.
+
+\subsubsection*{Block 2 -- Processing Block}
+Decision core running on ESP32.
+\begin{itemize}
+  \item Occupancy counter with floor at zero.
+  \item Prayer window evaluator from cached schedule.
+  \item Energy decision engine for lights/fans.
+  \item Air quality decision engine independent from prayer window.
+  \item Water anomaly detection and valve control.
+  \item State manager as single source of truth.
+\end{itemize}
+
+\subsubsection*{Block 3 -- Actuation Block}
+Executes commands on relays and valve, with confirmation and retries.
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.2cm} L{3.6cm} L{4.8cm}}
+\toprule
+\textbf{Device} & \textbf{Command Type} & \textbf{Confirmation} \\
+\midrule
+Smart relay (lights) & ON/OFF per zone & GPIO acknowledgment \\
+Smart relay (fans/AC) & ON/OFF per zone & GPIO acknowledgment \\
+Solenoid valve & OPEN/CLOSE per tap & GPIO acknowledgment \\
+\bottomrule
+\end{tabular*}
+\caption{Actuation block control and feedback}
+\end{table}
+
+\subsubsection*{Block 4 -- Data and Storage Block}
+Persists time-series data for dashboard and analytics.
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.3cm} L{3.3cm} L{4.6cm}}
+\toprule
+\textbf{Data Type} & \textbf{Logging Frequency} & \textbf{Retention} \\
+\midrule
+Occupancy count & Every 30s & 30-day rolling \\
+Water usage per tap & Per session + hourly total & 30-day rolling \\
+Device state changes & On every transition & 30-day rolling \\
+Air quality readings & Every 60s & 30-day rolling \\
+Alert records & On every alert event & 30-day rolling \\
+\bottomrule
+\end{tabular*}
+\caption{Stored operational data}
+\end{table}
+
+\subsubsection*{Block 5 -- Alert Block}
+Evaluates alert conditions, deduplicates repeated alerts, and pushes active alerts to dashboard.
+
+\subsubsection*{Block 6 -- Dashboard Block}
+Provides monitoring panels and manual override controls for admin users.
+
+\subsubsection*{Block 7 -- External API Block}
+Fetches daily prayer times and caches them for resilience.
+
+\subsection{Inter-Block Data Flow Summary}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4.2cm} L{4.2cm} L{4.8cm}}
+\toprule
+\textbf{From} & \textbf{To} & \textbf{Data} \\
+\midrule
+Sensing Block & Processing Block & Raw events, flow rates, IAQ readings \\
+External API Block & Processing Block & Daily prayer schedule \\
+Processing Block & Actuation Block & Device commands \\
+Actuation Block & Processing Block & Confirmations, fault flags \\
+Processing Block & Data and Storage Block & State snapshots, logs, transitions \\
+Processing Block & Alert Block & Threshold breach events \\
+Data and Storage Block & Dashboard Block & Current and historical readings \\
+Alert Block & Dashboard Block & Active alert queue \\
+Dashboard Block & Processing Block & Manual override commands \\
+\bottomrule
+\end{tabular*}
+\caption{Functional block data flows}
+\end{table}
