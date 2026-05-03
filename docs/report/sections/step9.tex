@@ -115,6 +115,28 @@ Temperature   & Thermal condition                      & Fatigue, reduced comfor
 
 IAQ sensors require periodic calibration (typically every 6--12 months).
 
+A good quality sensor offers accurate reading, but like any sensor, IAQ comes with some challenges like:
+\begin{itemize}
+  \item Sensor drift and degradation over time
+  \item Cross-sensitivity (e.g., VOC sensors reacting to humidity)
+  \item Need for periodic calibration
+  \item Data overload in multi-sensor networks
+  \item False readings due to temperature/humidity interference
+\end{itemize}
+
+It is important to calibrate it every 6-12 months to ensure good quality reading.
+
+Working principles of IAQ sensors:
+\begin{itemize}
+  \item Sensing: Each sensor type uses a specific physical or chemical method to detect its target pollutant.
+  \item Signal Processing: Detected signals are converted into electrical output (analog or digital).
+  \item Calibration: Sensors are calibrated for accuracy, often using reference gases.
+  \item Data Output: The processed data is sent via I2C, UART, Modbus, or wireless protocols (Wi-Fi, Zigbee, LoRa).
+  \item Display and Analysis: Results are visualized on display or uploaded to the cloud for remote monitoring.
+\end{itemize}
+
+Commonly, the output of an IAQ sensor can range from 0-50 (good), 51-100 (moderate), 101-150 (unhealthy for sensitive groups), and 151-200 (unhealthy).
+
 % -------------------------------------------------------
 \subsubsection{Water Flow Sensor}
 
@@ -124,9 +146,9 @@ IAQ sensors require periodic calibration (typically every 6--12 months).
 \caption{Water flow sensor}
 \end{figure}
 
-Water flow sensors measure instantaneous flow rate and cumulative usage, producing pulse
-output suitable for MCU integration. This allows the controller to detect abnormal continuous
-flow and apply water-saving actions when needed.
+Water flow sensors measure instantaneous flow rate and cumulative usage, producing pulse output suitable for MCU integration. This allows the controller to detect abnormal continuous flow and apply water-saving actions when needed.
+
+The sensor is usually installed at the water inlet or at the opening of the pipe. The required supply voltage is usually 5V to 18V DC. Water flow sensors can be used with hot, cold, warm, clean, or dirty water, depending on the sensor type. In our case, it should be enough for clean water of all temperatures. These sensors can be easily connected to microcontrollers such as Arduino.
 
 \textbf{Working principle summary:}
 \begin{itemize}
@@ -140,13 +162,49 @@ flow and apply water-saving actions when needed.
 \subsection{Output Devices (Actuators)}
 
 \subsubsection{Smart Lights}
-Activated by combined prayer-window and occupancy conditions to balance comfort and energy savings.
+Smart lights are used as an output device to provide illumination in the mosque when needed. Their main role is to support comfort and visibility during prayer times while reducing unnecessary energy use during periods of low occupancy.
+
+Working principle:
+\begin{itemize}
+  \item The system checks whether the prayer time is active.
+  \item It also checks whether a PIR sensor has detected people in a specific area of the mosque.
+  \item If both conditions are true, the lights turn on automatically.
+  \item If no people are detected, the lights remain off even during the prayer window.
+  \item After the prayer time ends, the lights turn off automatically (if no people detected).
+  \item This ensures that lighting is provided only when the prayer hall is in use.
+\end{itemize}
+
+How it functions in the project: When the PIR sensor detects movement or presence in a section of the mosque, the system interprets this as occupancy in that area. If this happens during the prayer period, the smart lights are activated to provide adequate lighting for worshippers. If the area becomes empty, the lights are switched off after a short delay to avoid unnecessary power consumption. This makes the lighting system both responsive and energy efficient, since it operates only when people are present and prayer time requires it.
 
 \subsubsection{Fans (AC Simulation)}
-Activated by IAQ conditions and occupancy demand; reduced when conditions normalize.
+Fans and AC units act as output devices that maintain a comfortable environment in the mosque by responding to indoor air quality readings such as temperature, humidity, CO2, and other pollution indicators. Their role is to improve ventilation when the prayer hall becomes crowded or the air becomes warm or stale, and to reduce operation when conditions return to normal.
+
+Working principle:
+\begin{itemize}
+  \item The IAQ sensor continuously measures temperature, humidity, and CO2 levels inside the mosque.
+  \item If the readings show that the air is getting warm, humid, or poorly ventilated, the controller sends a signal to activate the fans or AC.
+  \item If the air quality stays within acceptable limits, the fans and AC remain off or operate at a lower level.
+  \item This allows the ventilation system to respond automatically to real environmental conditions rather than running all the time.
+  \item After the crowd decreases or the temperature and air quality improve, the system reduces ventilation to save energy.
+\end{itemize}
+
+How it functions in the project: When the mosque becomes crowded, the sensor readings increase and indicate a higher need for ventilation. The controller then activates the fans or AC to improve air circulation and maintain comfort for worshippers. If the temperature, humidity, and CO2 levels return to acceptable values, the system stops or reduces the output again. This makes the ventilation process both responsive and energy efficient, since it is based on actual indoor conditions rather than fixed manual operations.
 
 \subsubsection{Solenoid Valve}
 Automatically closes water supply during abnormal flow patterns and can reopen via logic/manual reset.
+
+The solenoid valve acts as an output device that controls the water supply in the ablution area based on the readings from the water flow sensor. Its role is to stop water waste when abnormal or continuous flow is detected, such as when a tap is left open or a leak occurs.
+
+Working principle:
+\begin{itemize}
+  \item The water flow sensor continuously measures the amount of water moving through the pipe.
+  \item If the system detects abnormal flow or flow that continues longer than expected, the controller interprets this as possible waste.
+  \item The controller then sends an electrical signal to the solenoid valve.
+  \item The solenoid valve closes and cuts off the water supply.
+  \item When normal conditions return, the valve can be opened again manually or by the control logic.
+\end{itemize}
+
+How it functions in the project: When the sensor detects that water is flowing longer than it should, the system assumes that the tap may have been left open or that a leak is present. The controller then activates the solenoid valve to stop the flow and prevent waste. This helps the mosque conserve water while still allowing normal use when water demand is expected.
 
 \begin{figure}[H]
 \centering
@@ -157,8 +215,16 @@ Automatically closes water supply during abnormal flow patterns and can reopen v
 % -------------------------------------------------------
 \subsection{Processing Unit}
 
-The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and peripheral interfaces
-(I2C/UART/SPI/PWM), low power operation, and capability to run concurrent IoT control tasks.
+The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and peripheral interfaces (I2C/UART/SPI/PWM), low power operation, and capability to run concurrent IoT control tasks.
+
+The ideal processing unit for this project is the ESP32 microcontroller, as it is a powerful, low-cost, low-power System on a Chip (SoC), and offers enough processing capability to handle multiple sensors, control actuators, and support real-time IoT automation. It is also suitable for this system because it includes built-in Wi-Fi and Bluetooth, has multiple GPIO pins, and supports low-power operation, which makes it practical for a smart mosque environment.
+\begin{itemize}
+  \item Wi-Fi connectivity: The ESP32 has integrated Wi-Fi, so it can support network-based automation and monitoring without needing an extra communication module.
+  \item Suitable for multiple inputs and outputs: It provides many GPIO pins and supports interfaces such as I2C, UART, SPI, and PWM, which makes it easy to connect PIR sensors, flow sensors, IAQ sensors, relays, and valves.
+  \item Low power and efficient: The ESP32 includes power-saving modes, which is useful for a system that may run continuously throughout the day.
+  \item Good for embedded IoT control: It is designed for IoT applications and can act as a standalone controller for sensor reading and device actuation.
+  \item Practical for project scope: Compared with simpler boards, the ESP32 is better suited to a connected system that must manage occupancy, ventilation, lighting, and water control at the same time.
+\end{itemize}
 
 \begin{figure}[H]
 \centering
@@ -170,21 +236,34 @@ The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and periph
 \newpage
 \subsection{Communication Layer}
 \begin{itemize}
-    \item Local Wi-Fi AP for ESP32-to-server connectivity
-    \item IEEE 802.11 with WPA2-PSK security
-    \item Star topology
-    \item IoT network segmentation from general user devices
-    \item CPT representation: LAN linking MCU units to Registration Server
+  \item Local Wi-Fi AP for ESP32-to-server connectivity
+  \item IEEE 802.11 with WPA2-PSK security
+  \item Star topology
+  \item IoT network segmentation from general user devices
+  \item CPT representation: LAN linking MCU units to Registration Server
+\end{itemize}
+
+The communication layer is responsible for enabling reliable, real-time data exchange between distributed sensor nodes, the central processing unit, and the monitoring interface. It ensures that both sensing data and control commands are transmitted efficiently while maintaining system security and stability.
+
+The system communication is implemented as follows:
+\begin{itemize}
+  \item Network Setup: A local Wi-Fi access point connects ESP32 nodes to the central server, providing reliable coverage within the mosque.
+  \item Protocol and Security: Communication is based on IEEE 802.11 Wi-Fi and secured using WPA2-PSK encryption to restrict access and protect transmitted data.
+  \item Topology: A star topology is used, where all nodes communicate directly with the central access point, simplifying management and system expansion.
+  \item Network Segmentation: IoT devices are placed on a separate network segment from general user devices, reducing interference and minimizing unauthorized access risks.
+  \item Real-World Implementation: In practical deployments, technologies such as Zigbee or MQTT over Wi-Fi with a local broker may be used for improved scalability and efficiency.
+  \item Simulation Representation: In Cisco Packet Tracer, this is modeled as a local LAN connecting MCU units to the Registration Server, which acts as the central communication hub.
 \end{itemize}
 
 % -------------------------------------------------------
 \subsection{Integration Workflow}
+The integration workflow follows the same process defined in the system process specification (Step 2), ensuring consistent interaction between sensing, processing, and actuation components.
 \begin{enumerate}
-    \item Sensing stage
-    \item Data transmission stage
-    \item Processing and decision stage
-    \item Actuation stage
-    \item Monitoring and feedback stage
+  \item Sensing stage: Sensors continuously monitor system conditions, including occupancy through PIR sensors, environmental parameters (CO2, temperature, and humidity), and water usage through flow sensors in the wudu area.
+  \item Data transmission stage: Sensor readings are transmitted via the local Wi-Fi network to the central processing unit for analysis.
+  \item Processing and decision stage: The processing unit evaluates incoming data based on predefined conditions such as prayer schedules, occupancy detection, and environmental thresholds. Decisions are made regarding whether system actions are required.
+  \item Actuation stage: Based on the processed data, control signals are sent to actuators. Lighting and ventilation systems are activated when occupancy is detected during prayer times, ventilation is adjusted in response to environmental conditions, and water flow is controlled to prevent wastage.
+  \item Monitoring and feedback stage: System status and sensor data are updated on the central dashboard, allowing the administrator to monitor system performance and apply manual overrides when necessary.
 \end{enumerate}
 
 This workflow is consistent with Step 2 process design.

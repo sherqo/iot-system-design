@@ -24,8 +24,12 @@ Air quality is monitored periodically and ventilation is adjusted when threshold
 \subsubsection{Throughput}
 The system processes motion, water-flow, and air-quality streams in parallel, enabling simultaneous monitoring and decision-making during high-demand periods such as Friday prayer and Ramadan.
 
+The system is designed to handle multiple sensors at once by collecting motion, water-flow, and air-quality data in parallel and sending each reading to the controller without blocking the others. This means the mosque can monitor occupancy, water usage, and ventilation conditions simultaneously, which is important when several events happen at the same time. It can also handle continuous data flow during peak time, such as Friday prayer or Ramadan, because the sensors keep updating while the system processes live changes in crowd density and resource usage. As a result, the dashboard remains responsive even under heavy activity, and the mosque administration can make quick decisions without losing real-time visibility.
+
 \subsubsection{Efficiency}
 Lights and fans operate only when needed based on occupancy and schedule, and water control logic closes supply during leak-like behavior to reduce waste.
+
+The system is efficient because it avoids unnecessary activation of devices. Lights and fans turn on only when occupancy is detected and the prayer-time window requires them, which reduces energy waste and keeps power use aligned with actual demand. The system also improves water efficiency by monitoring flow in real time and shutting off the supply when it detects leaks or taps left running, which helps prevent unnecessary water waste.
 
 \subsection{System Reliability}
 
@@ -64,9 +68,19 @@ Occupancy, water, air-quality, and dashboard modules can evolve independently, r
   \item Monitoring for suspicious behavior and repeated login attempts
 \end{itemize}
 
+All IoT devices communicate through a secure local network rather than being openly exposed. This reduces the risk of external interference and makes it easier to control access to the mosque's sensors and actuators. The system ensures:
+\begin{itemize}
+  \item Sensors, controllers, and actuators are on a separate, secured local network segment from general user devices.
+  \item Restricted remote access so only approved users (admins) or services can reach the dashboard and device controls.
+  \item Firewall and gateways rules are implemented to reduce the chance of unauthorized access.
+  \item Network traffic is constantly monitored for unusual device behavior or repeated login attempts.
+\end{itemize}
+
 \newpage
 \subsubsection{Access Control}
 Role-based permissions, authenticated overrides, and action logging are applied for accountability.
+
+Only authorized users can view the dashboard or override systems such as lights, fans, and water valves. Role-based access control is a standard way to assign permissions, so the mosque administrator has full control while other users have limited or read-only access. This is implemented by giving the mosque administrator full control, while staff or guests get limited or read-only access. Manual overrides are only done through login credentials so devices cannot be changed by unauthenticated users. The system also uses separate permission levels for monitoring, control, and maintenance actions. For more protection, the system logs every override action so the system keeps a record of who changed what and when.
 
 Authentication flow:
 \begin{center}
@@ -76,27 +90,58 @@ User $\rightarrow$ Login Page $\rightarrow$ Authentication Check $\rightarrow$ A
 \subsubsection{Data Encryption}
 WPA2-PSK secures Wi-Fi communication between sensors, controllers, and dashboard. AES encryption protects traffic confidentiality and integrity.
 
+Data transmitted within the system is protected using WPA2-PSK (Wi-Fi Protected Access 2 - Pre-Shared Key) encryption over the wireless network. WPA2-PSK is a Wi-Fi security method that protects a network with a shared password and encrypts the data sent over it and does not require complex key management while still maintaining a strong level of confidentiality and integrity for transmitted data. This ensures that communication between sensors, the controller, and the dashboard is secured against unauthorized access.
+
+It works by using a shared password to authenticate devices and AES encryption to protect the Wi-Fi traffic, with the password acting as the secret key that both devices and the access point use to connect securely. AES encryption is a symmetric encryption method that scrambles data into unreadable ciphertext using the same secret key for both encryption and decryption. By encrypting data at the network level, the system helps prevent attackers from intercepting or modifying sensitive information such as occupancy counts, water usage data, and device control commands.
+
+What the system does:
+\begin{itemize}
+  \item Secures wireless communication between sensors (motion, water flow, air quality) and the controller using WPA2-PSK.
+  \item Protects local dashboard traffic transmitted over the Wi-Fi network.
+  \item Allows only authorized devices with the correct network credentials to join the network.
+  \item Provides a balance between security and performance, making it suitable for embedded IoT devices.
+\end{itemize}
+
 \subsubsection{Device Filtering}
 MAC allow-list filtering blocks unknown devices from joining. It is used together with WPA2-PSK and access control (not standalone security).
+
+Device filtering adds a basic access-control layer by allowing only approved IoT nodes to join the mosque network. In this project, MAC address filtering is used to create an allow list of trusted sensors, controllers, and dashboard devices, so any unregistered device is blocked from connecting. This is useful in a public environment because it reduces the chance of unknown devices joining the system and interfering with occupancy, water, or ventilation control.
+\begin{itemize}
+  \item Allow list only trusted devices: The router or access point can be configured so only the MAC addresses of authorized IoT nodes are permitted to connect.
+  \item Block unknown devices: Any device not on the list is denied network access, which helps keep the system limited to approved controllers and sensors.
+  \item Useful for IoT deployment: MAC filtering is practical in small, controlled networks like a mosque IoT setup because the number of devices is known and relatively stable.
+  \item Not a standalone security control: MAC addresses can be spoofed, so this method should be used together with WPA2-PSK and role-based access control rather than as the only protection.
+  \item Supports safer maintenance: When a new sensor or controller is added, its MAC address can be registered first, which gives the administrator a simple way to manage device enrollment.
+\end{itemize}
 
 \subsubsection{Privacy Protection}
 The system stores aggregate occupancy counts only and avoids personal identification. PIR-based sensing does not capture images.
 
 \subsection{Energy Efficiency}
 
-\subsubsection{Prayer Time Control}
 Prayer-time-aware control avoids continuous operation outside worship periods.
+
+\subsubsection{Prayer Time Control}
+Prayer-time automation helps the system avoid continuous operation outside scheduled worship periods. By linking the control logic to prayer times using APIs, the mosque can keep lighting and ventilation off during low-use periods, then activate them only when worshippers begin to gather. This reduces wasted power while keeping the environment comfortable and ready for prayer.
 
 \subsubsection{Occupancy-Based Activation}
 Devices activate only when people are present, reducing unnecessary consumption.
 
+Occupancy detection adds a second layer of control, so the system does not turn on devices unless people are present. If the prayer hall is empty, the lights and fans remain off even if the prayer window is active, which prevents unnecessary consumption. This is important because a mosque may have different attendance levels depending on the prayer, day, or season.
+
 \subsubsection{Automatic Shutdown}
 Lights and fans turn off after inactivity timeout, minimizing waste.
+
+The system also improves efficiency by shutting down devices automatically after inactivity. If no motion is detected for a set period, the lights and fans can turn off without manual intervention, which helps prevent energy waste when people leave early or when only part of the hall is being used. This makes the system both practical and energy-conscious, especially for high-traffic periods.
 
 \subsection{Safety Considerations}
 
 \subsubsection{Device Overheating}
 Thermal-safe operation requires ventilation, safe power design, and alerts/shutdown under abnormal heating.
 
+The system includes safeguards to prevent overheating of devices such as controllers, relays, and power modules. Since these components may run for long periods during peak prayer times, the design should allow for proper ventilation, safe power handling, and automatic shutdown or alerting if temperature rises beyond safe limits. This helps protect the hardware and improves long-term reliability.
+
 \subsubsection{Water Valve Reliability}
 Valve closure is validated over a short window to avoid false shutdown during normal use interruptions.
+
+The water valve is controlled carefully so it does not shut off incorrectly while someone is still using water. To avoid this, the system should confirm abnormal flow for a short validation period before closing the valve, rather than reacting to a brief or normal interruption in use. This reduces false shutdowns and ensures that the area remains safe and practical for worshippers.

@@ -1,0 +1,526 @@
+Step 8: Operational View Specification 
+
+8.1 System Performance  
+
+8.1.1 Response Time: 
+
+The system is designed to operate in near real-time to ensure timely responses to environmental and occupancy changes. When motion is detected at the mosque entrance, the system activates lighting and ventilation within approximately 1–2 seconds. This slight delay accounts for sensor detection and processing time, which is typical in IoT-based automation systems. Similarly, in the wudu area, the system monitors water flow continuously. If abnormal or continuous water usage is detected, the solenoid valve is automatically closed within approximately 2–3 seconds to prevent water wastage while minimizing false triggers. 
+
+The graph proves that, considering the mosque’s system operates over a local network, the typical response time for light activation or ventilation devices will not exceed 2 seconds.  
+
+Air quality is monitored periodically, with sensor readings updated every few seconds. If poor air quality is detected, the system adjusts ventilation accordingly to maintain a comfortable environment inside the prayer hall. The system continuously monitors CO₂ and other pollutants and responds when levels exceed safe ventilation thresholds. The system also monitors temperature and humidity to maintain a comfortable indoor environment. Sensors provide regular readings, enabling quick response to changes.  
+
+The system can handle simultaneous inputs from multiple sensors, especially during peak times, without noticeable performance degradation. Overall, the system improves efficiency by ensuring that energy-consuming devices such as lights and fans operate only when necessary. 
+
+8.1.2 Data Update Frequency: 
+
+The system updates occupancy in real time, adjusting after every entry or exit, so the dashboard always reflects the current number of people in the prayer hall and supports ventilation decisions. This immediate response is important for crowd management, especially during peak times. IR motion sensors enable near-real-time detection, updating occupancy as soon as movement occurs. While the exact refresh interval depends on the controller logic and network setup rather than the sensor itself, the system still supports rapid detection for automated lighting and fan control.  
+
+Air quality data is refreshed every 1 minute, which is suitable for CO₂ and related measurements since these values change gradually and this interval balances responsiveness with stable readings. When the mosque becomes crowded, ventilation is also triggered proactively based on occupancy levels, even before the next air-quality update, to maintain comfort and airflow during peak prayer times. 
+
+For water usage, the system uses water flow sensors to monitor consumption in real time and track total usage continuously. If the system detects abnormal water flow such as a possible leak or a tap left open, it can trigger an alert and automatically close the water supply using a smart valve to prevent waste and reduce damage.  
+
+8.1.3 Throughput:  
+
+The system is designed to handle multiple sensors at once by collecting motion, water-flow, and air-quality data in parallel and sending each reading to the controller without blocking the others. This means the mosque can monitor occupancy, water usage, and ventilation conditions simultaneously, which is important when several events happen at the same time. It can also handle continuous data flow during peak time, such as Friday prayer or Ramadan, because the sensors keep updating while the system processes live changes in crowd density and resource usage. As a result, the dashboard remains responsive even under heavy activity, and the mosque administration can make quick decisions without losing real-time visibility. 
+
+8.1.4: Efficiency 
+
+The system is efficient because it avoids unnecessary activation of devices. Lights and fans turn on only when occupancy is detected and the prayer-time window requires them, which reduces energy waste and keeps power use aligned with actual demand. The system also improves water efficiency by monitoring flow in real time and shutting off the supply when it detects leaks or taps left running, which helps prevent unnecessary water waste. 
+
+8.2 System Reliability  
+
+8.2.1 Sensor failure handling: 
+
+The system includes a fallback mechanism to keep the mosque operating safely if a sensor fails. For example, if a motion sensor stops working, the administrator can enable manual override to control the lights and fans directly from the dashboard. This ensures the system remains usable even when one device is offline, while maintenance can be performed without interrupting mosque operations. 
+
+    Flow sensor failure → use a manual valve override and alert the admin. 
+
+    Air-quality sensor failure → keep ventilation on a safe default schedule until the sensor is fixed. 
+
+8.2.2 Network failure: 
+
+If the network connection fails, the local system continues basic operation, so the mosque is not disrupted. Essential functions such as lights, fans, and water shut off are still controlled locally by the controller, while the dashboard and remote monitoring resume synchronization once the connection is restored. This makes the system resilient during temporary internet or server outages. 
+
+8.2.3 Power Failure: 
+
+If a power failure occurs, the system switches to a safe default state, so the mosque remains protected and manageable. Essential devices such as the controller, sensors, and critical valves should restart automatically when power returns, while the dashboard records the event for review. If backup power is available, it can keep the most important functions running long enough to preserve basic monitoring and prevent disruption during prayer times. After power is restored, the system returns lights, fans, and valves to a predefined safe startup state rather than restarting unpredictably, which improves reliability and prevents unnecessary activation. 
+
+8.3 System Scalability  
+
+The system is designed to grow without requiring a full redesign, which makes it suitable for a single mosque at first and later for larger deployments.  
+
+8.3.1 More sensors: 
+
+New sensors can be added gradually as the mosque’s needs increase. For example, extra motion sensors can improve occupancy counting at more entrances, additional flow sensors can track water use in more than one ablution area, and more air-quality sensors can cover larger prayer halls. Because each sensor type performs a specific task, the system can expand by connecting new devices to the same controller logic without changing the whole design. 
+
+8.3.2 Spreading to other mosques: 
+
+The same framework can be replicated in other mosques because the core functions are reusable. Each mosque can have its own local sensors, actuators, and dashboard data, while the overall system structure stays the same. This makes it possible to deploy the solution in multiple locations, with each mosque operating independently but following the same monitoring and automation rules. 
+
+8.3.3 Modular architecture: 
+
+A modular architecture makes the system scalable and easier to maintain, it can adapt to higher traffic, more devices, and new monitoring needs while keeping performance stable. Each part of the system, such as occupancy tracking, water monitoring, air-quality control, and dashboard management, can work as a separate module. This means updates or repairs can be made to one module without affecting the others, and new features can be added later with minimal disruption. This makes the project not only practical for a local pilot but also suitable for broader use in different mosque environments. 
+
+8.4 System Security 
+
+8.4.1 Network Protection 
+
+All IoT devices communicate through a secure local network rather than being openly exposed. This reduces the risk of external interference and makes it easier to control access to the mosque’s sensors and actuators. The designed system ensures: 
+
+    Sensors, controllers, and actuators are on a separate, secured local network segment from general user devices. 
+
+    Restricted remote access so only approved users (admins) or services can reach the dashboard and device controls. 
+
+    Firewall and gateways rules are implemented to reduce the chance of unauthorized access. 
+
+    Network traffic is constantly monitored for unusual device behavior or repeated login attempts.  
+
+ 
+
+8.4.2 Access Control  
+
+Only authorized users can view the dashboard or override systems such as lights, fans, and water valves. Role-based access control is a standard way to assign permissions, so the mosque administrator has full control while other users have limited or read-only access.  
+
+This is implemented by giving the mosque administrator full control, while staff or guests get limited or read-only access. Manual overrides are only done through login credentials so devices cannot be changed by unauthenticated users. The system also uses separate permission levels for monitoring, control, and maintenance actions. For more protection, the system logs every override action so the system keeps a record of who changed what and when. 
+
+Authentication flow diagram: 
+
+User → Login Page → Authentication Check → Access Granted → Dashboard 
+
+8.4.3 Data Encryption 
+
+Data transmitted within the system is protected using WPA2-PSK (Wi-Fi Protected Access 2 - Pre-Shared Key) encryption over the wireless network. WPA2-PSK is a Wi Fi security method that protects a network with a shared password and encrypts the data sent over it and does not require complex key management while still maintaining a strong level of confidentiality and integrity for transmitted data. This ensures that communication between sensors, the controller, and the dashboard is secured against unauthorized access.  
+
+It works by using a shared password to authenticate devices and AES encryption to protect the Wi Fi traffic, with the password acting as the secret key that both devices and the access point use to connect securely. AES encryption is a symmetric encryption method that scrambles data into unreadable ciphertext using the same secret key for both encryption and decryption. By encrypting data at the network level, the system helps prevent attackers from intercepting or modifying sensitive information such as occupancy counts, water usage data, and device control commands. 
+
+What the system does: 
+
+    Secures wireless communication between sensors (motion, water flow, air quality) and the controller using WPA2-PSK.  
+
+    Protects local dashboard traffic transmitted over the Wi‑Fi network. 
+
+    Allows only authorized devices with the correct network credentials to join the network. 
+
+    Provides a balance between security and performance, making it suitable for embedded IoT devices. 
+
+8.4.4 Device Filtering 
+
+Device filtering adds a basic access-control layer by allowing only approved IoT nodes to join the mosque network. In this project, MAC address filtering is used to create an allow list of trusted sensors, controllers, and dashboard devices, so any unregistered device is blocked from connecting. This is useful in a public environment because it reduces the chance of unknown devices joining the system and interfering with occupancy, water, or ventilation control. 
+
+    Allow list only trusted devices: The router or access point can be configured so only the MAC addresses of authorized IoT nodes are permitted to connect. 
+
+    Block unknown devices: Any device not on the list is denied network access, which helps keep the system limited to approved controllers and sensors. 
+
+    Useful for IoT deployment: MAC filtering is practical in small, controlled networks like a mosque IoT setup because the number of devices is known and relatively stable. 
+
+    Not a standalone security control: MAC addresses can be spoofed, so this method should be used together with WPA2-PSK and role-based access control rather than as the only protection. 
+
+    Supports safer maintenance: When a new sensor or controller is added, its MAC address can be registered first, which gives the administrator a simple way to manage device enrollment. 
+
+8.4.5 Privacy Protection  
+
+Since the system tracks occupancy, it should only store aggregate counts and avoid identifying individuals. The goal is to monitor crowd levels, not to collect personal data, so privacy is built into the design from the start. This is further supported using PIR motion sensors, which detect the presence of movement without capturing images, identities, or personal identifiable information.  
+
+8.5 Energy efficiency  
+
+The system is designed to reduce energy use by ensuring that lights and fans are only active when they are needed. In practice, this means the AC fans and smart lights turn on during prayer time only if occupancy is detected in the hall, so empty spaces are not consuming power unnecessarily. This approach is especially useful in a mosque, where usage patterns change throughout the day and peak mainly during congregational prayers. 
+
+8.5.1 Prayer time control: 
+
+Prayer-time automation helps the system avoid continuous operation outside scheduled worship periods. By linking the control logic to prayer times using APIs, the mosque can keep lighting and ventilation off during low-use periods, then activate them only when worshippers begin to gather. This reduces wasted power while keeping the environment comfortable and ready for prayer. 
+
+8.5.2 Occupancy-Based Activation 
+
+Occupancy detection adds a second layer of control, so the system does not turn on devices unless people are present. If the prayer hall is empty, the lights and fans remain off even if the prayer window is active, which prevents unnecessary consumption. This is important because a mosque may have different attendance levels depending on the prayer, day, or season. 
+
+8.5.3 Automatic Shutdown 
+
+The system also improves efficiency by shutting down devices automatically after inactivity. If no motion is detected for a set period, the lights and fans can turn off without manual intervention, which helps prevent energy waste when people leave early or when only part of the hall is being used. This makes the system both practical and energy-conscious, especially for high-traffic periods. 
+
+8.6 Safety considerations 
+
+8.6.1 Device Overheating: 
+
+The system includes safeguards to prevent overheating of devices such as controllers, relays, and power modules. Since these components may run for long periods during peak prayer times, the design should allow for proper ventilation, safe power handling, and automatic shutdown or alerting if temperature rises beyond safe limits. This helps protect the hardware and improves long-term reliability. 
+
+8.6.2 Water Valve Reliability 
+
+The water valve is controlled carefully so it does not shut off incorrectly while someone is still using water. To avoid this, the system should confirm abnormal flow for a short validation period before closing the valve, rather than reacting to a brief or normal interruption in use. This reduces false shutdowns and ensures that the area remains safe and practical for worshippers. 
+
+Step 9: Device & Component Integration 
+
+9.1 Input devices (sensors) 
+
+9.1.1 Motion Sensor (PIR) 
+
+A Passive Infrared (PIR) sensor is a type of motion detection device that operates without actively emitting energy. The term “passive” indicates that the sensor does not generate or radiate signals for detection purposes. Instead, it detects variations in infrared radiation naturally emitted or reflected by objects within its field of view. PIR sensors are compact, cost-effective, and energy-efficient, making them suitable for a wide range of applications. They are commonly used in residential, medical, and industrial environments for occupancy and motion detection. 
+
+ 
+
+Sensor details: 
+
+    Detection range: up to 7 meters 
+
+    Detection angle: 110 degrees 
+
+    Operating voltage: DC 4.5V - 12V DC 
+
+    Output signal: 3.3V digital output 
+
+    Delay time: adjustable from 0.3 seconds to 5 minutes 
+
+    Operating temperature: -15°C to +70°C 
+
+    Sensitivity: Adjustable 
+
+Working Principle of a PIR Motion Sensor: 
+
+    Infrared detection: 
+    A PIR sensor contains a pyroelectric element that detects changes in infrared radiation. Since all objects emit infrared energy, warmer objects produce a stronger signal. 
+
+ 
+
+    Sensor structure: 
+    The sensing element is divided into two sections that are arranged to balance each other under normal conditions. A lens is placed over the sensor to improve its sensing range and focus incoming infrared radiation. 
+
+ 
+
+    Idle state: 
+    When no movement is present, both sections receive approximately the same amount of infrared radiation. In this case, no differential signal is produced, so the output remains stable. 
+
+    Motion detection 
+    When a warm body moves across the sensor’s field of view, one section receives more infrared radiation than the other. This creates a differential signal, which is then amplified and compared by the internal circuit. 
+
+    Output generation 
+    If the change in infrared radiation is significant, the comparator produces an output signal, indicating motion. When the object leaves the sensing area, the signal changes again, allowing the sensor to detect movement in real time. 
+
+ 
+
+It is important to remember that the PIR sensor should be installed away from the Wi-Fi antenna to avoid messing with its performance, since Wi-Fi signals emit electromagnetic radiation that can interfere with the PIR sensor. 
+
+9.1.2 Air Quality Sensor (IAQ) 
+
+To manage and maintain clean indoor air, IAQ (indoor air quality) sensors are employed to monitor key environmental pollutants and climate parameters. These sensors play a central role in air purification systems, HVAC control, building automation, and environmental safety. Key factors influencing IAQ: 
+
+    Chemical pollutants (CO₂, VOCs, NO₂) 
+
+    Biological contaminants (mold, bacteria, allergens) 
+
+    Particulate matter (PM2.5, PM10) 
+
+    Environmental conditions (humidity, temperature, air pressure) 
+
+It is essentially a multi-parameter electronic device that detects and quantifies various pollutants and environmental conditions within indoor spaces. These sensors may measure gases, particles, and climate-related parameters, then transmit the data to a monitoring or control system. The Smart Mosque system is designed to use a multi-sensor module rather than a single-sensor one. 
+
+Common pollutants monitored by IAQ and their effect include: 
+
+Pollutant 
+	
+
+Description 
+	
+
+Health Effects 
+
+CO₂ 
+	
+
+Exhaled by humans; indicator of ventilation 
+	
+
+Fatigue, headaches, reduced productivity 
+
+VOCs 
+	
+
+Emitted by paints, cleaners, plastics 
+	
+
+Eye irritation, dizziness, cancer risks 
+
+PM2.5/PM10 
+	
+
+Fine dust, smoke, allergens 
+	
+
+Respiratory and cardiovascular problems 
+
+CO 
+	
+
+Incomplete combustion product 
+	
+
+Fatal at high concentrations 
+
+Formaldehyde 
+	
+
+Emitted by furniture, glues, insulation 
+	
+
+Carcinogenic, irritation 
+
+NO₂/O₃ 
+	
+
+From gas stoves, outdoor pollution 
+	
+
+Respiratory distress 
+
+Humidity 
+	
+
+Excessive moisture promotes mold 
+	
+
+Discomfort, mold growth 
+
+Temperature 
+	
+
+Affects comfort and productivity 
+	
+
+Fatigue, poor cognitive performance 
+
+ 
+
+Working principles of IAQ sensors: 
+
+    Sensing: Each sensor type uses a specific physical or chemical method to detect its target pollutant. 
+
+    Signal Processing: Detected signals are converted into electrical output (analog or digital). 
+
+    Calibration: Sensors are calibrated for accuracy, often using reference gases. 
+
+    Data Output: The processed data is sent via I²C, UART, Modbus, or wireless protocols (Wi-Fi, Zigbee, LoRa). 
+
+    Display and Analysis: Results are visualized on display or uploaded to the cloud for remote monitoring. 
+
+Commonly, the output of an IAQ sensor can range from 0-50 (good), 51-100 (moderate), 101-150 (unhealthy for sensitive groups), and 151-200 (unhealthy).  
+
+A good quality sensor offers accurate reading, but like any sensor, IAQ comes with some challenges like: 
+
+    Sensor drift and degradation over time 
+
+    Cross-sensitivity (e.g., VOC sensors reacting to humidity) 
+
+    Need for periodic calibration 
+
+    Data overload in multi-sensor networks 
+
+    False readings due to temperature/humidity interference 
+
+It is important to calibrate it every 6-12 months to ensure good quality reading. 
+
+9.1.3 Water Flow Sensor 
+
+Water flow sensors are installed at the water source or pipes to measure the rate of flow of water and calculate the amount of water flowed through the pipe. Rate of flow of water is measured as liters per hour or cubic meters. It measures water flow in real time and gives pulse output that is easy to connect to an MCU in simulation or implementation.  
+
+ 
+
+Working principles of a water flow sensor:  
+
+    A water flow sensor has a plastic body or valve that allows water to pass through it. 
+
+    Inside the sensor, a rotor and a Hall effect sensor work together to detect and measure water flow. 
+
+    When water moves through the sensor, it rotates the rotor. 
+
+    The rotor’s movement changes the speed of rotation, and this change is converted into a pulse signal by the Hall effect sensor. 
+
+    The pulse signal is then used to calculate the water flow rate. 
+
+    The main working principle of the sensor is the Hall effect, where rotor motion induces a voltage difference that is measured by the sensor. 
+
+    This induced voltage is transverse to the electric current and represents the flow movement inside the sensor. 
+
+    The flow value can then be displayed on an LCD screen or processed by a microcontroller. 
+
+Water flow sensors can be used with hot, cold, warm, clean, or dirty water, depending on the sensor type. In our case, it should be enough for clean water of all temperatures. These sensors can be easily connected to microcontrollers such as Arduino. The sensor is usually installed at the water inlet or at the opening of the pipe. The required supply voltage is usually 5V to 18V DC.  
+
+9.2 Output devices (actuators) 
+
+9.2.1 Smart Lights 
+
+Smart lights are used as an output device to provide illumination in the mosque when needed. Their main role is to support comfort and visibility during prayer times while reducing unnecessary energy use during periods of low occupancy. 
+
+Working principle: 
+
+    The system checks whether the prayer time is active. 
+
+    It also checks whether a PIR sensor has detected people in a specific area of the mosque. 
+
+    If both conditions are true, the lights turn on automatically. 
+
+    If no people are detected, the lights remain off even during the prayer window. 
+
+    After the prayer time ends, the lights turn off automatically (if no people detected). 
+
+    This ensures that lighting is provided only when the prayer hall is in use. 
+
+How it functions in the project: 
+When the PIR sensor detects movement or presence in a section of the mosque, the system interprets this as occupancy in that area. If this happens during the prayer period, the smart lights are activated to provide adequate lighting for worshippers. If the area becomes empty, the lights are switched off after a short delay to avoid unnecessary power consumption. This makes the lighting system both responsive and energy efficient, since it operates only when people are present and prayer time requires it. 
+
+ 
+
+9.2.2 Fans (AC Simulation) 
+
+Fans and AC units act as output devices that maintain a comfortable environment in the mosque by responding to indoor air quality readings such as temperature, humidity, CO2, and other pollution indicators. Their role is to improve ventilation when the prayer hall becomes crowded or the air becomes warm or stale, and to reduce operation when conditions return to normal. 
+
+Working principle: 
+
+    The IAQ sensor continuously measures temperature, humidity, and CO2 levels inside the mosque. 
+
+    If the readings show that the air is getting warm, humid, or poorly ventilated, the controller sends a signal to activate the fans or AC. 
+
+    If the air quality stays within acceptable limits, the fans and AC remain off or operate at a lower level. 
+
+    This allows the ventilation system to respond automatically to real environmental conditions rather than running all the time. 
+
+    After the crowd decreases or the temperature and air quality improve, the system reduces ventilation to save energy. 
+
+How it functions in the project: 
+When the mosque becomes crowded, the sensor readings increase and indicate a higher need for ventilation. The controller then activates the fans or AC to improve air circulation and maintain comfort for worshippers. If the temperature, humidity, and CO2 levels return to acceptable values, the system stops or reduces the output again. This makes the ventilation process both responsive and energy efficient, since it is based on actual indoor conditions rather than fixed manual operations.  
+
+ 
+
+9.2.3 Solenoid Valve  
+
+The solenoid valve acts as an output device that controls the water supply in the ablution area based on the readings from the water flow sensor. Its role is to stop water waste when abnormal or continuous flow is detected, such as when a tap is left open or a leak occurs. 
+
+Working principle: 
+
+    The water flow sensor continuously measures the amount of water moving through the pipe. 
+
+    If the system detects abnormal flow or flow that continues longer than expected, the controller interprets this as possible waste. 
+
+    The controller then sends an electrical signal to the solenoid valve. 
+
+    The solenoid valve closes and cuts off the water supply. 
+
+    When normal conditions return, the valve can be opened again manually or by the control logic. 
+
+How it functions in the project: 
+When the sensor detects that water is flowing longer than it should, the system assumes that the tap may have been left open or that a leak is present. The controller then activates the solenoid valve to stop the flow and prevent waste. This helps the mosque conserve water while still allowing normal use when water demand is expected. 
+
+ 
+
+ 
+
+9.3 Processing unit  
+
+Esp32 Introduction To Esp32 | Esp32The ideal processing unit for this project is the ESP32 microcontroller, as it is a powerful, low-cost, low-power System on a Chip (SoC), and offers enough processing capability to handle multiple sensors, control actuators, and support real-time IoT automation. It is also suitable for this system because it includes built-in Wi‑Fi and Bluetooth, has multiple GPIO pins, and supports low-power operation, which makes it practical for a smart mosque environment. 
+
+ 
+
+    Wi‑Fi connectivity: The ESP32 has integrated Wi‑Fi, so it can support network-based automation and monitoring without needing an extra communication module.  
+
+    Suitable for multiple inputs and outputs: It provides many GPIO pins and supports interfaces such as I2C, UART, SPI, and PWM, which makes it easy to connect PIR sensors, flow sensors, IAQ sensors, relays, and valves.  
+
+    Low power and efficient: The ESP32 includes power-saving modes, which is useful for a system that may run continuously throughout the day. 
+
+    Good for embedded IoT control: It is designed for IoT applications and can act as a standalone controller for sensor reading and device actuation.  
+
+    Practical for project scope: Compared with simpler boards, the ESP32 is better suited to a connected system that must manage occupancy, ventilation, lighting, and water control at the same time. 
+
+9.4 Communication layer  
+
+The communication layer is responsible for enabling reliable, real-time data exchange between distributed sensor nodes, the central processing unit, and the monitoring interface. It ensures that both sensing data and control commands are transmitted efficiently while maintaining system security and stability. 
+
+The system communication is implemented as follows:  
+
+    Network Setup: A local Wi-Fi access point connects ESP32 nodes to the central server, providing reliable coverage within the mosque.  
+
+    Protocol & Security: Communication is based on IEEE 802.11 Wi-Fi and secured using WPA2-PSK encryption to restrict access and protect transmitted data.  
+
+    Topology: A star topology is used, where all nodes communicate directly with the central access point, simplifying management and system expansion.  
+
+    Network Segmentation: IoT devices are placed on a separate network segment from general user devices, reducing interference and minimizing unauthorized access risks.  
+
+    Real-World Implementation: In practical deployments, technologies such as Zigbee or MQTT over Wi-Fi with a local broker may be used for improved scalability and efficiency.  
+
+    Simulation Representation: In Cisco Packet Tracer, this is modeled as a local LAN connecting MCU units to the Registration Server, which acts as the central communication hub. 
+
+9.5 Integration Workflow 
+
+The integration workflow follows the same process defined in the system process specification (Step 2), ensuring consistent interaction between sensing, processing, and actuation components. 
+
+    Sensing Stage: 
+    Sensors continuously monitor system conditions, including occupancy through PIR sensors, environmental parameters (CO₂, temperature, and humidity), and water usage through flow sensors in the wudu area.  
+
+    Data Transmission Stage: 
+    Sensor readings are transmitted via the local Wi-Fi network to the central processing unit for analysis.  
+
+    Processing and Decision Stage: 
+    The processing unit evaluates incoming data based on predefined conditions such as prayer schedules, occupancy detection, and environmental thresholds. Decisions are made regarding whether system actions are required.  
+
+    Actuation Stage: 
+    Based on the processed data, control signals are sent to actuators. Lighting and ventilation systems are activated when occupancy is detected during prayer times, ventilation is adjusted in response to environmental conditions, and water flow is controlled to prevent wastage.  
+
+    Monitoring and Feedback Stage: 
+    System status and sensor data are updated on the central dashboard, allowing the administrator to monitor system performance and apply manual overrides when necessary.  
+
+This structured workflow directly reflects the process flow defined earlier, ensuring consistency across system design and implementation. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+9.6 System Diagram 
+
+ 
+
+ Step 10: Application Development 
+
+10.1 Application overview and platform 
+
+The application layer of the IoT system consists of a web-based dashboard that serves as the main interface between users and the system. It provides a centralized platform for interacting with real-time data collected from sensors and controlling connected devices. 
+
+Its main purpose is to enable effective monitoring and management of the IoT environment by presenting live information in a clear and organized way. The dashboard acts as the primary operational tool for users, allowing them to observe system status, respond to alerts, and manage device behavior efficiently. 
+
+10.2 User role 
+
+The system is designed exclusively for admin users, who are responsible for monitoring and managing the IoT environment through the web-based dashboard. The admin has full access to real-time sensor data, system status, and device controls. Their role includes overseeing environmental conditions, responding to alerts, and adjusting system settings when necessary to ensure optimal performance and safety. 
+
+10.3 Core features 
+
+The web-based dashboard provides a set of essential functionalities that enable effective monitoring and control of the IoT system, including the following core features: 
+
+    Real-time monitoring of sensor data (e.g., CO₂, temperature, humidity, occupancy) 
+
+    Live system status display for all connected devices 
+
+    Alert and notification system for abnormal conditions 
+
+    Control of IoT actuators (e.g., ventilation system) 
+
+    Overview of historical data visualization and basic trends (e.g., peak hours) 
+
+ 
+
+The web-based dashboard communicates with the IoT system through a backend layer that enables real-time data exchange and control. It continuously receives updated sensor readings and system statuses, while also sending user commands to connected devices for execution. 
+
+Application-system interaction:  
+
+    Retrieves real-time data from IoT sensors via backend APIs 
+
+    Displays continuously updated system status on the dashboard 
+
+    Sends control commands to actuators (e.g., ventilation system) 
+
+    Supports bidirectional communication for monitoring and control 
+
+    Ensures low-latency updates for real-time system responsiveness 
+
+10.4 User Interface design  

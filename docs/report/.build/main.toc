@@ -1,0 +1,91 @@
+\contentsline {section}{\numberline {1}Purpose \& Requirements}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Purpose of the IoT System}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Functional Requirements}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Non-Functional Requirements}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Constraints and Assumptions}{5}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Process Specification}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Overview}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Core System Processes}{5}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Occupancy Detection Process}{5}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Energy Management Process}{6}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Wudu Water Monitoring Process}{6}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Air Quality Monitoring Process}{6}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Central Monitoring and Control Process}{7}{subsubsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.3}Integrated System Flowchart}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Process Interaction Notes}{7}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Domain Model Specification}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Entities}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Attributes for each Entity}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Relationships}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}UML Diagram}{10}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Information Model Specification}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Types of Data in System}{11}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Sensor Data (Raw Data)}{11}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Processed Data}{11}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}System Data (Stored)}{11}{subsubsection.4.1.3}%
+\contentsline {subsubsection}{\numberline {4.1.4}Control Data (from Admin)}{11}{subsubsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.2}Data Flow}{12}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Main Flow}{12}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Control Flow}{12}{subsubsection.4.2.2}%
+\contentsline {section}{\numberline {5}Service Specifications}{13}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Overview}{13}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Service List}{13}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Service Descriptions}{13}{subsection.5.3}%
+\contentsline {section}{\numberline {6}IoT Level Specification}{17}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Level 1 -- Perception Layer}{18}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Level 2 -- Network Layer}{19}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Level 3 -- Edge Processing Layer}{19}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Level 4 -- Data Accumulation Layer}{20}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Level 5 -- Application Layer}{20}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Level Interaction Summary}{20}{subsection.6.6}%
+\contentsline {section}{\numberline {7}Functional View Specification}{21}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Overview}{21}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Functional Block Descriptions}{21}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Inter-Block Data Flow Summary}{23}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Operational View Specification}{24}{section.8}%
+\contentsline {subsection}{\numberline {8.1}System Performance}{24}{subsection.8.1}%
+\contentsline {subsubsection}{\numberline {8.1.1}Response Time}{24}{subsubsection.8.1.1}%
+\contentsline {subsubsection}{\numberline {8.1.2}Data Update Frequency}{24}{subsubsection.8.1.2}%
+\contentsline {subsubsection}{\numberline {8.1.3}Throughput}{24}{subsubsection.8.1.3}%
+\contentsline {subsubsection}{\numberline {8.1.4}Efficiency}{25}{subsubsection.8.1.4}%
+\contentsline {subsection}{\numberline {8.2}System Reliability}{25}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Sensor Failure Handling}{25}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.2.2}Network Failure}{25}{subsubsection.8.2.2}%
+\contentsline {subsubsection}{\numberline {8.2.3}Power Failure}{25}{subsubsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.3}System Scalability}{25}{subsection.8.3}%
+\contentsline {subsubsection}{\numberline {8.3.1}More Sensors}{25}{subsubsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.2}Spreading to Other Mosques}{25}{subsubsection.8.3.2}%
+\contentsline {subsubsection}{\numberline {8.3.3}Modular Architecture}{25}{subsubsection.8.3.3}%
+\contentsline {subsection}{\numberline {8.4}System Security}{26}{subsection.8.4}%
+\contentsline {subsubsection}{\numberline {8.4.1}Network Protection}{26}{subsubsection.8.4.1}%
+\contentsline {subsubsection}{\numberline {8.4.2}Access Control}{27}{subsubsection.8.4.2}%
+\contentsline {subsubsection}{\numberline {8.4.3}Data Encryption}{27}{subsubsection.8.4.3}%
+\contentsline {subsubsection}{\numberline {8.4.4}Device Filtering}{27}{subsubsection.8.4.4}%
+\contentsline {subsubsection}{\numberline {8.4.5}Privacy Protection}{28}{subsubsection.8.4.5}%
+\contentsline {subsection}{\numberline {8.5}Energy Efficiency}{28}{subsection.8.5}%
+\contentsline {subsubsection}{\numberline {8.5.1}Prayer Time Control}{28}{subsubsection.8.5.1}%
+\contentsline {subsubsection}{\numberline {8.5.2}Occupancy-Based Activation}{28}{subsubsection.8.5.2}%
+\contentsline {subsubsection}{\numberline {8.5.3}Automatic Shutdown}{28}{subsubsection.8.5.3}%
+\contentsline {subsection}{\numberline {8.6}Safety Considerations}{28}{subsection.8.6}%
+\contentsline {subsubsection}{\numberline {8.6.1}Device Overheating}{29}{subsubsection.8.6.1}%
+\contentsline {subsubsection}{\numberline {8.6.2}Water Valve Reliability}{29}{subsubsection.8.6.2}%
+\contentsline {section}{\numberline {9}Device and Component Integration}{30}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Input Devices (Sensors)}{30}{subsection.9.1}%
+\contentsline {subsubsection}{\numberline {9.1.1}Motion Sensor (PIR)}{30}{subsubsection.9.1.1}%
+\contentsline {subsubsection}{\numberline {9.1.2}Air Quality Sensor (IAQ)}{32}{subsubsection.9.1.2}%
+\contentsline {subsubsection}{\numberline {9.1.3}Water Flow Sensor}{34}{subsubsection.9.1.3}%
+\contentsline {subsection}{\numberline {9.2}Output Devices (Actuators)}{34}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}Smart Lights}{34}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}Fans (AC Simulation)}{35}{subsubsection.9.2.2}%
+\contentsline {subsubsection}{\numberline {9.2.3}Solenoid Valve}{35}{subsubsection.9.2.3}%
+\contentsline {subsection}{\numberline {9.3}Processing Unit}{36}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Communication Layer}{38}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Integration Workflow}{38}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}System Diagram}{39}{subsection.9.6}%
+\contentsline {section}{\numberline {10}Application Development}{40}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Application Overview and Platform}{40}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}User Role}{40}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Core Features}{40}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}User Interface Design}{42}{subsection.10.4}%
+\contentsline {section}{List of Figures}{43}{figure.19}%
+\contentsline {section}{References}{44}{figure.19}%
