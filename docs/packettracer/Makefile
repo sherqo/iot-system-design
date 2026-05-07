@@ -6,12 +6,12 @@ DATE := $(shell date +%Y-%m-%d)
 
 all: $(BUILDDIR) $(OUTDIR)
 	@rm -f main.aux main.log main.out main.toc main.fls main.fdb_latexmk main.synctex.gz main.pdf
-	@cp -r imgs $(BUILDDIR)/
-	@cp imgs/0-uni-logo.png $(BUILDDIR)/
-	@cd $(BUILDDIR) && pdflatex -interaction=nonstopmode ../$(MAIN).tex
-	@cd $(BUILDDIR) && pdflatex -interaction=nonstopmode ../$(MAIN).tex
-	@rm -f main.aux main.log main.out main.toc main.fls main.fdb_latexmk main.synctex.gz main.pdf
+	@cp -r ../imgs-cpt $(BUILDDIR)/imgs
+	@cp ../imgs/0-uni-logo.png $(BUILDDIR)/
+	@cd $(BUILDDIR) && pdflatex -interaction=nonstopmode ../$(MAIN).tex || true
+	@cd $(BUILDDIR) && pdflatex -interaction=nonstopmode ../$(MAIN).tex || true
 	@cp $(BUILDDIR)/$(MAIN).pdf $(OUTDIR)/$(OUT)_$(DATE).pdf
+	@rm -f main.aux main.log main.out main.toc main.fls main.fdb_latexmk main.synctex.gz main.pdf
 
 dated: all
 	@ls -t $(OUTDIR)/$(MAIN)_*.pdf | head -1

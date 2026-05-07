@@ -24,10 +24,16 @@
 \usepackage{float}
 \usepackage{placeins}
 
-\graphicspath{{imgs/}}
+% ─── Image Paths ────────────────────────────────────────────────────────────
+\graphicspath{{imgs/}{./imgs/}{../imgs/}}
 
 % ─── Hyperlinks ─────────────────────────────────────────────────────────────
-\hypersetup{hidelinks, breaklinks=true, pdftitle={Smart Mosque Management System - Packet Tracer Simulation}, pdfauthor={Team Project}}
+\hypersetup{
+    hidelinks,
+    breaklinks=true,
+    pdftitle={Smart Mosque Management System},
+    pdfauthor={Team Project}
+}
 
 % ─── Section Formatting ─────────────────────────────────────────────────────
 \definecolor{mysec}{RGB}{47,84,150}
@@ -37,81 +43,30 @@
 \titleformat{\section}
 {\Large\bfseries\color{mysec}}
 {\thesection.}{0.5em}{}[\titlerule]
+
 \titleformat{\subsection}
 {\large\bfseries\color{mysubsec}}
 {\thesubsection}{0.5em}{}
+
 \titleformat{\subsubsection}
 {\normalsize\bfseries\color{mysubsubsec}}
 {\thesubsubsection}{0.5em}{}
-\titlespacing*{\section}{0pt}{2.2em}{1.0em}
-\titlespacing*{\subsection}{0pt}{1.8em}{1.0em}
-\titlespacing*{\subsubsection}{0pt}{1.2em}{1.0em}
 
-% Make each section start on a new page and keep floats in order
-\let\oldsection\section
-\def\section{\FloatBarrier\clearpage\oldsection}
+\titlespacing*{\section}{0pt}{2em}{1em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.8em}
+\titlespacing*{\subsubsection}{0pt}{1em}{0.6em}
 
 % ─── Header / Footer ────────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
-\setlength{\headheight}{15pt}
+\setlength{\headheight}{13.6pt}
+
 \fancyhead[L]{\small CSE356: Internet of Things}
-\fancyhead[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\small Smart Mosque Management System}
 \fancyfoot[C]{\small Page \thepage}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{\small Page \thepage}
-\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 
 % ─── Table Styling ──────────────────────────────────────────────────────────
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
@@ -132,20 +87,26 @@
 
 \begin{center}
     \includegraphics[width=0.18\textwidth]{0-uni-logo.png}\\[1.6em]
+
     {\Large\bfseries Ain Shams University -- Faculty of Engineering I-CHEP}\\[0.9em]
+
     {\large CSE356: Internet of Things}\\[2.3em]
 
     \vspace*{1.3cm}
 
-    {\Huge\bfseries Packet Tracer Simulation}\\[1.0em]
+    {\Huge\bfseries Part 2: Simulation Report}\\[1.0em]
+
     {\LARGE\bfseries Smart Mosque Management System}\\[1.4em]
+
     \rule{0.62\textwidth}{0.5pt}\\[1.3em]
+
     {\large 14-May-2026}
 \end{center}
 
 \vfill
 
 \begin{center}
+
 {\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{L{3.2cm}L{8.8cm}}
 \toprule
@@ -155,7 +116,7 @@
 \end{tabular}
 }
 
-\vspace{1.0em}
+\vspace{1em}
 
 {\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{L{3.2cm}L{8.8cm}}
@@ -167,40 +128,375 @@
 \bottomrule
 \end{tabular}
 }
+
 \end{center}
 
-\vspace*{2.6cm}
+\vspace*{2cm}
 \end{titlepage}
 
 % ─── Table of Contents ──────────────────────────────────────────────────────
 \tableofcontents
 \newpage
 
-% ─── 1. Introduction ──────────────────────────────────────────────────────────
+% ────────────────────────────────────────────────────────────────────────────
 \section{Introduction}
 
-% ─── 2. Simulation Environment & Topology ────────────────────────────────────
-\section{Simulation Environment \& Topology}
+The Smart Mosque Management System is a simulated IoT-based environment developed in Cisco Packet Tracer to improve operational efficiency, worshipper comfort, energy conservation, and water management inside mosques.
 
-% ─── 3. Functional Implementation ─────────────────────────────────────────────
-\section{Functional Implementation}
+The system follows a Sense $\rightarrow$ Process $\rightarrow$ Act $\rightarrow$ Monitor operational model where sensors continuously monitor environmental conditions, the IoT controller processes sensor data, automation conditions trigger actuator responses, and administrators supervise the system through a centralized dashboard.
 
-% ─── 4. Automation Logic & Conditions ─────────────────────────────────────────
-\section{Automation Logic \& Conditions}
+The project focuses on:
+\begin{itemize}
+    \item Smart energy management
+    \item Occupancy-aware automation
+    \item Environmental comfort control
+    \item Water conservation
+    \item Real-time monitoring
+\end{itemize}
 
-% ─── 5. Simulation Verification ─────────────────────────────────────────────
-\section{Simulation Verification (Results)}
+The implementation demonstrates how IoT technologies can support sustainable public facilities while reducing operational waste and improving responsiveness during high-attendance periods such as Friday prayers and Ramadan.
 
-% ─── 6. Challenges Faced ───────────────────────────────────────────────────
-\section{Challenges Faced}
+% ────────────────────────────────────────────────────────────────────────────
+\section{System Topology and Infrastructure}
 
-% ─── 7. Solutions & Overcoming Obstacles ─────────────────────────────────────
-\section{Solutions \& Overcoming Obstacles}
+The simulation environment is divided into three functional zones:
+\begin{itemize}
+    \item Prayer Hall
+    \item Wudu Area
+    \item Exterior / Entrance Area
+\end{itemize}
 
-% ─── 8. Conclusion ───────────────────────────────────────────────────────────
+The infrastructure is built around a centralized IoT architecture where sensors, actuators, servers, and wireless access points communicate through a local network.
+
+\subsection{Core Infrastructure Components}
+
+The system includes:
+\begin{itemize}
+    \item Cisco 2960-24TT switch
+    \item IoT Registration Server
+    \item DHCP Server
+    \item DNS Server
+    \item HTTP/HTTPS Dashboard Server
+    \item Wireless Access Points
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{1-overall-layout.png}
+\caption{Overall smart mosque topology}
+\end{figure}
+
+\subsection{IoT Device Registration}
+
+All IoT devices are registered through the IoT Registration Server to allow centralized automation and monitoring.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{2-iot-list.png}
+\caption{IoT Registration Server device inventory}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Network Services and Security}
+
+The system uses multiple network services to maintain secure and reliable communication.
+
+\subsection{DHCP and DNS Services}
+
+The DHCP server dynamically assigns IP addresses to connected IoT devices, while the DNS server resolves dashboard and server names locally.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{3-DHCP-config.png}
+\caption{DHCP configuration}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{4-DNS-config.png}
+\caption{DNS configuration}
+\end{minipage}
+\end{figure}
+
+\subsection{Wireless Security}
+
+Wireless communication is protected using WPA2-PSK authentication to prevent unauthorized device access.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{7-wireless-config.png}
+\caption{Wireless security configuration}
+\end{figure}
+
+\subsection{Connectivity Verification}
+
+The simulation verifies successful network communication between sensors and the IoT controller.
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{5-DHCP-from-sensor.png}
+\caption{Sensor IP assignment}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{6-iot-server-from-sensor.png}
+\caption{Sensor-to-server communication}
+\end{minipage}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Implemented Smart Features}
+
+\subsection{Occupancy-Based Lighting}
+
+Motion sensors automatically activate lighting when occupancy is detected inside the mosque.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{17-motion-detector-on.png}
+\caption{Lighting activation after motion detection}
+\end{figure}
+
+\subsection{Environmental Control}
+
+The system monitors:
+\begin{itemize}
+    \item Temperature
+    \item Humidity
+    \item CO$_2$
+\end{itemize}
+
+Environmental automation thresholds are shown below.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{4cm}L{4cm}L{5cm}}
+\toprule
+\textbf{Parameter} & \textbf{Threshold} & \textbf{Action} \\
+\midrule
+Temperature & $>$ 28$^\circ$C & Activate fan \\
+Temperature & $>$ 32$^\circ$C & Activate AC \\
+Humidity & $<$ 30\% & Activate humidifier \\
+Humidity & $\geq$ 60\% & Open smart window \\
+CO$_2$ & High threshold exceeded & Activate ventilation \\
+\bottomrule
+\end{tabular}
+\caption{Environmental automation thresholds}
+\end{table}
+
+\subsection{HVAC Verification}
+
+Environmental conditions were manipulated through the Packet Tracer environment controls to test HVAC activation behavior.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\textwidth]{12-change-temp.png}
+\caption{Temperature manipulation testing}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{10-fan-off.png}
+\caption{Normal state}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{13-fan-and-ac-on.png}
+\caption{AC and fan activation}
+\end{minipage}
+\end{figure}
+
+\subsection{Humidity Comfort Control}
+
+When humidity drops below 30\%, the humidifier activates automatically to maintain indoor comfort.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{23-humidifier-on.png}
+\caption{Humidifier activation}
+\end{figure}
+
+\subsection{Smart Window Automation}
+
+The smart window supports passive ventilation:
+\begin{itemize}
+    \item Opens when humidity is high and AC is OFF
+    \item Closes automatically when AC activates
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{25-window-open.png}
+\caption{Window open}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=\textwidth]{26-window-close.png}
+\caption{Window closed}
+\end{minipage}
+\end{figure}
+
+\subsection{Water Safety Monitoring}
+
+Water flow is monitored continuously to detect leaks or taps left open.
+
+Due to Cisco Packet Tracer limitations, a siren is used to simulate solenoid valve activation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{15-high-water-level.png}
+\caption{Water leak alert activation}
+\end{figure}
+
+\subsection{Occupancy Full Detection}
+
+When all prayer hall motion sensors activate simultaneously, the occupancy-full siren is triggered automatically.
+
+\subsection{Street Lamp Automation}
+
+Exterior lighting activates automatically depending on environmental conditions and occupancy behavior.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{22-street-lamp-on.png}
+\caption{Street lamp automation}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Automation Logic}
+
+The system behavior is controlled through IoT Server automation conditions.
+
+The implemented logic includes:
+\begin{itemize}
+    \item Occupancy-based lighting
+    \item Temperature-based AC activation
+    \item CO$_2$-based ventilation
+    \item Water leak detection
+    \item Humidity comfort control
+    \item Smart window management
+    \item Occupancy-full siren logic
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{27-conditions.png}
+\caption{IoT server automation conditions}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Dashboard and User Interfaces}
+
+The system includes two dashboard interfaces:
+\begin{itemize}
+    \item Administrative dashboard
+    \item User prayer-time dashboard
+\end{itemize}
+
+\subsection{Administrative Dashboard}
+
+The admin dashboard allows:
+\begin{itemize}
+    \item Real-time monitoring
+    \item Device status visualization
+    \item Alert observation
+    \item Manual override control
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{8-admin-dashboard.png}
+\caption{Administrative dashboard}
+\end{figure}
+
+\subsection{Prayer-Time Dashboard}
+
+The user dashboard displays prayer schedules calculated using the USNO solar position algorithm.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{9-user-dashboard.png}
+\caption{Prayer-time dashboard}
+\end{figure}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{System Evaluation}
+
+The simulation demonstrates successful implementation of:
+\begin{itemize}
+    \item Energy-aware automation
+    \item Occupancy monitoring
+    \item Environmental comfort management
+    \item Water conservation
+    \item Real-time IoT monitoring
+\end{itemize}
+
+The modular design also allows future scalability through additional sensors and automation conditions.
+
+The system remained responsive during simultaneous sensor activity and demonstrated reliable automated behavior during testing.
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Challenges and Solutions}
+
+Several implementation challenges were encountered during development.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{L{6cm}L{8cm}}
+\toprule
+\textbf{Challenge} & \textbf{Solution} \\
+\midrule
+No native solenoid valve in CPT & Used siren as simulation proxy \\
+No external API support & Used USNO prayer-time calculations \\
+Large number of devices & Implemented DHCP and DNS servers \\
+Environmental testing difficulty & Used CPT environment controls \\
+Server functionality limitations & Used separate infrastructure servers \\
+\bottomrule
+\end{tabular}
+\caption{Implementation challenges and solutions}
+\end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\section{Future Improvements}
+
+Future development may include:
+\begin{itemize}
+    \item Real ESP32 deployment
+    \item MQTT communication
+    \item Cloud monitoring
+    \item Mobile application integration
+    \item AI-based occupancy prediction
+    \item Solar energy integration
+\end{itemize}
+
+% ────────────────────────────────────────────────────────────────────────────
 \section{Conclusion}
 
-% ─── List of Figures ──────────────────────────────────────────────────────────
+The Smart Mosque Management System successfully demonstrates how IoT technologies can improve efficiency, comfort, and sustainability inside public religious facilities.
+
+The implementation achieved:
+\begin{itemize}
+    \item Automated environmental management
+    \item Smart occupancy-aware control
+    \item Water conservation
+    \item Real-time monitoring
+    \item Secure local-network communication
+\end{itemize}
+
+Despite Cisco Packet Tracer limitations, the simulation provides a realistic representation of a modular and scalable smart mosque ecosystem.
+
+% ────────────────────────────────────────────────────────────────────────────
 \cleardoublepage
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures

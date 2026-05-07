@@ -1,0 +1,26 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}System Topology and Infrastructure}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Core Infrastructure Components}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}IoT Device Registration}{3}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Network Services and Security}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}DHCP and DNS Services}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Wireless Security}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Connectivity Verification}{4}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Implemented Smart Features}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Occupancy-Based Lighting}{5}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Environmental Control}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}HVAC Verification}{6}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Humidity Comfort Control}{6}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Smart Window Automation}{7}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Water Safety Monitoring}{7}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Occupancy Full Detection}{8}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Street Lamp Automation}{8}{subsection.4.8}%
+\contentsline {section}{\numberline {5}Automation Logic}{8}{section.5}%
+\contentsline {section}{\numberline {6}Dashboard and User Interfaces}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Administrative Dashboard}{9}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Prayer-Time Dashboard}{10}{subsection.6.2}%
+\contentsline {section}{\numberline {7}System Evaluation}{10}{section.7}%
+\contentsline {section}{\numberline {8}Challenges and Solutions}{11}{section.8}%
+\contentsline {section}{\numberline {9}Future Improvements}{11}{section.9}%
+\contentsline {section}{\numberline {10}Conclusion}{11}{section.10}%
+\contentsline {section}{List of Figures}{13}{section.10}%
