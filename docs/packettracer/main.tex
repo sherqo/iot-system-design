@@ -1,0 +1,208 @@
+\documentclass[12pt, a4paper]{article}
+
+% ─── Packages ───────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=1.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage[svgnames]{xcolor}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{placeins}
+
+\graphicspath{{imgs/}}
+
+% ─── Hyperlinks ─────────────────────────────────────────────────────────────
+\hypersetup{hidelinks, breaklinks=true, pdftitle={Smart Mosque Management System - Packet Tracer Simulation}, pdfauthor={Team Project}}
+
+% ─── Section Formatting ─────────────────────────────────────────────────────
+\definecolor{mysec}{RGB}{47,84,150}
+\definecolor{mysubsec}{RGB}{60,98,165}
+\definecolor{mysubsubsec}{RGB}{75,115,180}
+
+\titleformat{\section}
+{\Large\bfseries\color{mysec}}
+{\thesection.}{0.5em}{}[\titlerule]
+\titleformat{\subsection}
+{\large\bfseries\color{mysubsec}}
+{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+{\normalsize\bfseries\color{mysubsubsec}}
+{\thesubsubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{2.2em}{1.0em}
+\titlespacing*{\subsection}{0pt}{1.8em}{1.0em}
+\titlespacing*{\subsubsection}{0pt}{1.2em}{1.0em}
+
+% Make each section start on a new page and keep floats in order
+\let\oldsection\section
+\def\section{\FloatBarrier\clearpage\oldsection}
+
+% ─── Header / Footer ────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\fancyhead[L]{\small CSE356: Internet of Things}
+\fancyhead[R]{\small Smart Mosque - Packet Tracer}
+\fancyfoot[C]{\small Page \thepage}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\small Page \thepage}
+\fancyfoot[R]{\small Smart Mosque - Packet Tracer}
+
+% ─── Table Styling ──────────────────────────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\setlength{\extrarowheight}{4pt}
+
+% ─── List Styling ───────────────────────────────────────────────────────────
+\setlist[itemize]{leftmargin=1.5em, itemsep=0.2em, topsep=0.3em}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=0.2em, topsep=0.3em}
+
+% ────────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ─── Cover Page ─────────────────────────────────────────────────────────────
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+    \includegraphics[width=0.18\textwidth]{0-uni-logo.png}\\[1.6em]
+    {\Large\bfseries Ain Shams University -- Faculty of Engineering I-CHEP}\\[0.9em]
+    {\large CSE356: Internet of Things}\\[2.3em]
+
+    \vspace*{1.3cm}
+
+    {\Huge\bfseries Packet Tracer Simulation}\\[1.0em]
+    {\LARGE\bfseries Smart Mosque Management System}\\[1.4em]
+    \rule{0.62\textwidth}{0.5pt}\\[1.3em]
+    {\large 14-May-2026}
+\end{center}
+
+\vfill
+
+\begin{center}
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{L{3.2cm}L{8.8cm}}
+\toprule
+\textbf{Submitted to} & Prof. Islam Tharwat\\
+                      & Eng. Hamdy Osama\\
+\bottomrule
+\end{tabular}
+}
+
+\vspace{1.0em}
+
+{\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{L{3.2cm}L{8.8cm}}
+\toprule
+\textbf{Submitted by} & 23P0184 -- Sara Ahmed\\
+                      & 23P0360 -- El-Sharqawy Wael\\
+                      & 23P0386 -- Esraa Mustafa\\
+                      & 23P0272 -- Nada Medhat\\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+
+\vspace*{2.6cm}
+\end{titlepage}
+
+% ─── Table of Contents ──────────────────────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ─── 1. Introduction ──────────────────────────────────────────────────────────
+\section{Introduction}
+
+% ─── 2. Simulation Environment & Topology ────────────────────────────────────
+\section{Simulation Environment \& Topology}
+
+% ─── 3. Functional Implementation ─────────────────────────────────────────────
+\section{Functional Implementation}
+
+% ─── 4. Automation Logic & Conditions ─────────────────────────────────────────
+\section{Automation Logic \& Conditions}
+
+% ─── 5. Simulation Verification ─────────────────────────────────────────────
+\section{Simulation Verification (Results)}
+
+% ─── 6. Challenges Faced ───────────────────────────────────────────────────
+\section{Challenges Faced}
+
+% ─── 7. Solutions & Overcoming Obstacles ─────────────────────────────────────
+\section{Solutions \& Overcoming Obstacles}
+
+% ─── 8. Conclusion ───────────────────────────────────────────────────────────
+\section{Conclusion}
+
+% ─── List of Figures ──────────────────────────────────────────────────────────
+\cleardoublepage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+
+\end{document}
