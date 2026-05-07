@@ -1,88 +1,47 @@
-<<<<<<< HEAD
 \section{Application Development}
 
 \subsection{Application Overview and Platform}
-The application layer is a web-based dashboard acting as the primary interface between users and the IoT system. It centralizes real-time data visualization and device control in one operational view.
 
-\subsection{User Role}
-The system is designed for an admin role with full access to monitoring, alert handling, and override control to maintain system performance and safety.
-
-\subsection{Core Features}
-\begin{itemize}
-  \item Real-time monitoring (CO$_2$, temperature, humidity, occupancy)
-  \item Live status display of connected devices
-  \item Alert and notification handling for abnormal conditions
-  \item Actuator control (e.g., ventilation)
-  \item Historical data overview and basic trend visualization
-\end{itemize}
-
-\textbf{Application-system interaction:}
-\begin{itemize}
-  \item Retrieves real-time sensor data via backend APIs
-  \item Displays continuously updated system status
-  \item Sends control commands to actuators
-  \item Supports bidirectional monitoring/control communication
-  \item Maintains low-latency updates for operational responsiveness
-\end{itemize}
-
-\subsection{User Interface Design}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{10.4-ui-design-3.png}
-    \caption{Dashboard UI design - Prayer times}
-\end{figure}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{10.4-ui-design-1.png}
-    \caption{Dashboard UI design - High CO$_2$ alert}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \begin{minipage}[t]{0.49\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{10.4-ui-design-2.png}
-  \end{minipage}\hfill
-  \begin{minipage}[t]{0.49\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{10.4-ui-design-4.png}
-  \end{minipage}
-  \caption{Dashboard UI design - Normal conditions}
-\end{figure}
-
-
-=======
-\newpage
-\section{Application Development}
-
-\subsection{Application Overview and Platform}
 The application layer of the IoT system consists of a web-based dashboard that serves as the main interface between users and the system. It provides a centralized platform for interacting with real-time data collected from sensors and controlling connected devices.
 
 Its main purpose is to enable effective monitoring and management of the IoT environment by presenting live information in a clear and organized way. The dashboard acts as the primary operational tool for users, allowing them to observe system status, respond to alerts, and manage device behavior efficiently.
 
 The application layer is a web-based dashboard acting as the primary interface between users and the IoT system. It centralizes real-time data visualization and device control in one operational view.
 
+% -------------------------------------------------------
+
 \subsection{User Role}
+
 The system is designed exclusively for admin users, who are responsible for monitoring and managing the IoT environment through the web-based dashboard. The admin has full access to real-time sensor data, system status, and device controls. Their role includes overseeing environmental conditions, responding to alerts, and adjusting system settings when necessary to ensure optimal performance and safety.
 
 The system is designed for an admin role with full access to monitoring, alert handling, and override control to maintain system performance and safety.
 
+% -------------------------------------------------------
+
 \subsection{Core Features}
+
 The web-based dashboard provides a set of essential functionalities that enable effective monitoring and control of the IoT system, including the following core features:
+
 \begin{itemize}
-  \item Real-time monitoring of sensor data (e.g., CO2, temperature, humidity, occupancy)
+  \item Real-time monitoring of sensor data (e.g., CO$_2$, temperature, humidity, occupancy)
   \item Live system status display for all connected devices
   \item Alert and notification system for abnormal conditions
   \item Control of IoT actuators (e.g., ventilation system)
   \item Overview of historical data visualization and basic trends (e.g., peak hours)
 \end{itemize}
 
+The dashboard also supports monitoring of additional smart devices integrated into the system, including:
+\begin{itemize}
+  \item Smart window state (open/closed)
+  \item Humidifier activation status
+  \item Occupancy-full siren alerts
+  \item Street lamp activity status
+\end{itemize}
+
 The web-based dashboard communicates with the IoT system through a backend layer that enables real-time data exchange and control. It continuously receives updated sensor readings and system statuses, while also sending user commands to connected devices for execution.
 
 \textbf{Application-system interaction:}
+
 \begin{itemize}
   \item Retrieves real-time data from IoT sensors via backend APIs
   \item Displays continuously updated system status on the dashboard
@@ -91,34 +50,67 @@ The web-based dashboard communicates with the IoT system through a backend layer
   \item Ensures low-latency updates for real-time system responsiveness
 \end{itemize}
 
-\newpage
+% -------------------------------------------------------
+
 \subsection{User Interface Design}
 
-\begin{figure}[H]
+The user interface is designed to provide a simple and organized operational dashboard that allows administrators to monitor environmental conditions and control connected IoT devices efficiently.
+
+The interface emphasizes:
+\begin{itemize}
+    \item Clear visualization of live sensor data
+    \item Easy identification of abnormal conditions and alerts
+    \item Simple actuator control and manual override operations
+    \item Continuous monitoring of occupancy and environmental comfort
+    \item Responsive layout suitable for monitoring multiple system components simultaneously
+\end{itemize}
+
+The dashboard interface includes:
+\begin{itemize}
+    \item Prayer-time schedule display
+    \item Real-time occupancy indicators
+    \item Temperature, humidity, and CO$_2$ monitoring panels
+    \item Device status indicators for lights, fans, AC, smart window, humidifier, and street lamp
+    \item Alert notifications for overcrowding, poor air quality, abnormal water flow, and system faults
+\end{itemize}
+
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{10.4-ui-design-3.png}
-    \caption{Dashboard UI design - Prayer times}
+    \caption{Dashboard UI design -- Prayer times}
 \end{figure}
 
-
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth]{10.4-ui-design-1.png}
-    \caption{Dashboard UI design - High CO$_2$ alert}
+    \caption{Dashboard UI design -- High CO$_2$ alert}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
   \centering
   \begin{minipage}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{10.4-ui-design-2.png}
-  \end{minipage}\hfill
+  \end{minipage}
+  \hfill
   \begin{minipage}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{10.4-ui-design-4.png}
   \end{minipage}
-  \caption{Dashboard UI design - Normal conditions}
+  \caption{Dashboard UI design -- Normal operating conditions}
 \end{figure}
 
+% -------------------------------------------------------
 
->>>>>>> e43e52f20d321dd86cf0dd1f5e670263b6aa2823
+\subsection{System Integration with the Dashboard}
+
+The dashboard is integrated directly with the IoT infrastructure and continuously exchanges information with sensors, controllers, and actuators through the local network.
+
+The integration workflow includes:
+\begin{itemize}
+    \item Receiving live sensor readings from occupancy, IAQ, humidity, and water-monitoring systems
+    \item Processing and displaying environmental thresholds and alerts
+    \item Sending manual override commands to lighting, ventilation, humidifier, smart window, and valve-control devices
+    \item Maintaining synchronized device-state visualization for administrators
+    \item Supporting reliable low-latency monitoring inside the local mosque network
+\end{itemize}

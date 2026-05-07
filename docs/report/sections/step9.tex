@@ -1,14 +1,12 @@
-<<<<<<< HEAD
 \section{Device and Component Integration}
 
 \subsection{Input Devices (Sensors)}
 
 \subsubsection{Motion Sensor (PIR)}
 
-A Passive Infrared (PIR) sensor detects changes in infrared radiation emitted by warm bodies.
-It is compact, low-cost, and energy-efficient.
+A Passive Infrared (PIR) sensor is a type of motion detection device that operates without actively emitting energy. The term ``passive'' indicates that the sensor does not generate or radiate signals for detection purposes. Instead, it detects variations in infrared radiation naturally emitted or reflected by objects within its field of view. PIR sensors are compact, cost-effective, and energy-efficient, making them suitable for a wide range of applications. They are commonly used in residential, medical, and industrial environments for occupancy and motion detection.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \begin{minipage}[t]{0.45\textwidth}
 \centering
@@ -26,23 +24,24 @@ It is compact, low-cost, and energy-efficient.
 \begin{itemize}
     \item Detection range: up to 7 meters
     \item Detection angle: 110 degrees
-    \item Operating voltage: DC 4.5V--12V
+    \item Operating voltage: DC 4.5V--12V DC
     \item Output signal: 3.3V digital output
-    \item Delay time: 0.3 seconds to 5 minutes (adjustable)
+    \item Delay time: adjustable from 0.3 seconds to 5 minutes
     \item Operating temperature: -15$^\circ$C to +70$^\circ$C
-    \item Sensitivity: adjustable
+    \item Sensitivity: Adjustable
 \end{itemize}
 
-\textbf{Working principle summary:}
+\textbf{Working Principle of a PIR Motion Sensor}
 
-\textbf{1. Infrared detection:} The PIR sensing element continuously detects infrared
-radiation from the environment. When a warm object crosses the field of view, the detected
-radiation level changes from one zone to another, producing a measurable differential signal.
-This transition is the key trigger used by the sensor to recognize motion.
+\textbf{1. Infrared detection:}
 
-\textbf{2. Sensor structure:} Uses dual sensing zones and lens focusing.
+A PIR sensor contains a pyroelectric element that detects changes in infrared radiation. Since all objects emit infrared energy, warmer objects produce a stronger signal.
 
-\begin{figure}[H]
+\textbf{2. Sensor structure:}
+
+The sensing element is divided into two sections that are arranged to balance each other under normal conditions. A lens is placed over the sensor to improve its sensing range and focus incoming infrared radiation.
+
+\begin{figure}[htbp]
 \centering
 \begin{minipage}[t]{0.45\textwidth}
 \centering
@@ -56,442 +55,296 @@ This transition is the key trigger used by the sensor to recognize motion.
 \caption{Infrared detection concept (left) and PIR sensor structure (right)}
 \end{figure}
 
-\textbf{3. Idle state:} Balanced sensing zones keep the output stable.
+\textbf{3. Idle state:}
 
-\textbf{4. Motion detection:} As a person moves across the sensing area, one PIR segment
-receives higher infrared energy than the other. The sensor circuit amplifies this difference
-and interprets it as movement.
+When no movement is present, both sections receive approximately the same amount of infrared radiation. In this case, no differential signal is produced, so the output remains stable.
 
-\textbf{5. Output generation:} After threshold comparison, the sensor produces a digital
-output pulse. This output is forwarded to the controller to trigger occupancy and automation
-logic in real time.
+\textbf{4. Motion detection}
 
-\begin{figure}[H]
+When a warm body moves across the sensor's field of view, one section receives more infrared radiation than the other. This creates a differential signal, which is then amplified and compared by the internal circuit.
+
+\textbf{5. Output generation}
+
+If the change in infrared radiation is significant, the comparator produces an output signal, indicating motion. When the object leaves the sensing area, the signal changes again, allowing the sensor to detect movement in real time.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{9.1.1-motion-detection.jpg}
 \caption{Motion detection behavior}
 \end{figure}
 
-PIR should be installed away from Wi-Fi antennas to reduce electromagnetic interference risk.
+It is important to remember that the PIR sensor should be installed away from the Wi-Fi antenna to avoid affecting its performance, since Wi-Fi signals emit electromagnetic radiation that can interfere with the PIR sensor.
 
 % -------------------------------------------------------
+
 \subsubsection{Air Quality Sensor (IAQ)}
 
-\begin{figure}[H]
+To manage and maintain clean indoor air, IAQ (Indoor Air Quality) sensors are employed to monitor key environmental pollutants and climate parameters. These sensors play a central role in air purification systems, HVAC control, building automation, and environmental safety.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{9.1.2-air-quality-sensor.jpg}
 \caption{Indoor air quality sensor module}
 \end{figure}
 
-IAQ sensing supports ventilation control by monitoring gases and climate parameters.
-
-\textbf{Key IAQ factors:}
+\textbf{Key factors influencing IAQ:}
 \begin{itemize}
     \item Chemical pollutants (CO$_2$, VOCs, NO$_2$)
     \item Biological contaminants (mold, bacteria, allergens)
     \item Particulate matter (PM2.5, PM10)
-    \item Environmental conditions (humidity, temperature, pressure)
+    \item Environmental conditions (humidity, temperature, air pressure)
 \end{itemize}
 
-\textbf{Common pollutants and impact:}
-\begin{table}[H]
+The IAQ sensor is essentially a multi-parameter electronic device that detects and quantifies various pollutants and environmental conditions within indoor spaces. These sensors may measure gases, particles, and climate-related parameters, then transmit the data to a monitoring or control system. The Smart Mosque system is designed to use a multi-sensor module rather than a single-sensor one.
+
+\textbf{Common pollutants monitored by IAQ and their effects:}
+
+\begin{table}[htbp]
 \centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{2.2cm} L{4.8cm} L{5.6cm}}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{2.5cm} L{4.5cm} L{5.2cm}}
 \toprule
 \textbf{Pollutant} & \textbf{Description} & \textbf{Health Effects} \\
 \midrule
-CO$_2$        & Ventilation indicator                  & Fatigue, headache, lower productivity \\
-VOCs          & Emitted by paints/cleaners/plastics    & Irritation, dizziness, long-term risk \\
-PM2.5/PM10    & Fine dust and smoke particles          & Respiratory and cardiovascular burden \\
-CO            & Incomplete combustion product          & Severe toxicity at high concentration \\
-Formaldehyde  & Emitted by furniture/insulation        & Carcinogenic, irritation \\
-NO$_2$/O$_3$  & Combustion and outdoor sources         & Respiratory distress \\
-Humidity      & Moisture level                         & Mold growth, discomfort \\
-Temperature   & Thermal condition                      & Fatigue, reduced comfort \\
+CO$_2$ & Exhaled by humans; indicator of ventilation & Fatigue, headaches, reduced productivity \\
+VOCs & Emitted by paints, cleaners, plastics & Eye irritation, dizziness, cancer risks \\
+PM2.5/PM10 & Fine dust, smoke, allergens & Respiratory and cardiovascular problems \\
+CO & Incomplete combustion product & Fatal at high concentrations \\
+Formaldehyde & Emitted by furniture, glues, insulation & Carcinogenic, irritation \\
+NO$_2$/O$_3$ & From gas stoves, outdoor pollution & Respiratory distress \\
+Humidity & Excessive moisture promotes mold & Discomfort, mold growth \\
+Temperature & Affects comfort and productivity & Fatigue, poor cognitive performance \\
 \bottomrule
 \end{tabular*}
 \caption{IAQ factors and effects}
 \end{table}
 
-IAQ sensors require periodic calibration (typically every 6--12 months).
+\textbf{Working principles of IAQ sensors:}
+\begin{enumerate}
+    \item Sensing: Each sensor type uses a specific physical or chemical method to detect its target pollutant.
+    \item Signal Processing: Detected signals are converted into electrical output (analog or digital).
+    \item Calibration: Sensors are calibrated for accuracy, often using reference gases.
+    \item Data Output: The processed data is sent via I2C, UART, Modbus, or wireless protocols (Wi-Fi, Zigbee, LoRa).
+    \item Display and Analysis: Results are visualized on display or uploaded to the cloud for remote monitoring.
+\end{enumerate}
+
+Commonly, the output of an IAQ sensor can range from 0--50 (good), 51--100 (moderate), 101--150 (unhealthy for sensitive groups), and 151--200 (unhealthy).
+
+A good quality sensor offers accurate readings, but like any sensor, IAQ devices come with several challenges:
+\begin{itemize}
+    \item Sensor drift and degradation over time
+    \item Cross-sensitivity (e.g., VOC sensors reacting to humidity)
+    \item Need for periodic calibration
+    \item Data overload in multi-sensor networks
+    \item False readings due to temperature/humidity interference
+\end{itemize}
+
+It is important to calibrate the sensor every 6--12 months to ensure good quality readings.
 
 % -------------------------------------------------------
+
 \subsubsection{Water Flow Sensor}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{9.1.3-water-flow-sensor.jpg}
 \caption{Water flow sensor}
 \end{figure}
 
-Water flow sensors measure instantaneous flow rate and cumulative usage, producing pulse
-output suitable for MCU integration. This allows the controller to detect abnormal continuous
-flow and apply water-saving actions when needed.
+Water flow sensors are installed at water sources or pipes to measure the flow rate of water and calculate the total amount of water flowing through the pipe. Flow rate is commonly measured in liters per hour or cubic meters. The sensor measures water flow in real time and provides pulse output that can easily connect to an MCU in simulation or real implementation.
 
-\textbf{Working principle summary:}
+\textbf{Working principles of a water flow sensor:}
 \begin{itemize}
-    \item Water drives an internal rotor.
-    \item Hall-effect sensing converts rotor speed to pulse signal.
-    \item Pulse frequency maps to flow rate.
-    \item Controller computes usage and triggers control logic.
+    \item A water flow sensor has a plastic body or valve that allows water to pass through it.
+    \item Inside the sensor, a rotor and a Hall-effect sensor work together to detect and measure water flow.
+    \item When water moves through the sensor, it rotates the rotor.
+    \item The rotor's movement changes the rotation speed, which is converted into a pulse signal by the Hall-effect sensor.
+    \item The pulse signal is then used to calculate the water flow rate.
+    \item The main working principle is the Hall effect, where rotor motion induces a voltage difference measured by the sensor.
+    \item This induced voltage represents flow movement inside the sensor.
+    \item The flow value can then be displayed or processed by the controller.
 \end{itemize}
 
+Water flow sensors can be used with hot, cold, warm, clean, or dirty water depending on sensor type. In this project, clean water compatibility is sufficient. These sensors can be connected easily to microcontrollers such as the ESP32. The required supply voltage is typically between 5V and 18V DC.
+
 % -------------------------------------------------------
+
 \subsection{Output Devices (Actuators)}
 
 \subsubsection{Smart Lights}
-Activated by combined prayer-window and occupancy conditions to balance comfort and energy savings.
 
-\subsubsection{Fans (AC Simulation)}
-Activated by IAQ conditions and occupancy demand. Two separate cooling thresholds are implemented:
+Smart lights are used as output devices to provide illumination in the mosque when needed. Their role is to support comfort and visibility during prayer times while reducing unnecessary energy usage during low occupancy periods.
+
+\textbf{Working principle:}
 \begin{itemize}
-    \item Ventilation fan activates when CO$_2$ exceeds threshold, temperature exceeds 28$^\circ$C, or humidity exceeds 65\%.
-    \item Dedicated AC unit activates when temperature exceeds 32$^\circ$C as a stronger cooling response.
+    \item The system checks whether prayer time is active.
+    \item It also checks whether a PIR sensor detects people in a specific area.
+    \item If both conditions are true, lights turn ON automatically.
+    \item If no people are detected, lights remain OFF even during the prayer window.
+    \item After prayer time ends, lights turn OFF automatically.
 \end{itemize}
 
-When environmental conditions normalize, the system automatically deactivates the corresponding cooling devices.
+\textbf{How it functions in the project:}
+
+When the PIR sensor detects movement in a mosque section, the system interprets this as occupancy. If occupancy occurs during the prayer period, the lights activate automatically to provide illumination. When the area becomes empty, the lights turn OFF after a short delay to avoid unnecessary power consumption.
+
+% -------------------------------------------------------
+
+\subsubsection{Fans (AC Simulation)}
+
+Fans and AC units maintain comfortable environmental conditions by responding to temperature, humidity, CO$_2$, and air-quality conditions.
+
+\textbf{Working principle:}
+\begin{itemize}
+    \item The IAQ sensor continuously measures temperature, humidity, and CO$_2$ levels.
+    \item Ventilation fans activate when CO$_2$ exceeds thresholds, temperature exceeds 28$^\circ$C, or humidity exceeds 65\%.
+    \item A dedicated AC unit activates when temperature exceeds 32$^\circ$C as a stronger cooling response.
+    \item If environmental conditions remain acceptable, fans and AC stay OFF or operate at lower intensity.
+    \item When conditions improve, the system reduces ventilation automatically.
+\end{itemize}
+
+\textbf{How it functions in the project:}
+
+When the mosque becomes crowded, environmental readings indicate increased ventilation demand. The controller activates fans or AC accordingly to maintain comfort and airflow. Once temperature, humidity, and CO$_2$ return to acceptable levels, ventilation decreases automatically to reduce energy consumption.
+
+% -------------------------------------------------------
 
 \subsubsection{Solenoid Valve}
-Automatically closes water supply during abnormal flow patterns and can reopen via logic/manual reset.
 
-\begin{figure}[H]
+The solenoid valve controls the water supply in the ablution area using water flow sensor readings. Its role is to stop water waste when abnormal or continuous flow is detected.
+
+\textbf{Working principle:}
+\begin{itemize}
+    \item Water flow sensors continuously monitor water movement.
+    \item If abnormal flow continues longer than expected, the controller interprets this as possible waste.
+    \item The controller sends an electrical signal to the solenoid valve.
+    \item The solenoid valve closes and stops water flow.
+    \item The valve can reopen manually or automatically when normal conditions return.
+\end{itemize}
+
+\textbf{How it functions in the project:}
+
+If the system detects water flowing longer than expected, it assumes a tap may have been left open or a leak is present. The controller activates the solenoid valve to stop the flow and prevent unnecessary waste.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.42\textwidth]{9.2.3-parts-of-solenoid-valve.jpg}
 \caption{Solenoid valve components}
 \end{figure}
+
+% -------------------------------------------------------
 
 \subsubsection{Smart Window}
-The smart window is controlled automatically using AC state and humidity readings.
-When the AC unit activates, the window closes to preserve conditioned air inside the prayer hall.
-If the AC is OFF and humidity reaches high levels, the window opens to support passive ventilation and improve indoor airflow.
+
+The smart window improves airflow while reducing unnecessary cooling loss.
+
+\textbf{Working principle:}
+\begin{itemize}
+    \item The system continuously monitors humidity and AC state.
+    \item If the AC unit is ON, the smart window closes automatically.
+    \item If the AC unit is OFF and humidity is high, the window opens for passive ventilation.
+    \item Window operation updates dynamically according to environmental conditions.
+\end{itemize}
+
+\textbf{How it functions in the project:}
+
+The smart window complements the ventilation system by providing natural airflow when mechanical cooling is not required, improving comfort and reducing unnecessary AC operation.
+
+% -------------------------------------------------------
 
 \subsubsection{Humidifier}
-The humidifier activates automatically when indoor humidity drops below the configured comfort threshold.
-This helps maintain comfortable environmental conditions for worshippers, especially during dry weather conditions.
+
+The humidifier maintains comfortable indoor humidity levels inside the mosque.
+
+\textbf{Working principle:}
+\begin{itemize}
+    \item Humidity sensors continuously monitor indoor moisture levels.
+    \item If humidity falls below 30\%, the humidifier activates automatically.
+    \item Once humidity returns to acceptable range, the humidifier deactivates automatically.
+\end{itemize}
+
+\textbf{How it functions in the project:}
+
+The humidifier improves comfort for worshippers during dry environmental conditions and helps maintain stable indoor air quality.
+
+% -------------------------------------------------------
 
 \subsubsection{Street Lamp}
-The street lamp provides entrance-area lighting based on motion detection and occupancy activity near the mosque entrance.
-This improves visibility and safety while reducing unnecessary energy consumption during low-activity periods.
+
+The street lamp provides lighting near the mosque entrance during periods of activity.
+
+\textbf{Working principle:}
+\begin{itemize}
+    \item PIR motion sensors monitor activity near the entrance.
+    \item When motion is detected, the controller activates the street lamp automatically.
+    \item After inactivity, the street lamp turns OFF automatically.
+\end{itemize}
+
+\textbf{How it functions in the project:}
+
+The street lamp improves entrance visibility and safety while minimizing unnecessary energy consumption during low-activity periods.
 
 % -------------------------------------------------------
+
 \subsection{Processing Unit}
 
-The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and peripheral interfaces
-(I2C/UART/SPI/PWM), low power operation, and capability to run concurrent IoT control tasks.
+The ESP32 microcontroller is selected as the processing unit because it is a powerful, low-cost, and low-power System-on-Chip (SoC) capable of supporting real-time IoT automation.
 
-\begin{figure}[H]
+\begin{itemize}
+    \item Wi-Fi connectivity: Built-in Wi-Fi supports network-based monitoring and automation.
+    \item Multiple interfaces: Supports GPIO, I2C, UART, SPI, and PWM interfaces.
+    \item Low power operation: Suitable for continuous operation throughout the day.
+    \item Embedded IoT control: Capable of handling sensor reading and device actuation simultaneously.
+    \item Practical for project scope: Well suited for managing occupancy, ventilation, lighting, and water-control systems together.
+\end{itemize}
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.45\textwidth]{9.3-esp32.jpg}
 \caption{ESP32 processing unit}
 \end{figure}
 
 % -------------------------------------------------------
+
 \subsection{Communication Layer}
+
+The communication layer enables reliable real-time data exchange between distributed sensors, the processing unit, and the dashboard.
+
+\textbf{The system communication is implemented as follows:}
 \begin{itemize}
-    \item Local Wi-Fi AP for ESP32-to-server connectivity
-    \item IEEE 802.11 with WPA2-PSK security
-    \item Star topology
-    \item IoT network segmentation from general user devices
-    \item CPT representation: LAN linking MCU units to Registration Server
+    \item Network Setup: A local Wi-Fi access point connects ESP32 nodes to the server.
+    \item Protocol and Security: IEEE 802.11 Wi-Fi secured using WPA2-PSK encryption.
+    \item Topology: Star topology simplifies management and expansion.
+    \item Network Segmentation: IoT devices operate on a separate secured network segment.
+    \item Real-World Implementation: MQTT or Zigbee-based solutions may be used in larger deployments.
+    \item Simulation Representation: Cisco Packet Tracer models the system using MCU nodes connected to a Registration Server.
 \end{itemize}
 
 % -------------------------------------------------------
+
 \subsection{Integration Workflow}
+
+The integration workflow follows the same process defined in the system process specification to ensure consistency between sensing, processing, and actuation stages.
+
 \begin{enumerate}
-    \item Sensing stage
-    \item Data transmission stage
-    \item Processing and decision stage
-    \item Actuation stage
-    \item Monitoring and feedback stage
+    \item \textbf{Sensing Stage:} Sensors continuously monitor occupancy, environmental conditions, humidity, temperature, and water usage.
+    
+    \item \textbf{Data Transmission Stage:} Sensor readings are transmitted through the local Wi-Fi network to the processing unit.
+    
+    \item \textbf{Processing and Decision Stage:} The controller evaluates incoming data using predefined thresholds, prayer schedules, and occupancy logic.
+    
+    \item \textbf{Actuation Stage:} Control signals are sent to lighting, ventilation, windows, humidifiers, and water-control devices.
+    
+    \item \textbf{Monitoring and Feedback Stage:} Dashboard systems display current sensor readings, alerts, and device status while allowing administrator overrides.
 \end{enumerate}
 
-This workflow is consistent with Step 2 process design.
+This workflow directly reflects the process flow defined earlier and ensures consistency across design and implementation.
 
 % -------------------------------------------------------
+
 \subsection{System Diagram}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.84\textwidth]{9.6-system-diagram.png}
 \caption{System integration diagram}
 \end{figure}
-=======
-\newpage
-\section{Device and Component Integration}
-
-\subsection{Input Devices (Sensors)}
-
-\subsubsection{Motion Sensor (PIR)}
-
-A Passive Infrared (PIR) sensor detects changes in infrared radiation emitted by warm bodies.
-It is compact, low-cost, and energy-efficient.
-
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=0.85\linewidth]{9.1.1-pir.jpg}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=0.85\linewidth]{9.1.1-grid-eye-illusion.png}
-\end{minipage}
-\caption{PIR motion sensor (left) and PIR sensing grid illustration (right)}
-\end{figure}
-
-\textbf{Sensor details:}
-\begin{itemize}
-    \item Detection range: up to 7 meters
-    \item Detection angle: 110 degrees
-    \item Operating voltage: DC 4.5V--12V
-    \item Output signal: 3.3V digital output
-    \item Delay time: 0.3 seconds to 5 minutes (adjustable)
-    \item Operating temperature: -15$^\circ$C to +70$^\circ$C
-    \item Sensitivity: adjustable
-\end{itemize}
-
-\textbf{Working principle summary:}
-
-\textbf{1. Infrared detection:} The PIR sensing element continuously detects infrared
-radiation from the environment. When a warm object crosses the field of view, the detected
-radiation level changes from one zone to another, producing a measurable differential signal.
-This transition is the key trigger used by the sensor to recognize motion.
-
-\textbf{2. Sensor structure:} Uses dual sensing zones and lens focusing.
-
-\begin{figure}[H]
-\centering
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=0.85\linewidth]{9.1.1-infrared-detection.png}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-\centering
-\includegraphics[width=0.85\linewidth]{9.1.1-sensor-structure.png}
-\end{minipage}
-\caption{Infrared detection concept (left) and PIR sensor structure (right)}
-\end{figure}
-
-\textbf{3. Idle state:} Balanced sensing zones keep the output stable.
-
-\textbf{4. Motion detection:} As a person moves across the sensing area, one PIR segment
-receives higher infrared energy than the other. The sensor circuit amplifies this difference
-and interprets it as movement.
-
-\textbf{5. Output generation:} After threshold comparison, the sensor produces a digital
-output pulse. This output is forwarded to the controller to trigger occupancy and automation
-logic in real time.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.45\textwidth]{9.1.1-motion-detection.jpg}
-\caption{Motion detection behavior}
-\end{figure}
-
-PIR should be installed away from Wi-Fi antennas to reduce electromagnetic interference risk.
-
-% -------------------------------------------------------
-\subsubsection{Air Quality Sensor (IAQ)}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.45\textwidth]{9.1.2-air-quality-sensor.jpg}
-\caption{Indoor air quality sensor module}
-\end{figure}
-
-IAQ sensing supports ventilation control by monitoring gases and climate parameters.
-
-\textbf{Key IAQ factors:}
-\begin{itemize}
-    \item Chemical pollutants (CO$_2$, VOCs, NO$_2$)
-    \item Biological contaminants (mold, bacteria, allergens)
-    \item Particulate matter (PM2.5, PM10)
-    \item Environmental conditions (humidity, temperature, pressure)
-\end{itemize}
-
-\textbf{Common pollutants and impact:}
-\begin{table}[H]
-\centering
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{2.2cm} L{4.8cm} L{5.6cm}}
-\toprule
-\textbf{Pollutant} & \textbf{Description} & \textbf{Health Effects} \\
-\midrule
-CO$_2$        & Ventilation indicator                  & Fatigue, headache, lower productivity \\
-VOCs          & Emitted by paints/cleaners/plastics    & Irritation, dizziness, long-term risk \\
-PM2.5/PM10    & Fine dust and smoke particles          & Respiratory and cardiovascular burden \\
-CO            & Incomplete combustion product          & Severe toxicity at high concentration \\
-Formaldehyde  & Emitted by furniture/insulation        & Carcinogenic, irritation \\
-NO$_2$/O$_3$  & Combustion and outdoor sources         & Respiratory distress \\
-Humidity      & Moisture level                         & Mold growth, discomfort \\
-Temperature   & Thermal condition                      & Fatigue, reduced comfort \\
-\bottomrule
-\end{tabular*}
-\caption{IAQ factors and effects}
-\end{table}
-
-IAQ sensors require periodic calibration (typically every 6--12 months).
-
-A good quality sensor offers accurate reading, but like any sensor, IAQ comes with some challenges like:
-\begin{itemize}
-  \item Sensor drift and degradation over time
-  \item Cross-sensitivity (e.g., VOC sensors reacting to humidity)
-  \item Need for periodic calibration
-  \item Data overload in multi-sensor networks
-  \item False readings due to temperature/humidity interference
-\end{itemize}
-
-It is important to calibrate it every 6-12 months to ensure good quality reading.
-
-Working principles of IAQ sensors:
-\begin{itemize}
-  \item Sensing: Each sensor type uses a specific physical or chemical method to detect its target pollutant.
-  \item Signal Processing: Detected signals are converted into electrical output (analog or digital).
-  \item Calibration: Sensors are calibrated for accuracy, often using reference gases.
-  \item Data Output: The processed data is sent via I2C, UART, Modbus, or wireless protocols (Wi-Fi, Zigbee, LoRa).
-  \item Display and Analysis: Results are visualized on display or uploaded to the cloud for remote monitoring.
-\end{itemize}
-
-Commonly, the output of an IAQ sensor can range from 0-50 (good), 51-100 (moderate), 101-150 (unhealthy for sensitive groups), and 151-200 (unhealthy).
-
-% -------------------------------------------------------
-\subsubsection{Water Flow Sensor}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.45\textwidth]{9.1.3-water-flow-sensor.jpg}
-\caption{Water flow sensor}
-\end{figure}
-
-Water flow sensors measure instantaneous flow rate and cumulative usage, producing pulse output suitable for MCU integration. This allows the controller to detect abnormal continuous flow and apply water-saving actions when needed.
-
-The sensor is usually installed at the water inlet or at the opening of the pipe. The required supply voltage is usually 5V to 18V DC. Water flow sensors can be used with hot, cold, warm, clean, or dirty water, depending on the sensor type. In our case, it should be enough for clean water of all temperatures. These sensors can be easily connected to microcontrollers such as Arduino.
-
-\textbf{Working principle summary:}
-\begin{itemize}
-    \item Water drives an internal rotor.
-    \item Hall-effect sensing converts rotor speed to pulse signal.
-    \item Pulse frequency maps to flow rate.
-    \item Controller computes usage and triggers control logic.
-\end{itemize}
-
-% -------------------------------------------------------
-\subsection{Output Devices (Actuators)}
-
-\subsubsection{Smart Lights}
-Smart lights are used as an output device to provide illumination in the mosque when needed. Their main role is to support comfort and visibility during prayer times while reducing unnecessary energy use during periods of low occupancy.
-
-Working principle:
-\begin{itemize}
-  \item The system checks whether the prayer time is active.
-  \item It also checks whether a PIR sensor has detected people in a specific area of the mosque.
-  \item If both conditions are true, the lights turn on automatically.
-  \item If no people are detected, the lights remain off even during the prayer window.
-  \item After the prayer time ends, the lights turn off automatically (if no people detected).
-  \item This ensures that lighting is provided only when the prayer hall is in use.
-\end{itemize}
-
-How it functions in the project: When the PIR sensor detects movement or presence in a section of the mosque, the system interprets this as occupancy in that area. If this happens during the prayer period, the smart lights are activated to provide adequate lighting for worshippers. If the area becomes empty, the lights are switched off after a short delay to avoid unnecessary power consumption. This makes the lighting system both responsive and energy efficient, since it operates only when people are present and prayer time requires it.
-
-\subsubsection{Fans (AC Simulation)}
-Fans and AC units act as output devices that maintain a comfortable environment in the mosque by responding to indoor air quality readings such as temperature, humidity, CO2, and other pollution indicators. Their role is to improve ventilation when the prayer hall becomes crowded or the air becomes warm or stale, and to reduce operation when conditions return to normal.
-
-Working principle:
-\begin{itemize}
-  \item The IAQ sensor continuously measures temperature, humidity, and CO2 levels inside the mosque.
-  \item If the readings show that the air is getting warm, humid, or poorly ventilated, the controller sends a signal to activate the fans or AC.
-  \item If the air quality stays within acceptable limits, the fans and AC remain off or operate at a lower level.
-  \item This allows the ventilation system to respond automatically to real environmental conditions rather than running all the time.
-  \item After the crowd decreases or the temperature and air quality improve, the system reduces ventilation to save energy.
-\end{itemize}
-
-How it functions in the project: When the mosque becomes crowded, the sensor readings increase and indicate a higher need for ventilation. The controller then activates the fans or AC to improve air circulation and maintain comfort for worshippers. If the temperature, humidity, and CO2 levels return to acceptable values, the system stops or reduces the output again. This makes the ventilation process both responsive and energy efficient, since it is based on actual indoor conditions rather than fixed manual operations.
-
-\subsubsection{Solenoid Valve}
-Automatically closes water supply during abnormal flow patterns and can reopen via logic/manual reset.
-
-The solenoid valve acts as an output device that controls the water supply in the ablution area based on the readings from the water flow sensor. Its role is to stop water waste when abnormal or continuous flow is detected, such as when a tap is left open or a leak occurs.
-
-Working principle:
-\begin{itemize}
-  \item The water flow sensor continuously measures the amount of water moving through the pipe.
-  \item If the system detects abnormal flow or flow that continues longer than expected, the controller interprets this as possible waste.
-  \item The controller then sends an electrical signal to the solenoid valve.
-  \item The solenoid valve closes and cuts off the water supply.
-  \item When normal conditions return, the valve can be opened again manually or by the control logic.
-\end{itemize}
-
-How it functions in the project: When the sensor detects that water is flowing longer than it should, the system assumes that the tap may have been left open or that a leak is present. The controller then activates the solenoid valve to stop the flow and prevent waste. This helps the mosque conserve water while still allowing normal use when water demand is expected.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.42\textwidth]{9.2.3-parts-of-solenoid-valve.jpg}
-\caption{Solenoid valve components}
-\end{figure}
-
-% -------------------------------------------------------
-\subsection{Processing Unit}
-
-The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and peripheral interfaces (I2C/UART/SPI/PWM), low power operation, and capability to run concurrent IoT control tasks.
-
-The ideal processing unit for this project is the ESP32 microcontroller, as it is a powerful, low-cost, low-power System on a Chip (SoC), and offers enough processing capability to handle multiple sensors, control actuators, and support real-time IoT automation. It is also suitable for this system because it includes built-in Wi-Fi and Bluetooth, has multiple GPIO pins, and supports low-power operation, which makes it practical for a smart mosque environment.
-\begin{itemize}
-  \item Wi-Fi connectivity: The ESP32 has integrated Wi-Fi, so it can support network-based automation and monitoring without needing an extra communication module.
-  \item Suitable for multiple inputs and outputs: It provides many GPIO pins and supports interfaces such as I2C, UART, SPI, and PWM, which makes it easy to connect PIR sensors, flow sensors, IAQ sensors, relays, and valves.
-  \item Low power and efficient: The ESP32 includes power-saving modes, which is useful for a system that may run continuously throughout the day.
-  \item Good for embedded IoT control: It is designed for IoT applications and can act as a standalone controller for sensor reading and device actuation.
-  \item Practical for project scope: Compared with simpler boards, the ESP32 is better suited to a connected system that must manage occupancy, ventilation, lighting, and water control at the same time.
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.45\textwidth]{9.3-esp32.jpg}
-\caption{ESP32 processing unit}
-\end{figure}
-
-% -------------------------------------------------------
-\newpage
-\subsection{Communication Layer}
-\begin{itemize}
-  \item Local Wi-Fi AP for ESP32-to-server connectivity
-  \item IEEE 802.11 with WPA2-PSK security
-  \item Star topology
-  \item IoT network segmentation from general user devices
-  \item CPT representation: LAN linking MCU units to Registration Server
-\end{itemize}
-
-The communication layer is responsible for enabling reliable, real-time data exchange between distributed sensor nodes, the central processing unit, and the monitoring interface. It ensures that both sensing data and control commands are transmitted efficiently while maintaining system security and stability.
-
-The system communication is implemented as follows:
-\begin{itemize}
-  \item Network Setup: A local Wi-Fi access point connects ESP32 nodes to the central server, providing reliable coverage within the mosque.
-  \item Protocol and Security: Communication is based on IEEE 802.11 Wi-Fi and secured using WPA2-PSK encryption to restrict access and protect transmitted data.
-  \item Topology: A star topology is used, where all nodes communicate directly with the central access point, simplifying management and system expansion.
-  \item Network Segmentation: IoT devices are placed on a separate network segment from general user devices, reducing interference and minimizing unauthorized access risks.
-  \item Real-World Implementation: In practical deployments, technologies such as Zigbee or MQTT over Wi-Fi with a local broker may be used for improved scalability and efficiency.
-  \item Simulation Representation: In Cisco Packet Tracer, this is modeled as a local LAN connecting MCU units to the Registration Server, which acts as the central communication hub.
-\end{itemize}
-
-% -------------------------------------------------------
-\subsection{Integration Workflow}
-The integration workflow follows the same process defined in the system process specification (Step 2), ensuring consistent interaction between sensing, processing, and actuation components.
-\begin{enumerate}
-  \item Sensing stage: Sensors continuously monitor system conditions, including occupancy through PIR sensors, environmental parameters (CO2, temperature, and humidity), and water usage through flow sensors in the wudu area.
-  \item Data transmission stage: Sensor readings are transmitted via the local Wi-Fi network to the central processing unit for analysis.
-  \item Processing and decision stage: The processing unit evaluates incoming data based on predefined conditions such as prayer schedules, occupancy detection, and environmental thresholds. Decisions are made regarding whether system actions are required.
-  \item Actuation stage: Based on the processed data, control signals are sent to actuators. Lighting and ventilation systems are activated when occupancy is detected during prayer times, ventilation is adjusted in response to environmental conditions, and water flow is controlled to prevent wastage.
-  \item Monitoring and feedback stage: System status and sensor data are updated on the central dashboard, allowing the administrator to monitor system performance and apply manual overrides when necessary.
-\end{enumerate}
-
-This workflow is consistent with Step 2 process design.
-
-% -------------------------------------------------------
-\subsection{System Diagram}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.84\textwidth]{9.6-system-diagram.png}
-\caption{System integration diagram}
-\end{figure}
->>>>>>> e43e52f20d321dd86cf0dd1f5e670263b6aa2823
