@@ -1,0 +1,172 @@
+## System Functionality
+
+The Smart Mosque Management System has 5 core functionalities:
+
+### 1. Occupancy Detection
+- PIR sensors at entrances count people entering/exiting
+- Real-time occupancy count displayed on dashboard
+- Triggers alerts when capacity exceeds safe limits (>80% = warning, 100% = critical)
+
+### 2. Energy Management
+- Auto turn ON/OFF lights and fans based on:
+  - Prayer times (from API - aladhan.com)
+  - Occupancy detection (motion sensors)
+- Reduces unnecessary energy consumption
+
+### 3. Water Monitoring (Wudu Area)
+- Flow sensors measure water usage in real-time
+- Detects abnormal patterns (leaks or taps left open)
+- Solenoid valve automatically closes to prevent waste
+
+### 4. Air Quality Monitoring
+- IAQ sensors monitor CO₂, temperature, humidity
+- Auto-activate ventilation when thresholds exceeded:
+  - CO₂ > 1000 ppm
+  - Temperature > 28°C
+  - Humidity > 65%
+
+### 5. Central Dashboard
+- Displays: occupancy, energy, water, air quality
+- Sends alerts for abnormal conditions
+- Allows admin manual override control
+
+---
+
+## Cisco Packet Tracer Simulation
+
+### Network Topology
+
+```
+                    ┌─────────────────┐
+                    │   Wi-Fi Access   │
+                    │      Point      │
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+        ┌─────┴─────┐ ┌─────┴─────┐ ┌─────┴─────┐
+        │  ESP32    │ │  ESP32    │ │  ESP32    │
+        │ (Prayer  │ │  (Wudu)   │ │  (IAQ)    │
+        │   Hall)  │ │  Area)    │ │  Sensor)  │
+        └─────┬─────┘ └─────┬─────┘ └─────┬─────┘
+             │             │             │
+    ┌────────┴────────┐   │      ┌──────┴──────┐
+    │                │   │      │              │
+┌───┴───┐       ┌────┴───┐  │   ┌──┴────┐  ┌──┴────┐
+│ Smart │       │ Solenoid│  │   │ IAQ   │  │ PIR   │
+│Relay  │       │ Valve  │  │   │Sensor │  │Sensor │
+│(Light)│       │        │  │   │      │  │      │
+└───────┘       └────────┘  │   └───────┘  └───────┘
+        │                  │
+        │            ┌────┴────┐
+        │            │ PIR     │
+        │            │(Motion)│
+        │            └────────┘
+
+                             ┌────────────────────┐
+                             │  Registration      │
+                             │    Server          │
+                             │  (IoT Backend)    │
+                             └────────┬─────────┘
+                                      │
+                             ┌────────┴─────────┐
+                             │   Admin PC       │
+                             │  (Dashboard)    │
+                             └────────────────┘
+```
+
+### Devices Used in Packet Tracer
+
+| Device | Purpose |
+|--------|---------|
+| Wi-Fi Access Point | Local network for ESP32s |
+| ESP32 (×3) | Controllers for each zone |
+| PIR Motion Sensors | Occupancy detection |
+| Flow Sensor (Water) | Water monitoring |
+| IAQ Sensor | Air quality monitoring |
+| Smart Relay (×2) | Control lights and fans |
+| Solenoid Valve | Water flow control |
+| IoT Server / Registration Server | Data accumulation |
+| PC | Dashboard access |
+
+### Connections
+
+- Sensors → ESP32: Digital GPIO, I²C (for IAQ)
+- ESP32 → Wi-Fi: IEEE 802.11 (WPA2-PSK)
+- Wi-Fi → Server: Local LAN
+- Server → PC: HTTP/Web browser
+
+---
+
+## Requirements Met Check
+
+### Step 1: Purpose & Requirements ✓
+- Purpose defined: energy/water optimization, occupancy, air quality
+- Functional requirements: A-F (Energy, Occupancy, Water, Air Quality, Dashboard, Alerts)
+- Non-functional requirements: Performance, Scalability, Reliability, Security, Usability, Maintainability, Cost Efficiency
+
+### Step 2: Process Specification ✓
+- 5 core processes documented
+- Flowchart included (2.3-integrated-system-flowchart.png)
+- Process interaction notes included
+
+### Step 3: Domain Model Specification ✓
+- Entities identified: Mosque, Zone, Sensors, Actuators, Controller, IoT Server, Dashboard, Admin
+- Attributes for each entity defined
+- Relationships documented
+- UML diagram included (3.4-uml-diagram.png)
+
+### Step 4: Information Model Specification ✓
+- Sensor data: occupancy, motion, air quality, water
+- Processed data: status types
+- System data: historical logs
+- Control data: override commands
+- Main and control flows documented with diagrams
+
+### Step 5: Service Specifications ✓
+- 7 services defined (SVC-01 to SVC-07)
+- Service list table included
+- Each service has purpose, interface, operations, thresholds
+
+### Step 6: IoT Level Specification ✓
+- Level 1: Perception Layer (sensors + actuators)
+- Level 2: Network Layer (Wi-Fi, star topology)
+- Level 3: Edge Processing (ESP32)
+- Level 4: Data Accumulation (Server)
+- Level 5: Application Layer (Dashboard)
+- Layer diagram included (6.5-layers.png)
+
+### Step 7: Functional View Specification ✓
+- 7 functional blocks defined
+- Each block has inputs, outputs, responsibilities
+- Data flow diagram included (7.3-data-flow-diagram.png)
+
+### Step 8: Operational View Specification ✓
+- System Performance: response time, data update frequency, throughput, efficiency
+- System Reliability: sensor failure, network failure, power failure handling
+- System Scalability: more sensors, other mosques, modular architecture
+- System Security: network protection, access control, encryption, device filtering, privacy
+- Energy Efficiency: prayer time control, occupancy-based activation, automatic shutdown
+- Safety: device overheating, water valve reliability
+
+### Step 9: Device & Component Integration ✓
+- Input devices: PIR sensor, IAQ sensor, Water flow sensor
+- Output devices: Smart lights, Fans/AC, Solenoid valve
+- Processing unit: ESP32 details
+- Communication layer: Wi-Fi AP, IEEE 802.11, WPA2-PSK, star topology
+- System diagram included (9.6-system-diagram.png)
+
+### Step 10: Application Development ✓
+- Web-based dashboard
+- Admin role with full access
+- Core features: real-time monitoring, alerts, control, historical data
+- UI design screenshots included
+
+---
+
+## Summary
+
+✅ All 10 steps are documented and complete
+✅ Each step has proper diagrams and tables
+✅ Cisco Packet Tracer simulation matches the design
+✅ All functional requirements are met by the implementation

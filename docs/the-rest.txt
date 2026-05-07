@@ -1,0 +1,1919 @@
+​​A blue and black logo
+
+Description automatically generated 
+
+​Ain Shams University – Faculty of Engineering I-CHEP 
+
+​ 
+
+​ 
+
+​CSE356: Internet of Things 
+
+​Project Report 
+
+​Smart Mosque Management System 
+
+​14-May-2026 
+
+​ 
+
+​Submitted to: 
+
+​PROF. Islam Tharwat 
+
+​Eng. Hamdy Osama 
+
+​Shape 
+
+​Submitted by: 
+
+    ​23P0184: Sara Ahmed 
+
+    ​23P0360: El-Sharqawy Wael 
+
+    ​23P0386: Esraa Mustafa 
+
+    ​23P0272: Nada Medhat 
+
+​ 
+
+​Shape 
+​ 
+
+ 
+
+Table of contents 
+
+​​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​ 
+
+​​ 
+
+ 
+
+ 
+
+Step 1: Purpose & Requirements 
+
+    Purpose of the IoT System 
+
+The purpose of the Smart Mosque Management System is to design an intelligent IoT-based solution that enhances the operational efficiency of mosques by: 
+
+    Optimizing energy consumption (lighting and air conditioning)  
+
+    Conserving water usage in wudu (ablution) areas  
+
+    Monitoring and managing crowd occupancy  
+
+    Improving indoor air quality and comfort  
+
+The system leverages real-time sensor data, automated control mechanisms, and a centralized monitoring dashboard to ensure efficient resource utilization, especially during high-attendance periods such as Friday prayers and Ramadan. 
+
+    Functional Requirements 
+
+These define what the system must do: 
+
+A. Energy Management 
+
+    Automatically turn ON/OFF lights and fans/AC based on:  
+
+    Prayer times (via API)  
+
+    Occupancy detection (motion sensors)  
+
+    Adjust energy usage dynamically depending on crowd density  
+
+B. Occupancy Detection 
+
+    Count number of people entering/exiting using IR sensors  
+
+    Provide real-time hall capacity status  
+
+    Trigger alerts if capacity exceeds safe limits  
+
+C. Water Monitoring (Wudu Area) 
+
+    Measure water flow using flow sensors  
+
+    Detect abnormal usage (leaks or taps left open)  
+
+    Automatically close water supply using water valves  
+
+D. Air Quality Monitoring 
+
+    Measure air quality (e.g., CO₂, humidity, temperature)  
+
+    Trigger ventilation (fans) when thresholds are exceeded  
+
+E. Central Dashboard 
+
+    Display:  
+
+    Current occupancy  
+
+    Energy consumption  
+
+    Water usage  
+
+    Air quality readings  
+
+    Allow manual override control for administrators  
+
+F. Notifications & Alerts 
+
+    Send alerts for:  
+
+    Overcrowding  
+
+    Water leakage  
+
+    Poor air quality  
+
+    System faults  
+
+    Non-Functional Requirements 
+
+These define how well the system should perform: 
+
+A. Performance 
+
+    Real-time response (low latency in sensor-actuator loop)  
+
+    Efficient handling of multiple sensors simultaneously  
+
+B. Scalability 
+
+    System should support small to large mosques  
+
+    Easy addition of new sensors/devices  
+
+C. Reliability 
+
+    Continuous operation with minimal downtime  
+
+    Fault-tolerant communication between devices  
+
+D. Security 
+
+    Encrypted Communication: Use WPA2-PSK encryption for all wireless sensor-to-gateway connections. 
+
+    Access Control: Secure the monitoring dashboard with username/password authentication to prevent unauthorized overrides. 
+
+    Device Filtering: Use MAC address filtering to ensure only authorized IoT nodes can join the network. 
+
+E. Usability 
+
+    Simple and intuitive dashboard interface  
+
+    Minimal training required for mosque staff  
+
+F. Maintainability 
+
+    Easy to update system (software + hardware)  
+
+    Modular design for replacing faulty components  
+
+G. Cost Efficiency 
+
+    Use affordable IoT components suitable for local deployment in Egypt 
+
+    Constraints and Assumptions 
+
+Constraints 
+
+    Limited budget → use cost-effective sensors  
+
+    Implementation in Cisco Packet Tracer simulation  
+
+    Dependence on internet for prayer-time API  
+
+Assumptions 
+
+    Stable local network exists in mosque  
+
+    Power supply is reliable  
+
+    Admin has basic technical knowledge 
+
+The system aligns with Egypt’s sustainability goals by reducing unnecessary consumption of water and electricity in high-usage public religious spaces. 
+
+Step 2: Process Specification 
+
+2.1 Overview 
+
+The Smart Mosque Management System operates through a set of coordinated processes that continuously collect sensor data, analyze conditions, and trigger automated actions. These processes ensure efficient energy usage, water conservation, and safe occupancy management. 
+
+The system follows a Sense → Process → Act → Monitor pipeline. 
+
+2.2 Core System Processes 
+
+2.2.1 Occupancy Detection Process 
+
+Objective: Monitor the number of people inside the mosque. 
+
+Workflow: 
+
+    IR sensors at entrances detect entry/exit events  
+
+    System increments/decrements occupancy count  
+
+    Data is sent to the central controller  
+
+    If occupancy exceeds threshold:  
+
+    Trigger alert on dashboard  
+
+    Occupancy data is used by other processes (energy control) 
+
+2.2.2 Energy Management Process 
+
+Objective: Optimize electricity usage based on prayer times and occupancy. 
+
+Workflow: 
+
+    System retrieves prayer times from API  
+
+    Motion sensors detect presence in prayer hall  
+
+    Decision logic:  
+
+    IF (Within Prayer Window OR Motion Detected)  
+    → Turn ON lights and AC/fans  
+
+    ELSE 
+    → Turn OFF devices  
+
+    Adjust intensity (optional) based on crowd density  
+
+2.2.3 Wudu Water Monitoring Process 
+
+Objective: Prevent water waste in ablution areas. 
+
+Workflow: 
+
+    Flow sensors measure water usage  
+
+    System checks:  
+
+    Continuous flow without interruption  
+
+    If abnormal usage detected:  
+
+    Assume tap left open / leak  
+
+    Activate water valve to shut water  
+
+    Log water consumption data  
+
+2.2.4 Air Quality Monitoring Process 
+
+Objective: Maintain comfortable and safe air condisations. 
+
+Workflow: 
+
+    Sensors read CO₂, humidity, temperature  
+
+    Compare readings with predefined thresholds  
+
+    IF air quality is poor:  
+
+    Activate ventilation (fans/windows system)  
+
+    Update dashboard with real-time values  
+
+2.2.5 Central Monitoring & Control Process 
+
+Objective: Provide full system visibility and control. 
+
+Workflow: 
+
+    Collect data from all subsystems  
+
+    Display on web dashboard:  
+
+    Occupancy  
+
+    Energy usage  
+
+    Water consumption  
+
+    Air quality  
+
+    Allow admin to:  
+
+    Override automation  
+
+    Turn devices ON/OFF manually  
+
+    Store historical data (optional) 
+
+2.3 Integrated System Flowchart 
+
+ 
+
+ 
+
+2.4 Process Interaction Notes  
+
+    Occupancy data → affects energy decisions  
+
+    Air quality → may override energy logic (force ventilation ON)  
+
+    Water system → independent but logged centrally  
+
+    All processes communicate via a central controller (MCU/SBC) 
+
+The system processes are designed as loosely coupled modules to ensure scalability, maintainability, and real-time responsiveness 
+
+Step 3: Domain Model Specification 
+
+3.1 Entities 
+
+Core System Entities: 
+
+    Mosque  
+
+    Zone (Prayer Hall / Wudu Area)  
+
+Sensors: 
+
+    Motion Sensor  
+
+    IR Counter Sensor  
+
+    Air Quality Sensor  
+
+    Water Flow Sensor  
+
+Actuators: 
+
+    Light  
+
+    Fan / AC  
+
+    Water Valve  
+
+System Components: 
+
+    Controller (MCU/SBC)  
+
+    IoT Server  
+
+    Dashboard (Web App)  
+
+    Admin 
+
+ 
+
+ 
+
+3.2 Attributes for each Entity 
+
+ Mosque 
+
+    mosqueID  
+
+    name  
+
+    location  
+
+Shape 
+
+ Zone 
+
+    zoneID  
+
+    type (Prayer Hall / Wudu Area)  
+
+    capacity  
+
+Shape 
+
+  Sensor  
+
+    sensorID  
+
+    type (motion, IR, air, water)  
+
+    status (active/inactive)  
+
+    value (reading)  
+
+Shape 
+
+  Actuator 
+
+    actuatorID  
+
+    type (light, fan, valve)  
+
+    status (ON/OFF)  
+
+Shape 
+
+  Controller 
+
+    controllerID  
+
+    processingLogic  
+
+    status  
+
+ 
+
+ 
+
+Shape 
+
+  IoT Server 
+
+    serverID  
+
+    database  
+
+    connectionStatus  
+
+Shape 
+
+   Dashboard 
+
+    dashboardID  
+
+    displayData  
+
+    controlOptions  
+
+Shape 
+
+    Admin 
+
+    adminID  
+
+    username  
+
+    password 
+
+ 
+
+3.3 Relationships 
+
+    Mosque contains Zones  
+
+    Zone contains Sensors  
+
+    Zone contains Actuators  
+
+    Sensors send data to Controller  
+
+    Controller controls Actuators  
+
+    Controller communicates with IoT Server  
+
+    IoT Server updates Dashboard  
+
+    Admin interacts with Dashboard  
+
+    Dashboard sends commands to Controller 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+3.4 UML Diagram 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Step 4: Information Model Specification 
+
+4.1 Types of Data in System 
+
+4.1.1 sensor data (raw data) 
+
+Occupancy Data  
+
+    peopleCount (int)  
+
+    entry/exit events  
+
+  Motion Data  
+
+    motionDetected (boolean)  
+
+Air Quality Data  
+
+    CO2Level (ppm)  
+
+    temperature (°C)  
+
+    humidity (%)  
+
+ Water Data  
+
+    flowRate (L/min)  
+
+    usageDuration (seconds) 
+
+4.1.2 Processed Data 
+
+    occupancyStatus (normal / full / overcrowded)  
+
+    airQualityStatus (good / moderate / poor)  
+
+    waterUsageStatus (normal / leak detected)  
+
+    energyState (ON / OFF)  
+
+4.1.3 System Data (stored) 
+
+    historical water usage  
+
+    energy consumption logs  
+
+    occupancy logs  
+
+    alerts history  
+
+4.1.4 Control Data (from admin) 
+
+    manual override commands 
+
+    turn ON/OFF devices 
+
+ 
+
+4.2 Data Flow 
+
+4.2.1 Main Flow: 
+
+Sensors → Controller → IoT Server → Dashboard 
+
+ 
+
+ 
+
+ 
+
+ Main flow shows all four sensor types feeding raw readings (motion, people count, CO₂/temp/humidity, flow rate) into the controller, which passes processed data to the IoT server, which then updates the dashboard. The dashboard fans out to the four display panels (occupancy, energy, water, air quality) and triggers alerts on threshold breaches. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+4.2.2 Control Flow: 
+
+Admin → Dashboard → Controller → Actuators 
+
+ 
+
+Control flow shows the reverse path: the admin issues a manual override through the dashboard, which sends commands to the controller, which then dispatches control signals to the three actuator types (lights, fan/AC, water valve). 
+
+Step 5: Service Specifications 
+
+5.1 Overview 
+
+The Smart Mosque Management System exposes seven core services. Each service is a defined unit of functionality with clear inputs, outputs, triggers, and interfaces. Services are implemented on the ESP32 controller and exposed to the dashboard via the local network. 
+
+ 
+
+5.2 Service List 
+
+Service ID 
+	
+
+Service Name 
+	
+
+Type 
+	
+
+Trigger 
+
+SVC-01 
+	
+
+Prayer Time Sync 
+	
+
+Data Acquisition 
+	
+
+Scheduled – once daily 
+
+SVC-02 
+	
+
+Occupancy Tracking 
+	
+
+Sensing 
+	
+
+Continuous (event-driven) 
+
+SVC-03 
+	
+
+Energy Control 
+	
+
+Actuation 
+	
+
+Event-driven 
+
+SVC-04 
+	
+
+Water Monitoring & Control 
+	
+
+Sensing + Actuation 
+	
+
+Continuous 
+
+SVC-05 
+	
+
+Air Quality Monitoring 
+	
+
+Sensing + Actuation 
+	
+
+Periodic (every 60s) 
+
+SVC-06 
+	
+
+Alert & Notification 
+	
+
+Notification 
+	
+
+Threshold-triggered 
+
+SVC-07 
+	
+
+Dashboard Monitoring & Override 
+	
+
+Application + Control 
+	
+
+On-demand 
+
+ 
+
+5.3 Service Descriptions 
+
+ 
+
+SVC-01 — Prayer Time Sync Service 
+
+    Purpose: Retrieves accurate daily prayer times to anchor all energy automation logic. Without this, the system cannot distinguish active prayer windows from idle periods. 
+
+    Interface: HTTP GET request to a prayer time API (e.g., aladhan.com/v1/timingsByCity?city=Cairo&country=Egypt) once per day at midnight. 
+
+    Output: Five daily timestamps (Fajr, Dhuhr, Asr, Maghrib, Isha) stored in the ESP32's local memory. 
+
+    Fallback: If the API is unreachable, the system uses the previous day's cached schedule. The drift between consecutive days for Egyptian cities is under 2 minutes — acceptable for this use case. 
+
+    Data produced: 
+
+{ 
+  "fajr": "04:12", 
+  "dhuhr": "12:01", 
+  "asr": "15:28", 
+  "maghrib": "18:44", 
+  "isha": "20:10" 
+} 
+
+ 
+
+SVC-02 — Occupancy Tracking Service 
+
+    Purpose: Counts the number of people inside the prayer hall in real time to support energy decisions and crowd management. 
+
+    Interface: PIR sensor events at entry and exit points → ESP32 counter logic → count exposed via local API endpoint polled by the dashboard every 30 seconds. 
+
+    Operations:  
+
+    increment_count() — triggered on entry detection 
+
+    decrement_count() — triggered on exit detection; floor is 0 (never negative) 
+
+    get_current_count() — returns current integer count and status flag 
+
+    Output: 
+
+Field 
+	
+
+Type 
+	
+
+Description 
+
+occupancy_count 
+	
+
+int 
+	
+
+Current number of people in hall 
+
+capacity_percent 
+	
+
+float 
+	
+
+Count ÷ max capacity × 100 
+
+status 
+	
+
+enum 
+	
+
+NORMAL / HIGH (>80%) / FULL (=max) 
+
+    Alert integration: When status transitions to HIGH or FULL, SVC-06 is triggered automatically. 
+
+ 
+
+SVC-03 — Energy Control Service 
+
+    Purpose: Automatically activates and deactivates lights and fans/AC per zone based on prayer window status and occupancy presence. 
+
+    Interface: ESP32 reads state from SVC-01 and SVC-02, applies decision logic, and sends GPIO signals to relay modules controlling lights and fans. 
+
+    Decision logic: 
+
+IF (current_time is within prayer_window) AND (occupancy > 0): 
+    activate(lights, fans) for active zone 
+ELSE: 
+    deactivate(lights, fans) for active zone 
+ 
+IF (override_active): 
+    ignore above → apply override command from SVC-07 
+
+    Operations: 
+
+Operation 
+	
+
+Description 
+
+activate_zone(zone_id, device_type) 
+	
+
+Turns on lights or fans in a specific zone 
+
+deactivate_zone(zone_id, device_type) 
+	
+
+Turns off lights or fans in a specific zone 
+
+get_device_status(device_id) 
+	
+
+Returns current ON/OFF state of a device 
+
+    Note: Air quality readings from SVC-05 can override the fan state independently — poor air quality activates fans regardless of prayer window status. 
+
+ 
+
+SVC-04 — Water Monitoring & Control Service 
+
+    Purpose: Monitors water flow in the wudu area, detects leaks or taps left open, and automatically closes the solenoid valve after a defined inactivity timeout. 
+
+    Interface: Water flow sensor (pulse output) → ESP32 pulse counter → solenoid valve GPIO control. 
+
+    Operations: 
+
+Operation 
+	
+
+Description 
+
+monitor_flow(tap_id) 
+	
+
+Continuously reads flow rate in L/min 
+
+detect_anomaly() 
+	
+
+Flags non-zero flow after 30s of no motion nearby 
+
+close_valve(tap_id) 
+	
+
+Sends close signal to solenoid valve 
+
+open_valve(tap_id) 
+	
+
+Reopens valve (manual or after reset) 
+
+get_water_usage() 
+	
+
+Returns cumulative usage in liters per session/day 
+
+    Thresholds: 
+
+Condition 
+	
+
+Threshold 
+	
+
+Action 
+
+Normal use 
+	
+
+1–3 L/min 
+	
+
+No action 
+
+Inactivity timeout 
+	
+
+Flow > 0 with no motion for > 30s 
+	
+
+Close valve + alert 
+
+Leak flag 
+	
+
+Flow above normal with no motion 
+	
+
+Close valve + high-priority alert 
+
+    Failsafe: If the flow sensor goes offline, the valve defaults to closed and the admin is notified. 
+
+ 
+
+SVC-05 — Air Quality Monitoring Service 
+
+    Purpose: Monitors indoor CO₂ levels, temperature, and humidity. Activates ventilation fans when readings exceed safe thresholds, independent of prayer time logic. 
+
+    Interface: IAQ sensor (I²C/UART) → ESP32 → fan relay GPIO + dashboard update. 
+
+    Polling interval: Every 60 seconds. Suitable for CO₂ and climate parameters, which change gradually rather than instantaneously. 
+
+    Thresholds used: 
+
+Parameter 
+	
+
+Normal 
+	
+
+Action threshold 
+	
+
+Action 
+
+CO₂ 
+	
+
+< 1000 ppm 
+	
+
+> 1000 ppm 
+	
+
+Activate fans 
+
+Temperature 
+	
+
+18–26 °C 
+	
+
+> 28 °C 
+	
+
+Activate fans 
+
+Humidity 
+	
+
+30–60% 
+	
+
+> 65% 
+	
+
+Activate fans 
+
+    Output pushed to dashboard every 60s: 
+
+{ 
+  "co2_ppm": 870, 
+  "temperature_c": 27, 
+  "humidity_percent": 58, 
+  "air_quality_status": "MODERATE" 
+} 
+
+    Status scale: GOOD (0–50 AQI) / MODERATE (51–100) / POOR (101–150) / UNHEALTHY (151+) 
+
+ 
+
+SVC-06 — Alert & Notification Service 
+
+    Purpose: Detects threshold breaches across all subsystems and pushes real-time alerts to the admin dashboard. 
+
+    Interface: Internal event bus — ESP32 publishes events; dashboard polls the alert queue. 
+
+    Alert definitions: 
+
+Alert ID 
+	
+
+Trigger Condition 
+	
+
+Severity 
+
+ALT-01 
+	
+
+Occupancy > 80% of max capacity 
+	
+
+WARNING 
+
+ALT-02 
+	
+
+Occupancy = max capacity 
+	
+
+CRITICAL 
+
+ALT-03 
+	
+
+Water flow with no motion > 30s 
+	
+
+WARNING 
+
+ALT-04 
+	
+
+Leak pattern detected (high flow, no motion) 
+	
+
+CRITICAL 
+
+ALT-05 
+	
+
+Air quality status = POOR or UNHEALTHY 
+	
+
+WARNING 
+
+ALT-06 
+	
+
+Sensor offline / no response 
+	
+
+FAULT 
+
+ALT-07 
+	
+
+Actuator failed to respond after 3 retries 
+	
+
+FAULT 
+
+    Deduplication rule: The same alert type for the same device/zone cannot fire more than once per 5-minute window to prevent alert flooding. 
+
+    Alert record stored: 
+
+{ 
+  "alert_id": "ALT-03", 
+  "timestamp": "2026-04-25T13:42:00", 
+  "zone": "wudu_area", 
+  "status": "ACTIVE" 
+} 
+
+ 
+
+SVC-07 — Dashboard Monitoring & Manual Override Service 
+
+    Purpose: Provides the mosque administrator with a unified view of all system state and the ability to manually override any automated decision. 
+
+    Interface: Web dashboard (hosted on local server/CPT Registration Server) polling ESP32 REST endpoints every 30 seconds. Override commands sent via HTTP POST. 
+
+    Data displayed: 
+
+Panel 
+	
+
+Data shown 
+
+Occupancy 
+	
+
+Live count, capacity bar, status flag 
+
+Energy 
+	
+
+Device ON/OFF state per zone, prayer schedule 
+
+Water 
+	
+
+Flow rate per tap, daily usage total, valve state 
+
+Air Quality 
+	
+
+CO₂, temperature, humidity, AQI status 
+
+Alerts 
+	
+
+Active alert queue with timestamps 
+
+    Override operations: 
+
+Operation 
+	
+
+Description 
+
+override_on(device_id, duration_min) 
+	
+
+Forces device ON for N minutes 
+
+override_off(device_id) 
+	
+
+Forces device OFF regardless of logic 
+
+clear_override(device_id) 
+	
+
+Returns device to automatic mode 
+
+    Safety constraint: Override automatically expires after the set duration. Indefinite override requires admin re-confirmation every 60 minutes. 
+
+    Use case: Ramadan Tarawih prayers, Eid prayers, and other non-standard events where standard prayer-time logic is insufficient. 
+
+ 
+
+Step 6: IoT Level Specification 
+
+The Smart Mosque Management System is structured across five IoT levels, following the standard layered IoT architecture. Each level has a defined responsibility, and layers communicate only with adjacent layers to maintain separation of concerns. 
+
+Level 1 — Perception Layer 
+
+Role: Direct interaction with the physical environment. All sensing and actuation hardware lives here. 
+
+Sensors: 
+
+Device 
+	
+
+Placement 
+	
+
+Measurement 
+
+PIR Motion Sensor 
+	
+
+Main entrance, exit, per hall zone 
+	
+
+Entry/exit events, zone presence 
+
+Water Flow Sensor 
+	
+
+Each wudu tap inlet pipe 
+	
+
+Flow rate (L/min), pulse output 
+
+PIR Motion Sensor (Wudu) 
+	
+
+Ablution area 
+	
+
+Presence near taps 
+
+IAQ Sensor 
+	
+
+Prayer hall ceiling, near ventilation 
+	
+
+CO₂ (ppm), temperature (°C), humidity (%) 
+
+Actuators: 
+
+Device 
+	
+
+Placement 
+	
+
+Controlled action 
+
+Smart Relay (Lights) 
+	
+
+Per hall zone 
+	
+
+ON/OFF lighting 
+
+Smart Relay (Fans/AC) 
+	
+
+Per hall zone, wudu area 
+	
+
+ON/OFF ventilation 
+
+Solenoid Valve 
+	
+
+Per wudu tap supply line 
+	
+
+Open/close water flow 
+
+Communication from this layer: Digital GPIO signals and I²C/UART data lines to the ESP32 processing unit at Level 2. 
+
+ 
+
+Level 2 — Network Layer 
+
+Role: Local connectivity between sensors/actuators and the processing unit. Handles data transport within the mosque premises. 
+
+    Hardware: Local Wi-Fi access point connecting ESP32 units and the local server. 
+
+    Protocol: Wi-Fi (IEEE 802.11), secured with WPA2-PSK encryption. 
+
+    Topology: Star — all ESP32 nodes connect to the central access point. 
+
+    Segmentation: IoT devices are on a separate network segment from general user devices (guest Wi-Fi), reducing interference and unauthorized access risk. 
+
+    Real-world equivalent: In a production deployment, Zigbee or MQTT over Wi-Fi to a local broker would be used. In the Cisco Packet Tracer simulation, this is represented by the local LAN connecting MCU units to the Registration Server. 
+
+Key design decision: The core control loop (sensor → decision → actuator) is handled locally at Level 3 and does not depend on internet connectivity. The network layer only carries data; it does not make decisions. 
+
+ 
+
+Level 3 — Edge Processing Layer 
+
+Role: All decision-making and real-time control logic. This is the brain of the system. 
+
+    Hardware: ESP32 microcontroller units — one per functional zone (prayer hall zone, wudu area zone). 
+
+    Why ESP32: Built-in Wi-Fi, multiple GPIO pins, I²C/UART/SPI support, low power modes, and sufficient processing capability for concurrent sensor polling and actuator control. Suitable for continuous operation in a mosque environment. 
+
+Responsibilities: 
+
+Function 
+	
+
+Description 
+
+Sensor polling 
+	
+
+Reads PIR, IAQ, and flow sensor data at defined intervals 
+
+Occupancy counting 
+	
+
+Increments/decrements count based on entry/exit events 
+
+Prayer window evaluation 
+	
+
+Compares current time to cached prayer schedule 
+
+Energy control logic 
+	
+
+Combines occupancy + prayer window → relay commands 
+
+Water control logic 
+	
+
+Monitors flow, detects anomalies, closes valve on timeout 
+
+Air quality control 
+	
+
+Reads IAQ every 60s; activates fans on threshold breach 
+
+State management 
+	
+
+Maintains single source of truth for all device states locally 
+
+Alert generation 
+	
+
+Detects threshold breaches and publishes events to Level 4 
+
+Local caching 
+	
+
+Stores prayer time schedule locally for offline resilience 
+
+Failsafe behavior: If connectivity to Level 4 is lost, Level 3 continues operating all control loops autonomously. Devices do not go uncontrolled during a server or network outage. 
+
+ 
+
+Level 4 — Data Accumulation Layer 
+
+Role: Aggregates processed data from all ESP32 nodes, stores time-series records, and serves the dashboard. 
+
+    Hardware in CPT simulation: Registration Server acting as the local backend. 
+
+    In a real deployment: A local server or lightweight cloud instance (e.g., a Raspberry Pi running a simple REST API and database). 
+
+Responsibilities: 
+
+Function 
+	
+
+Description 
+
+State aggregation 
+	
+
+Receives periodic updates from ESP32 units every 30s 
+
+Time-series logging 
+	
+
+Stores occupancy, water usage, device state changes, alerts with timestamps 
+
+Alert queue management 
+	
+
+Maintains active and resolved alert records 
+
+Dashboard API 
+	
+
+Serves current and historical data to Level 5 on request 
+
+Data retention 
+	
+
+Rolling 30-day window; older data archived 
+
+Data stored (examples): 
+
+Occupancy log:   { timestamp, count, zone_id } 
+Water log:       { timestamp, tap_id, flow_rate, daily_total } 
+Device log:      { timestamp, device_id, state, trigger_source } 
+Alert log:       { timestamp, alert_id, zone, severity, resolved } 
+
+ 
+
+Level 5 — Application Layer 
+
+Role: The human-facing interface. Presents system state and accepts admin commands. 
+
+    Interface: Web dashboard accessible from the mosque admin's PC on the local network. 
+
+    In CPT simulation: Represented by a connected PC accessing the Registration Server's web interface. 
+
+    Functions: All of SVC-07 — live monitoring panels, alert display, prayer schedule view, and manual override controls. 
+
+    Users: Single admin role (mosque manager). No public-facing access. 
+
+ 
+
+Level Interaction Summary 
+
+[Sensors / Actuators] 
+       Level 1 
+           │  GPIO / I²C / UART 
+           ▼ 
+[ESP32 Edge Controller]  ◄──── [Prayer Time API (internet)] 
+       Level 2+3                    (cached locally) 
+           │  Wi-Fi (WPA2-PSK) 
+           ▼ 
+  [Local Server / CPT Registration Server] 
+       Level 4 
+           │  Local LAN 
+           ▼ 
+  [Admin Web Dashboard] 
+       Level 5 
+
+ 
+
+Step 7: Functional View Specification 
+
+7.1 Overview 
+
+The functional view breaks the system into independent blocks based on what each part does, not how it is physically built. Each block has defined inputs, outputs, and responsibilities. Blocks communicate through well-defined data flows, which makes the system modular and maintainable. 
+
+7.2 Functional Block Descriptions 
+
+ 
+
+Block 1 — Sensing Block 
+
+Collects all raw physical data from the mosque environment. 
+
+Sub-function 
+	
+
+Sensor 
+	
+
+Interval 
+	
+
+Output 
+
+Entry/exit detection 
+	
+
+PIR (entrance) 
+	
+
+Event-based 
+	
+
+Increment/decrement event 
+
+Zone presence detection 
+	
+
+PIR (hall zones) 
+	
+
+Every 5s 
+	
+
+Boolean presence flag per zone 
+
+Water flow measurement 
+	
+
+Flow sensor 
+	
+
+Every 1s 
+	
+
+Flow rate in L/min 
+
+Tap-area presence 
+	
+
+PIR (wudu area) 
+	
+
+Event-based 
+	
+
+Boolean presence flag 
+
+Air quality reading 
+	
+
+IAQ sensor 
+	
+
+Every 60s 
+	
+
+CO₂ ppm, temperature °C, humidity % 
+
+Failure behavior: If a sensor goes offline, the block flags it to the Processing Block. The system then applies a safe default: assumes occupied (for energy decisions) and assumes flow present (for water decisions) until the sensor is restored. 
+
+ 
+
+Block 2 — Processing Block 
+
+The decision-making core. All logic that determines what actions to take lives here, running on the ESP32. 
+
+Sub-functions: 
+
+Occupancy Counter 
+
+    Maintains a running count of people in the hall. 
+
+    Enforces a floor of 0 — exit events when count is already 0 are ignored. 
+
+Prayer Window Evaluator 
+
+    Compares current system time to the cached prayer schedule from SVC-01. 
+
+    Returns a boolean in_prayer_window used by the Decision Engine. 
+
+Decision Engine — Energy 
+
+IF in_prayer_window AND occupancy > 0: 
+    → ACTIVATE lights and fans for occupied zones 
+ELSE: 
+    → DEACTIVATE lights and fans 
+IF override_active: 
+    → Apply admin override command regardless of above 
+
+Decision Engine — Air Quality 
+
+IF co2 > 1000 ppm OR temperature > 28°C OR humidity > 65%: 
+    → ACTIVATE fans (independent of prayer window logic) 
+ELSE: 
+    → Return fans to energy control logic 
+
+Decision Engine — Water 
+
+IF flow_rate > 0 AND no_motion_duration > 30s: 
+    → CLOSE solenoid valve 
+    → Trigger ALT-03 
+IF flow_rate > leak_threshold AND no_motion: 
+    → CLOSE solenoid valve 
+    → Trigger ALT-04 (higher priority) 
+IF flow_rate == 0: 
+    → No action 
+
+State Manager 
+
+    Maintains current state of every device, sensor reading, and counter. 
+
+    Acts as the single source of truth at the edge. 
+
+    Pushes state snapshots to the Data & Storage Block every 30 seconds. 
+
+ 
+
+Block 3 — Actuation Block 
+
+Executes commands from the Processing Block on physical devices. 
+
+Device 
+	
+
+Command type 
+	
+
+Confirmation 
+
+Smart relay (lights) 
+	
+
+ON / OFF per zone 
+	
+
+GPIO acknowledgment 
+
+Smart relay (fans/AC) 
+	
+
+ON / OFF per zone 
+	
+
+GPIO acknowledgment 
+
+Solenoid valve 
+	
+
+OPEN / CLOSE per tap 
+	
+
+GPIO acknowledgment 
+
+Feedback loop: After every actuation command, the block waits up to 3 seconds for a confirmation signal. If no confirmation is received after 3 retries, the Processing Block logs a device fault and triggers ALT-07 in the Alert Block. This ensures the system knows whether commands are actually being executed, not just sent. 
+
+ 
+
+Block 4 — Data & Storage Block 
+
+Persists time-series data and system state to the local server for historical analysis and dashboard queries. 
+
+Data type 
+	
+
+Logging frequency 
+	
+
+Retention 
+
+Occupancy count 
+	
+
+Every 30s 
+	
+
+30 days rolling 
+
+Water usage per tap 
+	
+
+Per session + hourly total 
+	
+
+30 days rolling 
+
+Device state changes 
+	
+
+On every ON/OFF transition 
+	
+
+30 days rolling 
+
+Air quality readings 
+	
+
+Every 60s 
+	
+
+30 days rolling 
+
+Alert records 
+	
+
+On every alert event 
+	
+
+30 days rolling 
+
+Why this matters: The admin can review Friday prayer crowd peaks, monthly water savings, and energy consumption trends. This is what separates a smart system from a simple relay controller. 
+
+ 
+
+Block 5 — Alert Block 
+
+Monitors threshold conditions and pushes notifications to the Dashboard Block. 
+
+    Subscribes to state change events published by the Processing Block. 
+
+    Evaluates all seven alert conditions defined in SVC-06. 
+
+    Deduplicates: same alert type for same device/zone fires at most once per 5 minutes. 
+
+    Stores each alert with timestamp, zone, severity, and resolution status. 
+
+    Pushes active alerts to the dashboard in real time. 
+
+ 
+
+Block 6 — Dashboard Block 
+
+The admin's interface for monitoring and control. 
+
+    Polls the Data & Storage Block every 30 seconds for current readings. 
+
+    Renders four monitoring panels: occupancy, energy, water, air quality. 
+
+    Displays the active alert queue and prayer schedule. 
+
+    Accepts manual override inputs from the admin and forwards them as commands to the Processing Block. 
+
+    Single admin role — no public access. 
+
+ 
+
+Block 7 — External API Block 
+
+Interfaces with the only external dependency: the prayer time service. 
+
+    Sends one HTTP GET request per day at midnight. 
+
+    Parses the five daily prayer timestamps and writes them to ESP32 local memory. 
+
+    If the request fails, uses the previous day's cached schedule as fallback. 
+
+    No other external API dependencies — all other logic is self-contained on the local network. 
+
+ 
+
+7.4 Inter-Block Data Flow Summary 
+
+From 
+	
+
+To 
+	
+
+Data 
+
+Sensing Block 
+	
+
+Processing Block 
+	
+
+Raw sensor events, flow rates, IAQ readings 
+
+External API Block 
+	
+
+Processing Block 
+	
+
+Daily prayer time schedule 
+
+Processing Block 
+	
+
+Actuation Block 
+	
+
+Device commands (ON/OFF/OPEN/CLOSE) 
+
+Actuation Block 
+	
+
+Processing Block 
+	
+
+Execution confirmations, fault flags 
+
+Processing Block 
+	
+
+Data & Storage Block 
+	
+
+State snapshots, usage logs, transitions 
+
+Processing Block 
+	
+
+Alert Block 
+	
+
+Threshold breach events 
+
+Data & Storage Block 
+	
+
+Dashboard Block 
+	
+
+Aggregated current readings, historical data 
+
+Alert Block 
+	
+
+Dashboard Block 
+	
+
+Active alert queue 
+
+Dashboard Block 
+	
+
+Processing Block 
+	
+
+Manual override commands 
+
+ 

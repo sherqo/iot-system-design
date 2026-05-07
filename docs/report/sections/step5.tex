@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 \section{Service Specifications}
 
 \subsection{Overview}
@@ -125,3 +126,256 @@ Humidity & 30--60\% & $>$ 65\% & Activate fans \\
   \item Trigger source: Continuous threshold monitoring configured in the IoT Server.
   \item Connected devices: Humidity Monitor and Humidifier.
 \end{itemize}
+=======
+\newpage
+\section{Service Specifications}
+
+\subsection{Overview}
+The Smart Mosque Management System exposes seven core services. Each service is a defined unit of functionality with clear inputs, outputs, triggers, and interfaces. Services are implemented on the ESP32 controller and exposed to the dashboard via the local network.
+
+\subsection{Service List}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{1.4cm} L{5.2cm} L{3.3cm} L{4.2cm}}
+\toprule
+\textbf{Service ID} & \textbf{Service Name} & \textbf{Type} & \textbf{Trigger} \\
+\midrule
+SVC-01 & Prayer Time Sync & Data Acquisition & Scheduled -- once daily \\
+SVC-02 & Occupancy Tracking & Sensing & Continuous (event-driven) \\
+SVC-03 & Energy Control & Actuation & Event-driven \\
+SVC-04 & Water Monitoring \& Control & Sensing + Actuation & Continuous \\
+SVC-05 & Air Quality Monitoring & Sensing + Actuation & Periodic (every 60s) \\
+SVC-06 & Alert \& Notification & Notification & Threshold-triggered \\
+SVC-07 & Dashboard Monitoring \& Override & Application + Control & On-demand \\
+\bottomrule
+\end{tabular*}
+\caption{Core service list}
+\end{table}
+
+\subsection{Service Descriptions}
+
+\subsubsection*{SVC-01 -- Prayer Time Sync Service}
+\begin{itemize}
+  \item Purpose: Retrieves accurate daily prayer times to anchor energy automation logic. Without this, the system cannot distinguish active prayer windows from idle periods.
+  \item Interface: HTTP GET request to a prayer time API (e.g., aladhan.com/v1/timingsByCity?city=Cairo\&country=Egypt) once per day at midnight.
+  \item Output: Five daily timestamps (Fajr, Dhuhr, Asr, Maghrib, Isha) stored in ESP32 local memory.
+  \item Fallback: If the API is unreachable, the system uses previous day's cached schedule. The drift between consecutive days for Egyptian cities is under 2 minutes -- acceptable for this use case.
+\end{itemize}
+
+Data produced:
+\begin{verbatim}
+{
+  "fajr": "04:12",
+  "dhuhr": "12:01",
+  "asr": "15:28",
+  "maghrib": "18:44",
+  "isha": "20:10"
+}
+\end{verbatim}
+
+\subsubsection*{SVC-02 -- Occupancy Tracking Service}
+\begin{itemize}
+  \item Purpose: Counts the number of people inside the prayer hall in real time to support energy decisions and crowd management.
+  \item Interface: PIR sensor events at entry and exit points $\rightarrow$ ESP32 counter logic $\rightarrow$ count exposed via local API endpoint polled by dashboard every 30 seconds.
+  \item Operations:
+  \begin{itemize}
+    \item \texttt{increment\_count()} -- triggered on entry detection
+    \item \texttt{decrement\_count()} -- triggered on exit detection; floor is 0 (never negative)
+    \item \texttt{get\_current\_count()} -- returns current integer count and status flag
+  \end{itemize}
+  \item Output fields:
+\end{itemize}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4cm} L{3cm} L{6.5cm}}
+  \toprule
+  \textbf{Field} & \textbf{Type} & \textbf{Description} \\
+  \midrule
+  occupancy\_count & int & Current number of people in hall \\
+  capacity\_percent & float & Count $\div$ max capacity $\times$ 100 \\
+  status & enum & NORMAL / HIGH ($>$80\%) / FULL (=max) \\
+  \bottomrule
+\end{tabular*}
+\caption{Occupancy service output fields}
+\end{table}
+
+Alert integration: When status transitions to HIGH or FULL, SVC-06 is triggered automatically.
+
+\subsubsection*{SVC-03 -- Energy Control Service}
+\begin{itemize}
+  \item Purpose: Automatically activates and deactivates lights and fans/AC per zone based on prayer window status and occupancy presence.
+  \item Interface: ESP32 reads state from SVC-01 and SVC-02, applies decision logic, and sends GPIO signals to relay modules controlling lights and fans.
+  \item Decision logic:
+  \begin{itemize}
+    \item IF (current\_time is within prayer\_window) AND (occupancy $>$ 0): activate(lights, fans) for active zone
+    \item ELSE: deactivate(lights, fans) for active zone
+  \end{itemize}
+  \item IF (override\_active): ignore above $\rightarrow$ apply override command from SVC-07
+  \item Operations:
+\end{itemize}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5.5cm} L{8cm}}
+  \toprule
+  \textbf{Operation} & \textbf{Description} \\
+  \midrule
+  activate\_zone(zone\_id, device\_type) & Turns on lights or fans in a specific zone \\
+  deactivate\_zone(zone\_id, device\_type) & Turns off lights or fans in a specific zone \\
+  get\_device\_status(device\_id) & Returns current ON/OFF state of a device \\
+  \bottomrule
+\end{tabular*}
+\caption{Energy control operations}
+\end{table}
+
+Note: Air quality readings from SVC-05 can override the fan state independently -- poor air quality activates fans regardless of prayer window status.
+
+\subsubsection*{SVC-04 -- Water Monitoring and Control Service}
+\begin{itemize}
+  \item Purpose: Monitors water flow in wudu area, detects leaks or taps left open, and automatically closes solenoid valve after defined inactivity timeout.
+  \item Interface: Water flow sensor (pulse output) $\rightarrow$ ESP32 pulse counter $\rightarrow$ solenoid valve GPIO control.
+  \item Key operations:
+\end{itemize}
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{4cm} L{9.5cm}}
+  \toprule
+  \textbf{Operation} & \textbf{Description} \\
+  \midrule
+  monitor\_flow(tap\_id) & Continuously reads flow rate in L/min \\
+  detect\_anomaly() & Flags non-zero flow after 30s of no motion nearby \\
+  close\_valve(tap\_id) & Sends close signal to solenoid valve \\
+  open\_valve(tap\_id) & Reopens valve (manual or after reset) \\
+  get\_water\_usage() & Returns cumulative usage in liters per session/day \\
+  \bottomrule
+\end{tabular*}
+\caption{Water monitoring operations}
+\end{table}
+
+Key thresholds:
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{3.5cm} L{3.5cm} L{3.5cm} L{3.5cm}}
+  \toprule
+  \textbf{Condition} & \textbf{Threshold} & \textbf{Action} \\
+  \midrule
+  Normal use & 1--3 L/min & No action \\
+  Inactivity timeout & Flow $>$ 0 with no motion for $>$ 30s & Close valve + alert \\
+  Leak flag & Flow above normal with no motion & Close valve + high-priority alert \\
+  \bottomrule
+\end{tabular*}
+\caption{Water monitoring thresholds}
+\end{table}
+
+Failsafe: If flow sensor goes offline, valve defaults to closed and admin is notified.
+
+\subsubsection*{SVC-05 -- Air Quality Monitoring Service}
+\begin{itemize}
+  \item Purpose: Monitor indoor CO$_2$ levels, temperature, and humidity. Activates ventilation fans when readings exceed safe thresholds, independent of prayer time logic.
+  \item Interface: IAQ sensor (I$^2$C/UART) $\rightarrow$ ESP32 $\rightarrow$ fan relay GPIO + dashboard update.
+  \item Polling interval: Every 60 seconds. Suitable for CO$_2$ and climate parameters, which change gradually rather than instantaneously.
+\end{itemize}
+
+Output pushed to dashboard every 60s:
+\begin{verbatim}
+{
+  "co2_ppm": 870,
+  "temperature_c": 27,
+  "humidity_percent": 58,
+  "air_quality_status": "MODERATE"
+}
+\end{verbatim}
+
+Status scale: GOOD (0--50 AQI) / MODERATE (51--100) / POOR (101--150) / UNHEALTHY (151+)
+
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{3.3cm} L{3.7cm} L{3.1cm} L{3.5cm}}
+\toprule
+\textbf{Parameter} & \textbf{Normal} & \textbf{Action Threshold} & \textbf{Action} \\
+\midrule
+CO$_2$ & $<$ 1000 ppm & $>$ 1000 ppm & Activate fans \\
+Temperature & 18--26 $^\circ$C & $>$ 28 $^\circ$C & Activate fans \\
+Humidity & 30--60\% & $>$ 65\% & Activate fans \\
+\bottomrule
+\end{tabular*}
+\caption{Air quality thresholds}
+\end{table}
+
+\subsubsection*{SVC-06 -- Alert and Notification Service}
+\begin{itemize}
+  \item Purpose: Detects threshold breaches across all subsystems and pushes real-time alerts to admin dashboard.
+  \item Interface: Internal event bus -- ESP32 publishes events; dashboard polls the alert queue.
+  \item Deduplication: Same alert type for same device/zone fires at most once per 5 minutes.
+\end{itemize}
+
+Alert definitions:
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{2cm} L{6.5cm} L{3.5cm}}
+  \toprule
+  \textbf{Alert ID} & \textbf{Trigger Condition} & \textbf{Severity} \\
+  \midrule
+  ALT-01 & Occupancy $>$ 80\% of max capacity & WARNING \\
+  ALT-02 & Occupancy = max capacity & CRITICAL \\
+  ALT-03 & Water flow with no motion $>$ 30s & WARNING \\
+  ALT-04 & Leak pattern detected (high flow, no motion) & CRITICAL \\
+  ALT-05 & Air quality status = POOR or UNHEALTHY & WARNING \\
+  ALT-06 & Sensor offline / no response & FAULT \\
+  ALT-07 & Actuator failed to respond after 3 retries & FAULT \\
+  \bottomrule
+\end{tabular*}
+\caption{Alert definitions}
+\end{table}
+
+Alert record stored:
+\begin{verbatim}
+{
+  "alert_id": "ALT-03",
+  "timestamp": "2026-04-25T13:42:00",
+  "zone": "wudu_area",
+  "status": "ACTIVE"
+}
+\end{verbatim}
+
+\subsubsection*{SVC-07 -- Dashboard Monitoring and Manual Override Service}
+\begin{itemize}
+  \item Purpose: Provides the mosque administrator with a unified view of all system state and the ability to manually override any automated decision.
+  \item Interface: Web dashboard (hosted on local server/CPT Registration Server) polling ESP32 REST endpoints every 30 seconds. Override commands sent via HTTP POST.
+\end{itemize}
+
+Data displayed:
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{3.5cm} L{9cm}}
+  \toprule
+  \textbf{Panel} & \textbf{Data shown} \\
+  \midrule
+  Occupancy & Live count, capacity bar, status flag \\
+  Energy & Device ON/OFF state per zone, prayer schedule \\
+  Water & Flow rate per tap, daily usage total, valve state \\
+  Air Quality & CO$_2$, temperature, humidity, AQI status \\
+  Alerts & Active alert queue with timestamps \\
+  \bottomrule
+\end{tabular*}
+\caption{Dashboard data panels}
+\end{table}
+
+Override operations:
+\begin{table}[htbp]
+\centering
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}L{5cm} L{8.5cm}}
+  \toprule
+  \textbf{Operation} & \textbf{Description} \\
+  \midrule
+  override\_on(device\_id, duration\_min) & Forces device ON for N minutes \\
+  override\_off(device\_id) & Forces device OFF regardless of logic \\
+  clear\_override(device\_id) & Returns device to automatic mode \\
+  \bottomrule
+\end{tabular*}
+\caption{Override operations}
+\end{table}
+
+Safety constraint: Override automatically expires after the set duration. Indefinite override requires admin re-confirmation every 60 minutes.
+
+Use case: Ramadan Tarawih prayers, Eid prayers, and other non-standard events where standard prayer-time logic is insufficient.
+>>>>>>> e43e52f20d321dd86cf0dd1f5e670263b6aa2823
