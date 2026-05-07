@@ -15,12 +15,12 @@ PIR Motion Sensor & Main entrance, exit, hall zone & Entry/exit events, zone pre
 Water Flow Sensor & Wudu tap inlet pipe & Flow rate (L/min), pulse output \\
 PIR Motion Sensor (Wudu) & Ablution area & Presence near taps \\
 IAQ Sensor & Prayer hall near ventilation & CO$_2$, temperature, humidity \\
+Humidity Sensor & Prayer hall & Humidity \% reading \\
 \bottomrule
 \end{tabular*}
 \caption{Perception layer sensors}
 \end{table}
 
-\newpage
 \textbf{Actuators}
 \begin{table}[htbp]
 \centering
@@ -31,6 +31,9 @@ IAQ Sensor & Prayer hall near ventilation & CO$_2$, temperature, humidity \\
 Smart Relay (Lights) & Per hall zone & ON/OFF lighting \\
 Smart Relay (Fans/AC) & Per hall zone, wudu area & ON/OFF ventilation \\
 Solenoid Valve & Wudu tap supply line & Open/close water flow \\
+Smart Window & Prayer hall & Open/close for ventilation \\
+Humidifier & Prayer hall & ON/OFF for humidity comfort \\
+Street Lamp & Mosque entrance & ON/OFF occupancy-based \\
 \bottomrule
 \end{tabular*}
 \caption{Perception layer actuators}
@@ -72,7 +75,6 @@ Alert generation & Publishes threshold breach events to data layer \\
 
 Failsafe: If server connectivity is lost, edge controllers continue autonomous operation.
 
-\newpage
 \subsection{Level 4 -- Data Accumulation Layer}
 \textbf{Role:} Aggregate processed data, store logs, and serve dashboard queries.
 \begin{itemize}

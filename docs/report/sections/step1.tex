@@ -22,13 +22,15 @@ These define what the system must do.
     \item Occupancy detection (motion sensors)
   \end{itemize}
   \item Adjust energy usage dynamically depending on crowd density.
+  \item Smart window control: automatically opens for natural ventilation when AC is off and humidity $\geq 60\%$; closes when AC activates to retain conditioned air.
+  \item Humidity comfort control: humidifier activates when indoor humidity drops below 30\%.
 \end{itemize}
 
 \subsubsection*{B. Occupancy Detection}
 \begin{itemize}
   \item Count number of people entering/exiting using PIR sensors.
   \item Provide real-time hall capacity status.
-  \item Trigger alerts if capacity exceeds safe limits.
+  \item Activate a dedicated siren (is-mosque-full-siren) when all three prayer hall PIR sensors are simultaneously active, indicating maximum occupancy.
 \end{itemize}
 
 \subsubsection*{C. Water Monitoring (Wudu Area)}
@@ -95,7 +97,6 @@ These define how well the system should perform.
   \item Minimal training required for mosque staff
 \end{itemize}
 
-\newpage
 \subsubsection*{F. Maintainability}
 \begin{itemize}
   \item Easy software/hardware updates

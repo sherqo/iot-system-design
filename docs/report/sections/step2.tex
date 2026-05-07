@@ -13,7 +13,7 @@ The Smart Mosque Management System operates through coordinated processes that c
   \item PIR sensors at entrances detect entry/exit events.
   \item System increments/decrements occupancy count.
   \item Data is sent to the central controller.
-  \item If occupancy exceeds threshold, trigger alert on dashboard.
+  \item Trigger occupancy-full siren (is-mosque-full-siren) when all hall motion detectors activate simultaneously, and deactivate when any clears.
   \item Occupancy data is used by other processes (energy control).
 \end{enumerate}
 
@@ -29,6 +29,7 @@ The Smart Mosque Management System operates through coordinated processes that c
     \item IF (Within Prayer Window OR Motion Detected), then turn ON lights and AC/fans.
     \item ELSE, turn OFF devices.
   \end{itemize}
+  \item System also activates AC independently when temperature exceeds 32$^\circ$C (separate threshold from fans at 28$^\circ$C). When AC activates, smart window automatically closes. When AC is off and humidity $\geq 60\%$, window opens for passive ventilation.
   \item Optionally adjust intensity based on crowd density.
 \end{enumerate}
 
@@ -55,10 +56,11 @@ The Smart Mosque Management System operates through coordinated processes that c
   \item Sensors read CO$_2$, humidity, and temperature.
   \item Compare readings with predefined thresholds.
   \item If air quality is poor, activate ventilation.
+  \item Humidifier activates when humidity falls below 30\% to maintain comfort.
+  \item Window management provides passive ventilation as a complement to mechanical AC.
   \item Update dashboard with real-time values.
 \end{enumerate}
 
-\newpage
 \subsubsection{Central Monitoring and Control Process}
 \textbf{Objective:} Provide full system visibility and control.
 

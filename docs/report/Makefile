@@ -2,7 +2,7 @@ MAIN ?= main
 BUILDDIR = .build
 OUTDIR = output
 OUT ?= $(MAIN)
-DATE := $(shell date +%Y-%m-%d)
+DATE := $(shell date +%Y-%m-%d_%H%M%S)
 
 all: $(BUILDDIR) $(OUTDIR)
 	@rm -f main.aux main.log main.out main.toc main.fls main.fdb_latexmk main.synctex.gz main.pdf

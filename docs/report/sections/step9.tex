@@ -1,4 +1,3 @@
-\newpage
 \section{Device and Component Integration}
 
 \subsection{Input Devices (Sensors)}
@@ -143,7 +142,13 @@ flow and apply water-saving actions when needed.
 Activated by combined prayer-window and occupancy conditions to balance comfort and energy savings.
 
 \subsubsection{Fans (AC Simulation)}
-Activated by IAQ conditions and occupancy demand; reduced when conditions normalize.
+Activated by IAQ conditions and occupancy demand. Two separate cooling thresholds are implemented:
+\begin{itemize}
+    \item Ventilation fan activates when CO$_2$ exceeds threshold, temperature exceeds 28$^\circ$C, or humidity exceeds 65\%.
+    \item Dedicated AC unit activates when temperature exceeds 32$^\circ$C as a stronger cooling response.
+\end{itemize}
+
+When environmental conditions normalize, the system automatically deactivates the corresponding cooling devices.
 
 \subsubsection{Solenoid Valve}
 Automatically closes water supply during abnormal flow patterns and can reopen via logic/manual reset.
@@ -153,6 +158,19 @@ Automatically closes water supply during abnormal flow patterns and can reopen v
 \includegraphics[width=0.42\textwidth]{9.2.3-parts-of-solenoid-valve.jpg}
 \caption{Solenoid valve components}
 \end{figure}
+
+\subsubsection{Smart Window}
+The smart window is controlled automatically using AC state and humidity readings.
+When the AC unit activates, the window closes to preserve conditioned air inside the prayer hall.
+If the AC is OFF and humidity reaches high levels, the window opens to support passive ventilation and improve indoor airflow.
+
+\subsubsection{Humidifier}
+The humidifier activates automatically when indoor humidity drops below the configured comfort threshold.
+This helps maintain comfortable environmental conditions for worshippers, especially during dry weather conditions.
+
+\subsubsection{Street Lamp}
+The street lamp provides entrance-area lighting based on motion detection and occupancy activity near the mosque entrance.
+This improves visibility and safety while reducing unnecessary energy consumption during low-activity periods.
 
 % -------------------------------------------------------
 \subsection{Processing Unit}
@@ -167,7 +185,6 @@ The ESP32 is selected for integrated Wi-Fi/Bluetooth, sufficient GPIO and periph
 \end{figure}
 
 % -------------------------------------------------------
-\newpage
 \subsection{Communication Layer}
 \begin{itemize}
     \item Local Wi-Fi AP for ESP32-to-server connectivity

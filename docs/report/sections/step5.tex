@@ -1,4 +1,3 @@
-\newpage
 \section{Service Specifications}
 
 \subsection{Overview}
@@ -18,6 +17,8 @@ SVC-04 & Water Monitoring \& Control & Sensing + Actuation & Continuous \\
 SVC-05 & Air Quality Monitoring & Sensing + Actuation & Periodic (every 60s) \\
 SVC-06 & Alert \& Notification & Notification & Threshold-triggered \\
 SVC-07 & Dashboard Monitoring \& Override & Application + Control & On-demand \\
+SVC-08 & Window \& Ventilation Control & Actuation & Event-driven (AC state + humidity) \\
+SVC-09 & Humidity Comfort Control & Sensing + Actuation & Continuous \\
 \bottomrule
 \end{tabular*}
 \caption{Core service list}
@@ -97,4 +98,30 @@ Humidity & 30--60\% & $>$ 65\% & Activate fans \\
   \item Interface: Dashboard polls ESP32 REST endpoints every 30 seconds; override uses HTTP POST.
   \item Override operations: \texttt{override\_on()}, \texttt{override\_off()}, \texttt{clear\_override()}.
   \item Safety: Override expires automatically after configured duration.
+\end{itemize}
+
+\subsubsection*{SVC-08 -- Window and Ventilation Control Service}
+\begin{itemize}
+  \item Purpose: Control smart window behavior to improve ventilation efficiency and reduce unnecessary cooling loss.
+  \item Interface: IoT Server evaluates humidity sensor readings and AC device status, then sends control actions to the smart window device through the wireless access point.
+  \item Decision logic:
+  \begin{itemize}
+    \item IF prayer-AC is ON, set prayer-window state to OFF (closed).
+    \item IF prayer-AC is OFF AND humidity $\geq 60\%$, set prayer-window state to ON (open).
+  \end{itemize}
+  \item Trigger source: Event-driven automation rules configured in the IoT Server Conditions page.
+  \item Connected devices: Humidity Monitor, Air Conditioner, Smart Window.
+\end{itemize}
+
+\subsubsection*{SVC-09 -- Humidity Comfort Control Service}
+\begin{itemize}
+  \item Purpose: Maintain comfortable indoor humidity levels for worshippers.
+  \item Interface: IoT Server continuously monitors humidity readings and controls the humidifier device through configured automation conditions.
+  \item Decision logic:
+  \begin{itemize}
+    \item IF humidity $<$ 30\%, activate prayer-humidifier.
+    \item IF humidity $\geq 30\%$, deactivate prayer-humidifier.
+  \end{itemize}
+  \item Trigger source: Continuous threshold monitoring configured in the IoT Server.
+  \item Connected devices: Humidity Monitor and Humidifier.
 \end{itemize}

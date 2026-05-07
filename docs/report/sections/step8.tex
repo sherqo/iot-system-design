@@ -1,4 +1,3 @@
-\newpage
 \section{Operational View Specification}
 
 \subsection{System Performance}
@@ -52,7 +51,7 @@ Additional occupancy, flow, and IAQ sensors can be integrated with the same cont
 The architecture can be replicated across multiple mosques, each with local operation and data separation.
 
 \subsubsection{Modular Architecture}
-Occupancy, water, air-quality, and dashboard modules can evolve independently, reducing maintenance risk and easing upgrades.
+Occupancy, water, air-quality, and dashboard modules can evolve independently, reducing maintenance risk and easing upgrades. The window-ventilation and humidity-comfort modules operate independently and were added without modifying core occupancy or air-quality logic, demonstrating the modular design principle in practice.
 
 \subsection{System Security}
 
@@ -64,7 +63,6 @@ Occupancy, water, air-quality, and dashboard modules can evolve independently, r
   \item Monitoring for suspicious behavior and repeated login attempts
 \end{itemize}
 
-\newpage
 \subsubsection{Access Control}
 Role-based permissions, authenticated overrides, and action logging are applied for accountability.
 
